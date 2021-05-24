@@ -1,0 +1,8 @@
+{
+    "manifest_version": 2,
+    "name": "Lit Developer Tools",
+    "version": 0.1,
+    "description": "Developer tooling for Lit Element and the Lit ecosystem",
+    "author": "Matsuuu <huhta.matias@gmail.com>",
+    "devtools_page": "html/lit-devtools.html"
+}
