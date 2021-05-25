@@ -1,9 +1,34 @@
 {
-    "manifest_version": 3,
-    "name": "Lit Developer Tools",
+    "manifest_version": 2,
+    "name": "Lit Developer Tools V1",
     "version": "1.0",
     "minimum_chrome_version": "10.0",
     "description": "Developer tooling for Lit Element and the Lit ecosystem",
     "author": "Matsuuu <huhta.matias@gmail.com>",
-    "devtools_page": "html/lit-devtools-chrome.html"
+    "devtools_page": "dist/lit-devtools-chrome.html",
+
+    "background": {
+        "scripts": [
+            "dist/background.js"
+        ]
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*"
+            ],
+            "js": [
+                "dist/content_script.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "storage",
+        "background"
+    ]
 }
