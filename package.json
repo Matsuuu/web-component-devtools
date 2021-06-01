@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "lit": "*",
-    "query-selector-shadow-dom": "^1.0.0"
+    "lit": "*"
   },
   "scripts": {
     "build": "rimraf dist && rollup -c rollup.config.js",
@@ -9,6 +8,7 @@
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.10.0",
+    "@types/chrome": "^0.0.143",
     "deepmerge": "^4.2.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.50.0",
