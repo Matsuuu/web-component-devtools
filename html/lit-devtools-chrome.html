@@ -2,9 +2,30 @@
 <html>
   <head>
     <script src="/lib/devtools.js"></script>
+
+    <style>
+      html {
+        height: 100%;
+      }
+      body {
+        display: flex;
+        height: 100%;
+      }
+
+      custom-elements-list {
+        flex-basis: 60%;
+        height: 100%;
+      }
+
+      custom-elements-inspector {
+        flex-basis: 40%;
+        height: 100%;
+      }
+    </style>
   </head>
   <body>
     <custom-elements-list></custom-elements-list>
+    <custom-elements-inspector></custom-elements-inspector>
     <script type="module" src="/lib/view/init.js"></script>
   </body>
 </html>
