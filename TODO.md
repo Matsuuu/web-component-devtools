@@ -5,3 +5,7 @@
 TODO next:
 
 - Look into creating parsers for HTMLELement, later on maybe svelte, etc.
+    - For HTMLElement could we get by with just `observedAttributes`?
+    
+
+- Could we get the event listeners of objects?
