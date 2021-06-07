@@ -5,7 +5,5 @@
 
 TODO next:
 
-1. Update jsonifier with type detemination
-2. Clean up get messaging to inspector element
-3. Create editor components for each object type
-4. Create "UPDATE" -event, to update state of an object
+
+
