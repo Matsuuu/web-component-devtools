@@ -5,5 +5,4 @@
 
 TODO next:
 
-
-
+- Look into creating parsers for HTMLELement, later on maybe svelte, etc.
