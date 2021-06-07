@@ -4,7 +4,7 @@
   },
   "scripts": {
     "build": "rimraf dist && rollup -c rollup.config.js",
-    "start:build": "npm run build && web-dev-server --root-dir dist --app-index index.html --open --compatibility none"
+    "build:watch": "rimraf dist && rollup -c --watch rollup.config.js"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.10.0",
