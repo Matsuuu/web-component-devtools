@@ -5,7 +5,7 @@
     "minimum_chrome_version": "10.0",
     "description": "Developer tooling for Lit Element and the Lit ecosystem",
     "author": "Matsuuu <huhta.matias@gmail.com>",
-    "devtools_page": "dist/lit-devtools-chrome.html",
+    "devtools_page": "dist/lit-devtools-chrome-init.html",
 
     "background": {
         "scripts": [
