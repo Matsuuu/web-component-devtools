@@ -1,3 +1,3 @@
-# Lit Devtools
+# Web Component DevTools
 
 Under development

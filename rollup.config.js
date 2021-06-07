@@ -3,7 +3,7 @@ import html from "@open-wc/rollup-plugin-html";
 
 export default [
     {
-        input: "html/lit-devtools-chrome.html",
+        input: "html/wc-devtools-chrome.html",
         output: { dir: "dist" },
         plugins: [
             html({
@@ -13,7 +13,7 @@ export default [
         ],
     },
     {
-        input: "html/lit-devtools-chrome-init.html",
+        input: "html/wc-devtools-chrome-init.html",
         output: { dir: "dist" },
         plugins: [resolve(), html({ minify: false })],
     },
