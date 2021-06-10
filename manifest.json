@@ -16,8 +16,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://*/*",
-                "http://*/*"
+                "<all_urls>"
             ],
             "js": [
                 "dist/content_script.js"
