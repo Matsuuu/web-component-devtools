@@ -11,3 +11,6 @@ TODO next:
 - Could we get the event listeners of objects?
 
 - Separate parsers and onupdates to their own modules?
+
+- Rename connection types to channels
+- Finish writing nydus so that the connections don't last over refreshes in the background
