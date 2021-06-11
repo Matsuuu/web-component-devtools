@@ -14,3 +14,5 @@ TODO next:
 
 - Rename connection types to channels
 - Finish writing nydus so that the connections don't last over refreshes in the background
+
+- Make init.js call content script instead of vice versa. Should fix race condition
