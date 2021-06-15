@@ -29,6 +29,7 @@
         "activeTab",
         "tabs",
         "storage",
-        "background"
+        "background",
+        "contextMenus"
     ]
 }
