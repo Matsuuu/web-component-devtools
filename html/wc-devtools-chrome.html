@@ -10,18 +10,10 @@
         height: 100%;
       }
 
-      custom-elements-list {
-        flex-basis: 60%;
-        height: 100%;
-        max-height: 100%;
-        overflow-y: auto;
-      }
-
-      custom-elements-inspector {
-        flex-basis: 40%;
-        height: 100%;
-        max-height: 100%;
-        overflow-y: auto;
+      @media only screen and (max-width: 600px) {
+        body {
+          flex-direction: column;
+        }
       }
     </style>
     <script type="module" src="/lib/view/init.js"></script>
