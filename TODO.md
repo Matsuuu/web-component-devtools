@@ -4,7 +4,8 @@ TODO next:
 - Separate parsers and onupdates to their own modules?
 - Clean up and organize finder/jsonifier and the whole injection process
 - Make a hook for opening up web components devtools
-
+- Make nydus it's own package
+- Make nydus messageAll -function
 
 Backlog:
 
