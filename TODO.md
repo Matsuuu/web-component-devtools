@@ -1,8 +1,7 @@
-- Inspection action => Needs to go to DOM, get the current properties, pass them back with data types etc.
-
 
 TODO next:
 
+- Inspection contextaction
 - Make the tree closeable from branches
 - Make the highlighting maybe prettier
 - Add some icons for closing etc.
