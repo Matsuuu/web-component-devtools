@@ -20,3 +20,5 @@ Backlog:
 - Function call callbacks
 - Event listeners ?
 
+- Integrate Stoxy to make devtools remember stuff? Would this cause problems? What should we remember?
+
