@@ -21,4 +21,5 @@ Backlog:
 
 Known Bugs:
 
+- Sorting tree children are not currently determined correctly
 
