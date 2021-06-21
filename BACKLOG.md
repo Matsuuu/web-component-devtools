@@ -1,5 +1,6 @@
 Backlog in priority order:
 
+- Finish all inputs in inspector (Textarea for example)
 - Custom Element Manifest support
 - Make the UI like.. Not so bad
 - Make sure it's stabile.
