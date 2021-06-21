@@ -1,11 +1,6 @@
 
 TODO next:
 
-- Nydus tab specificity
-    - Figure out how to get the current tab info to content script and panel
-    - Maybe a one time message PING to get it from background?
-    - Assign it then to nydus?
-
 - Make a hook for opening up web components devtools => I don't think this is possible
 - Make nydus it's own package
 
