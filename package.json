@@ -8,10 +8,12 @@
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.10.0",
+    "@simplr-wc/prettier-config": "^1.0.3",
     "@types/chrome": "^0.0.143",
     "deepmerge": "^4.2.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.50.0",
     "rollup-plugin-copy": "^3.4.0"
-  }
+  },
+  "prettier": "@simplr-wc/prettier-config"
 }
