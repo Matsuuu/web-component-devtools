@@ -9,6 +9,7 @@
 
       .error {
         color: red;
+        font-size: 1.3rem;
       }
 
       @media only screen and (max-width: 1000px) {
@@ -21,17 +22,5 @@
   </head>
   <body>
     <div class="loading">Analyzing page...</div>
-
-    <script>
-      setTimeout(() => {
-        const loader = document.querySelector(".loading");
-        if (loader) {
-          const errorText = document.createElement("p");
-          errorText.innerText =
-            "Web Components Devtools could not be initialized. Please re-open DevTools to try again.";
-          document.body.appendChild(errorText);
-        }
-      }, 10000);
-    </script>
   </body>
 </html>
