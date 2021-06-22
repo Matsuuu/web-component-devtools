@@ -1,8 +1,11 @@
 Backlog in priority order:
 
+- Separate property and attribute update events and handle appropriately
 - Finish all inputs in inspector (Textarea for example)
+    - Code editor blocks for json objects?
 - Custom Element Manifest support
-- Make the UI like.. Not so bad
+    - Basic support done. Finalize it, and get all the data needed
+    - What to do with methods and events? Create issues to discuss?
 - Make sure it's stabile.
 - Support for other WC libraries. 
     - Haunted
@@ -25,18 +28,11 @@ https://thenounproject.com/term/inheritance/3438437/
 
 - Inspired by CEM:
 
-=> Split stuff into caterogies:
-    - Attributes
-    - Properties
-    - Events 
-    - Methods
-
 => Show inherited elements, with a hover bubble showing where it's inherited from
-
 => Show Superclass
 
 
 Known Bugs:
 
-- Sorting tree children are not currently determined correctly
+- Component tree children are not currently determined correctly
 
