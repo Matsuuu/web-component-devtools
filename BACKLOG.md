@@ -17,6 +17,24 @@ Backlog in priority order:
 - List event listeners of element, maybe even make it able to trigger them?
 
 
+StratchPad:
+
+Inheritance icon: 
+https://thenounproject.com/term/inheritance/3438437/
+
+
+- Inspired by CEM:
+
+=> Split stuff into caterogies:
+    - Attributes
+    - Properties
+    - Events 
+    - Methods
+
+=> Show inherited elements, with a hover bubble showing where it's inherited from
+
+=> Show Superclass
+
 
 Known Bugs:
 

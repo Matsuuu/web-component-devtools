@@ -10,6 +10,7 @@
     "@open-wc/building-rollup": "^1.10.0",
     "@simplr-wc/prettier-config": "^1.0.3",
     "@types/chrome": "^0.0.143",
+    "custom-elements-manifest": "^1.0.0",
     "deepmerge": "^4.2.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.50.0",
