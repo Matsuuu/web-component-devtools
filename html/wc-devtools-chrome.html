@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-        html {
-            height: 100%;
-        }
-      body {
-          height: 100%;
-        display: flex;
-        margin: 0;
-      }
+    <head>
+        <style>
+            html {
+                height: 100%;
+            }
+            body {
+                height: 100%;
+                display: flex;
+                margin: 0;
 
-      .error {
-        color: red;
-        font-size: 1.3rem;
-      }
+                --background-color: #fffffe;
+                --headline-color: #00214d;
+                --paragraph-color: #1b2d45;
+                --button-color: #0a9076;
+                --button-text: #00214d;
 
-      @media only screen and (max-width: 1000px) {
-        body {
-          flex-direction: column;
-        }
-      }
-    </style>
-    <script type="module" src="/lib/view/init.js"></script>
-  </head>
-  <body>
-    <div class="loading">Analyzing page...</div>
-  </body>
+                --highlight: #0a9076;
+                --secondary: #ff5470;
+
+                background: var(--background-color);
+            }
+
+            @media only screen and (max-width: 1000px) {
+                body {
+                    flex-direction: column;
+                }
+            }
+        </style>
+        <script type="module" src="/lib/view/init.js"></script>
+    </head>
+    <body>
+        <div class="loading">Analyzing page...</div>
+    </body>
 </html>
