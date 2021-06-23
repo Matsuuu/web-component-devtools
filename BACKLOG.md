@@ -1,6 +1,8 @@
 Backlog in priority order:
 
 - Separate property and attribute update events and handle appropriately
+    - Make the CEM check for the element before parsing.
+    -> There might be properties etc. we are not getting values of 
 - Finish all inputs in inspector (Textarea for example)
     - Code editor blocks for json objects?
 
