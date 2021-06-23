@@ -3,6 +3,12 @@ Backlog in priority order:
 - Separate property and attribute update events and handle appropriately
 - Finish all inputs in inspector (Textarea for example)
     - Code editor blocks for json objects?
+
+- Method calls
+- Events.. What to do with these?
+    - Enable triggering these events? Could native events bring problems?
+    - Flash the element when it's dispatched? Would require adding listeners on SELECT action and removing them later
+
 - Custom Element Manifest support
     - Basic support done. Finalize it, and get all the data needed
     - What to do with methods and events? Create issues to discuss?
