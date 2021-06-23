@@ -1,5 +1,6 @@
 Backlog in priority order:
 
+- Make the SELECT use the manifest as support for all routes. Make it less janky
 - Separate property and attribute update events and handle appropriately
     - Make the CEM check for the element before parsing.
     -> There might be properties etc. we are not getting values of 
