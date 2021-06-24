@@ -1,7 +1,30 @@
 Backlog in priority order:
 
 - Finish all inputs in inspector (Textarea for example)
-    - Code editor blocks for json objects?
+=> Make Objects and Arrays create summaries
+
+e.g: Items: [1,2,3] 
+
+Items : [_1,_2,_3] EDITABLE
+
+Items: [{id: 22, name: "Matsu"}, { id: 12, "Mutsu"}]
+
+ARROW_DOWN Items:
+               ARROW_DOWN 0:
+                            id: [_22_]
+                            name: [_Matsu_]
+               ARROW_DOWN 1:
+                            id: [_12_]
+                            name: [_Mutsu]
+
+
+ARROW_DOWN User: { id: 22, name: "Matsu", roles: [{ id: 0, roleName: "Boss" }]}
+                id: [_22_]
+                name: [_Matsu_]
+     ARROW_DOWN roles:
+                    id: 0,
+                    roleName: "Boss"
+            
 
 - Method calls
 - Events.. What to do with these?
