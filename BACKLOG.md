@@ -1,9 +1,5 @@
 Backlog in priority order:
 
-- Make the SELECT use the manifest as support for all routes. Make it less janky
-- Separate property and attribute update events and handle appropriately
-    - Make the CEM check for the element before parsing.
-    -> There might be properties etc. we are not getting values of 
 - Finish all inputs in inspector (Textarea for example)
     - Code editor blocks for json objects?
 
@@ -15,6 +11,9 @@ Backlog in priority order:
 - Custom Element Manifest support
     - Basic support done. Finalize it, and get all the data needed
     - What to do with methods and events? Create issues to discuss?
+=> Show inherited elements, with a hover bubble showing where it's inherited from
+=> Show Superclass
+
 - Make sure it's stabile.
 - Support for other WC libraries. 
     - Haunted
@@ -37,8 +36,6 @@ https://thenounproject.com/term/inheritance/3438437/
 
 - Inspired by CEM:
 
-=> Show inherited elements, with a hover bubble showing where it's inherited from
-=> Show Superclass
 
 
 Known Bugs:
