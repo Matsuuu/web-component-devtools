@@ -1,7 +1,5 @@
 Backlog in priority order:
 
-- Prepend a disclaimer comment at the start of the injected script.
-- Make the injection maybe happen only when devtools are opened? 
 - Remove elements from SELECT_RESULT which break the message
     - What to do with these? Maybe just ignore for now?
 - Finish all inputs in inspector (Textarea for example)
@@ -50,6 +48,7 @@ ARROW_DOWN User: { id: 22, name: "Matsu", roles: [{ id: 0, roleName: "Boss" }]}
     - Stencil
     - Vue
 
+- Make the injection maybe happen only when devtools are opened? 
 - Make nydus it's own package
 - Make a hook for opening up web components devtools => Currently asking @aerotwist about this
 - Make functions triggerable through buttons in the UI (needs research and maybe even a CEM)
