@@ -1,6 +1,5 @@
 Backlog in priority order:
 
-- Make the input elements in devtools use the `live` -directive
 - Make Fail of custom-elements.json fetch not cause console error
 - Prepend a disclaimer comment at the start of the injected script.
 - Make the injection maybe happen only when devtools are opened? 
