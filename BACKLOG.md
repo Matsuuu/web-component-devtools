@@ -1,6 +1,5 @@
 Backlog in priority order:
 
-- Make Fail of custom-elements.json fetch not cause console error
 - Prepend a disclaimer comment at the start of the injected script.
 - Make the injection maybe happen only when devtools are opened? 
 - Remove elements from SELECT_RESULT which break the message
@@ -35,6 +34,7 @@ ARROW_DOWN User: { id: 22, name: "Matsu", roles: [{ id: 0, roleName: "Boss" }]}
 - Events.. What to do with these?
     - Enable triggering these events? Could native events bring problems?
     - Flash the element when it's dispatched? Would require adding listeners on SELECT action and removing them later
+- Make selected element  properties update with latest values if the element updates.
 
 - Custom Element Manifest support
     - Basic support done. Finalize it, and get all the data needed
