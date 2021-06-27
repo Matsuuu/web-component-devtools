@@ -1,5 +1,6 @@
 Backlog in priority order:
 
+- Make Fail of custom-elements.json fetch not cause console error
 - Remove elements from SELECT_RESULT which break the message
     - What to do with these? Maybe just ignore for now?
 - Finish all inputs in inspector (Textarea for example)
