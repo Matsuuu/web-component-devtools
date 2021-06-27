@@ -1,6 +1,8 @@
 Backlog in priority order:
 
 - Make Fail of custom-elements.json fetch not cause console error
+- Prepend a disclaimer comment at the start of the injected script.
+- Make the injection maybe happen only when devtools are opened? 
 - Remove elements from SELECT_RESULT which break the message
     - What to do with these? Maybe just ignore for now?
 - Finish all inputs in inspector (Textarea for example)
