@@ -1,16 +1,14 @@
 Backlog in priority order:
 
-- Custom Element Manifest support
-    - Basic support done. Finalize it, and get all the data needed
-
 - Support for other WC libraries. 
     - Haunted
     - Atomico
     - Hybrids
     - Stencil
     - Vue
+    - etc.
 
-- Make the injection maybe happen only when devtools are opened? 
+- Make the injection maybe happen only when devtools are opened? Let's see if this becomes a issue
 
 - Make nydus it's own package
 - Make a hook for opening up web components devtools => Currently asking @aerotwist about this
