@@ -1,13 +1,9 @@
 Backlog in priority order:
 
-- Make the refresh trigger on dom changes
-
 - Method calls
 - Events.. What to do with these?
     - Flash the element when it's dispatched? Would require adding listeners on SELECT action and removing them later
-
-- Make selected element  properties update with latest values if the element updates.
-    - Mutationobserver?
+    !! Attach event listeners where you attach mutation observers and remove them in the same fashion
 
 - Custom Element Manifest support
     - Basic support done. Finalize it, and get all the data needed
