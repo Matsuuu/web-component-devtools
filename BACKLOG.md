@@ -1,9 +1,6 @@
 Backlog in priority order:
 
 - Method calls
-- Events.. What to do with these?
-    - Flash the element when it's dispatched? Would require adding listeners on SELECT action and removing them later
-    !! Attach event listeners where you attach mutation observers and remove them in the same fashion
 
 - Custom Element Manifest support
     - Basic support done. Finalize it, and get all the data needed
