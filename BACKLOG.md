@@ -2,7 +2,7 @@ Backlog in priority order:
 
 - Remove elements from SELECT_RESULT which break the message
     - What to do with these? Maybe just ignore for now?
-- Finish all inputs in inspector (Textarea for example)
+- Make the refresh trigger on dom changes
 => Make Objects and Arrays create summaries
 
 e.g: Items: [1,2,3] 
