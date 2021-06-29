@@ -9,6 +9,8 @@ Web Component DevTools also works with libraries built for developing Web Compon
 
 -   [Lit](https://github.com/lit/lit/)
 
+The list of extra support libraries will grow as adoption grows
+
 Issues:
 
 Any issues you run into while using the DevTools should be submitted to the GitHub Repository (https://github.com/Matsuuu/web-component-devtools/issues).
