@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Web Component DevTools",
-    "version": "1.0",
+    "version": "0.1",
     "minimum_chrome_version": "10.0",
     "description": "Developer tooling for Web Components and Web Component Libraries",
     "author": "Matsuuu <huhta.matias@gmail.com>",
@@ -33,8 +33,8 @@
         "contextMenus"
     ],
     "icons": {
-        "16": "icons/icon-16.png",
-        "48": "icons/icon-48.png",
-        "128": "icons/icon-128.png",
+        "16": "icons/logo-16.png",
+        "48": "icons/logo-48.png",
+        "128": "icons/logo-128.png"
     }
 }
