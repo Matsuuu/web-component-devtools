@@ -1,5 +1,6 @@
 import resolve from "@rollup/plugin-node-resolve";
 import html from "@open-wc/rollup-plugin-html";
+import copy from "rollup-plugin-copy";
 
 export default [
     {
@@ -8,6 +9,11 @@ export default [
         plugins: [
             html({
                 minify: false,
+            }),
+            copy({
+                targets: [
+                    { src: 'icons/*', dest: 'dist' }
+                ]
             }),
             resolve(),
         ],
