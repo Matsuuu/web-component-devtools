@@ -17,4 +17,4 @@ Backlog in priority order:
 Known Bugs:
 
 - Component tree children are not currently determined correctly
-
+- Some shadow dom polyfills might break the plugin. Youtube for example
