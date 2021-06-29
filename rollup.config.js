@@ -12,7 +12,8 @@ export default [
             }),
             copy({
                 targets: [
-                    { src: 'icons/*', dest: 'dist' }
+                    { src: 'icons/*', dest: 'dist' },
+                    { src: "manifest.json", dest: 'dist' }
                 ]
             }),
             resolve(),

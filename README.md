@@ -1,14 +1,13 @@
 # Web Component DevTools
 
-Under development
+Web Component DevTools is aimed at all developers working with Web Components. The tooling provided creates a new Chrome Devtools panel, which allows a quick look at the custom elements on the current page, and enables modification of attributes and properties of said components.
 
+Web Component DevTools works best when combined with the use of a Custom Elements Manifest (https://github.com/webcomponents/custom-elements-manifest). To enable analysis on your project, use a analyzer like the Open-WC Custom Elements Analyzer (https://github.com/open-wc/custom-elements-manifest/tree/master/packages/analyzer)
 
-### Plan
+Web Component DevTools also works with libraries built for developing Web Components. Currently the libraries, with extra support by DevTools are:
 
-The plan with Web Component DevTools is to allows Web component developers to have a storybook-like experience when developing their components.
-This would mean that the developer could easily through devtools change the properties and attributes of the component, and maybe even trigger events emitted by the component.
+-   Lit
 
-The Devtools is currently developed to crawl through the page, determine all the custom elements, and then tries to Ducktype the elements by their properties. 
-The end game plan is to have support for different WC libraries, and their ways of handling properties and such.
+Issues:
 
-Later on when [custom element manifest](https://github.com/webcomponents/custom-elements-manifest) becomes a wide-spread thing, I hope to add support for that too.
+Any issues you run into while using the DevTools should be submitted to the GitHub Repository (https://github.com/Matsuuu/web-component-devtools/issues).
