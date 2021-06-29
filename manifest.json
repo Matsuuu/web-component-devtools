@@ -6,13 +6,11 @@
     "description": "Developer tooling for Web Components and Web Component Libraries",
     "author": "Matsuuu <huhta.matias@gmail.com>",
     "devtools_page": "wc-devtools-chrome-init.html",
-
     "background": {
         "scripts": [
             "background.js"
         ]
     },
-
     "content_scripts": [
         {
             "matches": [
@@ -24,7 +22,6 @@
             "run_at": "document_idle"
         }
     ],
-
     "permissions": [
         "activeTab",
         "tabs",
