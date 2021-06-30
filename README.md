@@ -18,7 +18,7 @@ Any issues you run into while using the DevTools should be submitted to the GitH
 
 ## Discussion
 
-Join the discussion in Lit and Friends slack in the channel #web-component-devtool
+Join the discussion in Lit and Friends slack in the channel #web-component-devtools
 
 Join here: https://join.slack.com/share/zt-sffg0x76-2t1QoM1JWXrzfEbL9XP2_w
 
