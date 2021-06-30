@@ -33,3 +33,16 @@ The current architecture of the project goes as follow:
 
 - context-menus.js => Context menu actions and communication
 - devtools.js => Panel and general initialization actions. Lifecycle callbacks
+
+
+## Local Development
+
+If you want to develop or use the devtools locally, you can do so by following these steps:
+
+1. Clone this repository
+2. Run `npm install`
+3. run `npm run build`
+4. Go to Chrome Extensions
+5. Enable Developer mode
+6. Choose "Load Unpacked"
+7. Select the generated `dist` -directory in the project folder
