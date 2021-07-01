@@ -460,6 +460,18 @@ export class Nydus {
     async _requirementsFulfilled() {
         // Check that all required connections are built and ready
         const connectionsFlat = this._getConnectionsFlat();
-        return connectionsFlat.every(conn => conn.ready);
+        return (
+            connectionsFlat.length === this.connectionOptions.length &&
+            connectionsFlat.every(conn => conn.ready) &&
+            this._allConnectionsAreCreated(connectionsFlat)
+        );
+    }
+
+    _allConnectionsAreCreated(connectionsFlat) {
+        const connMap = {};
+        connectionsFlat.forEach(conn => (connMap[conn.id] = conn));
+        return this.connectionOptions.every(connOpt => {
+            return connMap[connOpt.id] != null;
+        });
     }
 }
