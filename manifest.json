@@ -23,9 +23,7 @@
         }
     ],
     "permissions": [
-        "activeTab",
         "tabs",
-        "storage",
         "background",
         "contextMenus"
     ],
