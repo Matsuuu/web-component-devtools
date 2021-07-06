@@ -1,4 +1,4 @@
-v1.0.1
+v 0.1.1
 
 - Update Lit Element Support to support Lit 2.0 components
 - Improve General Ducktyping
