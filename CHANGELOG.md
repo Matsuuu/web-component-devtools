@@ -4,3 +4,4 @@ v 0.1.1
 - Improve General Ducktyping
 - Fix a MediaQuery check on inspector window resizer
 - Compatibility with FAST elements
+- Compatibility with Atomico elements
