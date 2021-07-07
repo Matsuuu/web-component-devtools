@@ -2,6 +2,8 @@ v 0.1.2
 
 - Fix reactivity of property updates in devtools
 - Cast number property values to numbers by default
+- Improve Lit Type detection
+- Autofocus on previously focused element on refresh 
 
 v 0.1.1
 
