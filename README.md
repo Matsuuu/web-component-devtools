@@ -5,11 +5,48 @@ The tooling provided creates a new Chrome Devtools panel, which allows a quick l
 
 Web Component DevTools works best when combined with the use of a [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest). To enable analysis on your project, use a analyzer like the [Open-WC Custom Elements Analyzer](https://github.com/open-wc/custom-elements-manifest/tree/master/packages/analyzer)
 
+## Why?
+
+In the process of developing Web Components, wether it be with a library like [Lit](https://github.com/lit/lit/), or without any kind of library,
+there comes situtations in which you might want to have a bit more control over your components than what the regular browser devtools gives you.
+
+You might for example want to:
+
+- Toggle the Attributes of the element
+- Toggle the Properties of the element
+- Monitor when events get dispatched from the element
+- Call functions
+
+And when you're working with Web Components, Shadow DOM usually is present, making it fairly difficult to find the path to the element. And even if 
+you got the path, having to write `document.querySelector("my-selector-string > element-name").setAttribute("my-attr", "foo")` every time you want to
+modify a value is quite cumbersome.
+
+For this use case the Web Components DevTools were created: To enable the developer to easily modify the attributes, properties and therefore state
+of their element straight from the devtools window with the click of a button.
+
+## Features
+
+- List custom elements on page, and accessible iframes inside the page
+- Filter custom elements on the list
+- Inspect the attributes of custom elements
+- *Inspect the properties of custom elements
+- *Observe dispatched events
+- *Call functions of the custom element
+
+
+-* Feature is limited to [supported libraries ](#supported-libraries) and projects with a [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest).
+
+For the best development experience it is recommended to integrate a Custom Elements analyzer to the project, so
+that the elements get analyzer on build-time, generating a up-to-date manifest for the devtools to use.
+
+
 ## Download
 
 You can get the Web Component DevTools from the [Chrome Web Store](https://chrome.google.com/webstore/detail/web-component-devtools/gdniinfdlmmmjpnhgnkmfpffipenjljo/related) 
 
 ---
+
+### Supported libraries
 
 Web Component DevTools also works with libraries built for developing Web Components. Currently the libraries, with extra support by DevTools are:
 
@@ -19,7 +56,7 @@ Web Component DevTools also works with libraries built for developing Web Compon
 
 The list of extra support libraries will grow as adoption grows
 
-Issues:
+## Issues:
 
 Any issues you run into while using the DevTools should be submitted to the GitHub Repository (https://github.com/Matsuuu/web-component-devtools/issues).
 
