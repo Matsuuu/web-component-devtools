@@ -14,6 +14,8 @@ You can get the Web Component DevTools from the [Chrome Web Store](https://chrom
 Web Component DevTools also works with libraries built for developing Web Components. Currently the libraries, with extra support by DevTools are:
 
 -   [Lit](https://github.com/lit/lit/)
+-   [FAST](https://www.fast.design/)
+-   [Atomico](https://atomicojs.github.io/)
 
 The list of extra support libraries will grow as adoption grows
 
