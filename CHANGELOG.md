@@ -1,5 +1,8 @@
 v 0.1.2
 
+- Fix reactivity of property updates in devtools
+- Cast number property values to numbers by default
+
 v 0.1.1
 
 - Update Lit Element Support to support Lit 2.0 components
