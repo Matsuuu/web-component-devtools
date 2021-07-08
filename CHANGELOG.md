@@ -4,6 +4,7 @@ v 0.1.2
 - Cast number property values to numbers by default
 - Improve Lit Type detection
 - Autofocus on previously focused element on refresh 
+- Casting of function parameters follows the CEM typings
 - Support for union types
 - Better manifest url parsing
 
