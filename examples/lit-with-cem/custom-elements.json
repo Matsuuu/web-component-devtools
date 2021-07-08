@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "index.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LitNoCem",
+          "declaration": {
+            "name": "LitNoCem",
+            "module": "./src/LitNoCem.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "lit-with-cem.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "lit-with-cem",
+          "declaration": {
+            "name": "LitWithCem",
+            "module": "/src/LitWithCem.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/LitWithCem.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "LitWithCem",
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "__increment"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            },
+            {
+              "kind": "field",
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Hey there'"
+            },
+            {
+              "kind": "field",
+              "name": "counter",
+              "type": {
+                "text": "number"
+              },
+              "default": "5"
+            },
+            {
+              "kind": "field",
+              "name": "user",
+              "type": {
+                "text": "object"
+              },
+              "default": "{\n            id: 22,\n            name: 'Matsuuu',\n            languages: ['Java', 'Javascript'],\n        }"
+            },
+            {
+              "kind": "field",
+              "name": "status",
+              "type": {
+                "text": "'waiting' | 'ready'"
+              },
+              "default": "\"waiting\""
+            }
+          ],
+          "events": [
+            {
+              "name": "counter-increment",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "lit-with-cem",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LitWithCem",
+          "declaration": {
+            "name": "LitWithCem",
+            "module": "src/LitWithCem.js"
+          }
+        }
+      ]
+    }
+  ]
+}
