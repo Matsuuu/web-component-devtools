@@ -44,6 +44,10 @@ that the elements get analyzer on build-time, generating a up-to-date manifest f
 
 You can get the Web Component DevTools from the [Chrome Web Store](https://chrome.google.com/webstore/detail/web-component-devtools/gdniinfdlmmmjpnhgnkmfpffipenjljo/related) 
 
+### Setting up
+
+A brief video of setting up your development environment to get the most out of DevTools: https://youtu.be/D6W5iX3-E9E
+
 ---
 
 ### Supported libraries
