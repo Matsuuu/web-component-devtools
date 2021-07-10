@@ -75,6 +75,8 @@ Web Component DevTools also works with libraries built for developing Web Compon
 -   [Lit](https://github.com/lit/lit/)
 -   [FAST](https://www.fast.design/)
 -   [Atomico](https://atomicojs.github.io/)
+-   [Polymer](https://polymer-library.polymer-project.org/)
+-   [Vaadin](https://vaadin.com/)
 
 When developing with these libraries, the feature set of the devtools is increased, without the addition of the Custom Elements Manifest.
 

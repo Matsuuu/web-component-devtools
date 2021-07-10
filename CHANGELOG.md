@@ -1,6 +1,11 @@
 v 0.1.3
 
 - Bugfix: Element list updates on shadow DOM element changes e.g. Item added to list
+- Compatibility with Polymer elements
+- Compatibility with Vaadin elements
+- Add non-editable fields for Nodes and Functions
+- Throttle querying to increase performance
+- Add error messaging
 
 v 0.1.2
 
