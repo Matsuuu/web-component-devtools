@@ -1,3 +1,7 @@
+v 0.1.3
+
+- Bugfix: Element list updates on shadow DOM element changes e.g. Item added to list
+
 v 0.1.2
 
 - Fix reactivity of property updates in devtools
