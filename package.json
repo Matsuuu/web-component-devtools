@@ -4,6 +4,7 @@
         "nydus": "file:packages/nydus"
     },
     "scripts": {
+        "start": "npm run build:watch",
         "build": "rimraf dist && rollup -c rollup.config.js",
         "build:watch": "rimraf dist && rollup -c --watch rollup.config.js",
         "package": "npm run build && zip -j -r extension.zip dist/*"
