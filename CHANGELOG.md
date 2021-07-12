@@ -6,6 +6,9 @@ v 0.1.3
 - Add non-editable fields for Nodes and Functions
 - Throttle querying to increase performance
 - Add error messaging
+- Updated the performance of mutation observers and property updates
+- Re-name tab to "Web Components"
+- Add toggleable HTML tag previews next to custom elements in devtools list
 
 v 0.1.2
 

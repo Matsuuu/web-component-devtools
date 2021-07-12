@@ -33,7 +33,7 @@ export class UpdateTesting extends LitElement {
                 this.items = [];
             }
             this.requestUpdate();
-        }, 2000);
+        }, 750);
     }
 
     __increment() {
