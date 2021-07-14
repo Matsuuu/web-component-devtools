@@ -118,6 +118,175 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/fancy-title.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FancyTitle",
+          "members": [
+            {
+              "kind": "field",
+              "name": "properties",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "fancy-title",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FancyTitle",
+          "declaration": {
+            "name": "FancyTitle",
+            "module": "src/fancy-title.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "fancy-title",
+          "declaration": {
+            "name": "FancyTitle",
+            "module": "src/fancy-title.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/list-icon.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ListIcon",
+          "members": [
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "list-icon",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ListIcon",
+          "declaration": {
+            "name": "ListIcon",
+            "module": "src/list-icon.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "list-icon",
+          "declaration": {
+            "name": "ListIcon",
+            "module": "src/list-icon.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/list-item.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ListItem",
+          "members": [
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "list-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ListItem",
+          "declaration": {
+            "name": "ListItem",
+            "module": "src/list-item.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "list-item",
+          "declaration": {
+            "name": "ListItem",
+            "module": "src/list-item.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/list-wrapper.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ListWrapper",
+          "members": [
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "list-wrapper",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ListWrapper",
+          "declaration": {
+            "name": "ListWrapper",
+            "module": "src/list-wrapper.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "list-wrapper",
+          "declaration": {
+            "name": "ListWrapper",
+            "module": "src/list-wrapper.js"
+          }
+        }
+      ]
     }
   ]
 }
