@@ -1,19 +1,6 @@
-Backlog in priority order:
+- Firefox:
 
-- Support for other WC libraries. 
-    - Haunted
-    - Atomico
-    - Hybrids
-    - Stencil
-    - Vue
-    - etc.
-
-- Make the injection maybe happen only when devtools are opened? Let's see if this becomes a issue
-
-- Make nydus it's own package
-- Make a hook for opening up web components devtools => Currently asking @aerotwist about this
-
-
-Known Bugs:
-
-- Some shadow dom polyfills might break the plugin. Youtube for example
+- wrappedJSObject cleanup and solving
+- Refresh solving
+- Clean up messaging rework
+- Clean up dom actions events
