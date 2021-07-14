@@ -135,7 +135,8 @@ export class Nydus {
             if (chrome.tabs) {
                 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     if (request.type === NYDUS_TAB_PING) {
-                        sendResponse({ type: NYDUS_TAB_PING, tabId: sender.tab?.id });
+                        const senderTabId = sender.tab?.id;
+                        sendResponse({ type: NYDUS_TAB_PING, tabId: senderTabId });
                     }
                 });
                 chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -144,8 +145,12 @@ export class Nydus {
                 });
             } else {
                 chrome.runtime.sendMessage({ type: NYDUS_TAB_PING }, response => {
-                    this.nydusTab = response.tabId;
-                    resolve(response.tabId);
+                    let tabId = response.tabId;
+                    if (!tabId) {
+                        tabId = chrome?.devtools?.inspectedWindow?.tabId;
+                    }
+                    this.nydusTab = tabId;
+                    resolve(tabId);
                 });
             }
         });
@@ -218,7 +223,7 @@ export class Nydus {
                     tabId,
                 });
             } else {
-                await this._delay(100);
+                await this._delay(200);
                 this.message(recipient, message, _retryCount + 1);
             }
             return;
@@ -233,7 +238,7 @@ export class Nydus {
                     tabId,
                 });
             } else {
-                await this._delay(100);
+                await this._delay(200);
                 this.message(recipient, message, _retryCount + 1);
             }
             return;
@@ -366,18 +371,24 @@ export class Nydus {
     _doHostHandshake(nydusConnection, onMessage, isBackground) {
         chrome.runtime.onConnect.addListener(
             /** @this Nydus */
-            function startHandshake(/** @type chrome.runtime.Port */ connection) {
+            async function startHandshake(/** @type chrome.runtime.Port */ connection) {
                 if (connection.name !== nydusConnection.id) return;
-                nydusConnection.tabId = isBackground ? -1 : connection?.sender?.tab?.id ?? this.nydusTab;
-                this._handleClientHandshake(connection, nydusConnection);
+
+                let tabId = connection?.sender?.tab?.id;
+                if (!tabId) {
+                    tabId = await this._tryGetCurrentTab();
+                }
+                let nydusConnectionCopy = { ...nydusConnection };
+                nydusConnectionCopy.tabId = isBackground ? -1 : tabId ?? this.nydusTab;
+                this._handleClientHandshake(connection, nydusConnectionCopy);
 
                 if (onMessage) {
                     connection.onMessage.addListener(onMessage);
                 }
                 this._addConnectionOnDisconnectListeners(
                     connection,
-                    nydusConnection.id.toString(),
-                    nydusConnection.tabId,
+                    nydusConnectionCopy.id.toString(),
+                    nydusConnectionCopy.tabId,
                 );
             }.bind(this),
         );
