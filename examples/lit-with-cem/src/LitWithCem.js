@@ -1,4 +1,8 @@
 import { html, css, LitElement } from 'lit-element';
+import "./list-wrapper.js";
+import "./list-item.js";
+import "./list-icon.js";
+import "./fancy-title.js";
 
 export class LitWithCem extends LitElement {
     static get styles() {
@@ -58,6 +62,14 @@ export class LitWithCem extends LitElement {
             <ul>
                 ${this.user?.languages?.map(lang => html`<li>${lang}</li>`)}
             </ul>
+
+            <list-wrapper>
+                <fancy-title slot="header">Hey I'm a title</fancy-title>
+                <list-item>Foo</list-item>
+                <list-item>Bar</list-item>
+                <list-item>Baz</list-item>
+                <list-item>Bin</list-item>
+            </list-wrapper>
         `;
     }
 }
