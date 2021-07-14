@@ -205,27 +205,37 @@ export class Nydus {
      * @param {string | number} recipient
      * @param {any} message
      */
-    async message(recipient, message) {
+    async message(recipient, message, _retryCount = 0) {
         await this.whenReady;
 
         const tabId = await this._tryGetCurrentTab();
         let connPool = this.connections[tabId] ?? this.connections[-1];
         if (!connPool) {
-            console.warn('[WebComponentDevTools]: Message send missed. Tab connection pool not found.', {
-                recipient,
-                message,
-                tabId,
-            });
+            if (_retryCount >= 5) {
+                console.warn('[WebComponentDevTools]: Message send missed. Tab connection pool not found.', {
+                    recipient,
+                    message,
+                    tabId,
+                });
+            } else {
+                await this._delay(100);
+                this.message(recipient, message, _retryCount + 1);
+            }
             return;
         }
 
         const conn = connPool[recipient]?.connection;
         if (!conn) {
-            console.warn('[WebComponentDevTools]: Message send missed. Connection not found.', {
-                recipient,
-                message,
-                tabId,
-            });
+            if (_retryCount >= 5) {
+                console.warn('[WebComponentDevTools]: Message send missed. Connection not found.', {
+                    recipient,
+                    message,
+                    tabId,
+                });
+            } else {
+                await this._delay(100);
+                this.message(recipient, message, _retryCount + 1);
+            }
             return;
         }
         conn.postMessage({ ...message, tabId });
@@ -355,6 +365,7 @@ export class Nydus {
      */
     _doHostHandshake(nydusConnection, onMessage, isBackground) {
         chrome.runtime.onConnect.addListener(
+            /** @this Nydus */
             function startHandshake(/** @type chrome.runtime.Port */ connection) {
                 if (connection.name !== nydusConnection.id) return;
                 nydusConnection.tabId = isBackground ? -1 : connection?.sender?.tab?.id ?? this.nydusTab;
@@ -427,8 +438,8 @@ export class Nydus {
         });
     }
 
-    async _readyCheck() {
-        if (await this._requirementsFulfilled()) {
+    _readyCheck() {
+        if (this._requirementsFulfilled()) {
             // Resolve the whenReady promise for those listening for it
             this._whenReadyResolver(this);
             this._doOnReady();
@@ -447,7 +458,6 @@ export class Nydus {
 
     _getConnectionsFlat() {
         let connections = [];
-        Object.values;
         for (const connPool of Object.values(this.connections)) {
             for (const conn of Object.values(connPool)) {
                 connections.push(conn);
@@ -457,7 +467,7 @@ export class Nydus {
         return connections;
     }
 
-    async _requirementsFulfilled() {
+    _requirementsFulfilled() {
         // Check that all required connections are built and ready
         const connectionsFlat = this._getConnectionsFlat();
         return (
