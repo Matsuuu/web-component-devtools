@@ -1,3 +1,11 @@
+v 0.1.4
+
+- Bugfix: Fix element list parsing and ordering when mixing light and shadow DOM and list items
+- Enhancement: Moved from DOM events to postMessage on devtools communcation
+- Improved stability of messaging
+- Removed unnecessary permissions
+- Implemented Firefox support
+
 v 0.1.3
 
 - Bugfix: Element list updates on shadow DOM element changes e.g. Item added to list
