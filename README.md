@@ -116,6 +116,15 @@ The current architecture of the project goes as follow:
 
 ## Local Development
 
+Required tools:
+
+- NPM (any up to date version should do)
+- A preferably up to date version of Chrome/Firefox
+- A zipping tool (when working with firefox).
+- Any OS (windows/mac/linux)
+
+---
+
 If you want to develop or use the devtools locally, you can do so by following these steps:
 
 1. Clone this repository
@@ -125,3 +134,13 @@ If you want to develop or use the devtools locally, you can do so by following t
 5. Enable Developer mode
 6. Choose "Load Unpacked"
 7. Select the generated `dist` -directory in the project folder
+
+### Firefox
+
+For firefox, you might need to create a zip of the `dist`-folder to ad it to firefox as an extension.
+
+Feel free to use whatever zip tool you want to zip the `dist`-folder.
+
+## Generating a full package
+
+There is a combination script called `npm run package` which builds the project, and packages it utilizing the `zip` command line tool for linux.
