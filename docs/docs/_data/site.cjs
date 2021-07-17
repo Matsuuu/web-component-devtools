@@ -2,7 +2,7 @@ module.exports = function () {
   return {
     dir: 'ltr',
     lang: 'en',
-    name: 'Rocket',
+    name: 'Web Component DevTools',
     description: 'Web Component DevTools is a Browser Extension focused on helping Web Component developers in the process of writing components and websites.',
     socialLinks: [
       {
@@ -17,8 +17,8 @@ module.exports = function () {
     ],
     gitSiteUrl: 'https://github.com/Matsuuu/web-component-devtools',
     gitBranch: 'main',
-    helpUrl: 'https://github.com/Matsuuu/web-component-devtools/issues',
-    logoAlt: 'Web Component Devtools Logo',
+      helpUrl: 'https://github.com/Matsuuu/web-component-devtools/issues',
+    logoAlt: 'Web Component DevTools Logo',
     iconColorMaskIcon: '#3f93ce',
     iconColorMsapplicationTileColor: '#1d3557',
     iconColorThemeColor: '#1d3557',
