@@ -23,7 +23,7 @@ main #web-component-devtools {
 
 main p {
     font-size: 1.4rem;
-    color: var(--secondary);
+
 }
 
 body[layout^='layout-home'] .reasons {
@@ -36,6 +36,53 @@ body[layout^='layout-home'] .reasons {
 
 .reasons img {
     box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 8px 0 rgb(0 0 0 / 12%);;
+}
+
+.download-options {
+    display: flex; 
+    justify-content: space-between;
+}
+
+.download-section {
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.download-section .badge {
+    height: 1.6rem;
+    padding: 1rem 0 0;
+}
+
+.download-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 8px 0 rgb(0 0 0 / 12%);
+    cursor: pointer;
+    padding: 0.2rem 1rem;
+    transition: 200ms ease-in-out;
+    color: var(--text-color) !important;
+    text-decoration: none !important;
+    border-radius: 4px;
+}
+
+.download-button:hover {
+    background: #0a907622;
+}
+
+.download-button span {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.download-button img {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.2rem 1rem 0.2rem 0;
 }
 
 @media screen and (min-width: 1024px) {

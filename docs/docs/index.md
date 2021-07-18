@@ -28,5 +28,3 @@ reasons:
       image: /_assets/cem.webp
 ---
 
-
-
