@@ -6,6 +6,10 @@ body[layout^='layout-home'] .markdown-body .call-to-action:nth-of-type(2) {
   --primary-color-darker: #000;
 }
 
+body[layout^='layout-home'] .page-logo {
+    width: 10vw;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -20,6 +24,18 @@ main #web-component-devtools {
 main p {
     font-size: 1.4rem;
     color: var(--secondary);
+}
+
+body[layout^='layout-home'] .reasons {
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+}
+
+.reasons article {
+    margin-bottom: 5rem;
+}
+
+.reasons img {
+    box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 8px 0 rgb(0 0 0 / 12%);;
 }
 
 @media screen and (min-width: 1024px) {

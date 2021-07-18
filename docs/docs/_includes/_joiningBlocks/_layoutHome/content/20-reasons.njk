@@ -3,7 +3,7 @@
 <section class="reasons">
   {% for reason in reasons %}
     <article>
-    <img src="{{ reason.image | asset | url }}" />
+      <img src="{{ reason.image | asset | url }}" />
       <h3>{{ reason.header }}</h3>
       {{ reason.text | safe }}
     </article>
