@@ -1,9 +1,9 @@
 /* feel free to override this file for your page - add a file docs/_assets/style.css */
 
 body[layout^='layout-home'] .markdown-body .call-to-action:nth-of-type(2) {
-  --primary-color: #222;
-  --primary-color-lighter: #333;
-  --primary-color-darker: #000;
+    --primary-color: #222;
+    --primary-color-lighter: #333;
+    --primary-color-darker: #000;
 }
 
 body[layout^='layout-home'] .page-logo {
@@ -23,7 +23,6 @@ main #web-component-devtools {
 
 main p {
     font-size: 1.4rem;
-
 }
 
 body[layout^='layout-home'] .reasons {
@@ -35,11 +34,12 @@ body[layout^='layout-home'] .reasons {
 }
 
 .reasons img {
-    box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 8px 0 rgb(0 0 0 / 12%);;
+    box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 8px 0 rgb(0 0 0 / 12%);
+    border-radius: 4px;
 }
 
 .download-options {
-    display: flex; 
+    display: flex;
     justify-content: space-between;
 }
 
@@ -86,9 +86,29 @@ body[layout^='layout-home'] .reasons {
 }
 
 @media screen and (min-width: 1024px) {
-  body[layout='layout-home-background'] .page-background {
-    top: -210px;
-    right: -463px;
-    transform: rotate(45deg);
-  }
+    body[layout='layout-home-background'] .page-background {
+        top: -210px;
+        right: -463px;
+        transform: rotate(45deg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body[layout='layout-home-background'] .page-background {
+        top: -210px;
+        right: -463px;
+        transform: rotate(45deg);
+    }
+
+    .download-options {
+        flex-direction: column;
+    }
+
+    .download-section {
+        margin-bottom: 4rem;
+    }
+
+    body[layout^='layout-home'] .reasons {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
 }
