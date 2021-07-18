@@ -213,7 +213,7 @@ export class Nydus {
     async message(recipient, message, _retryCount = 0) {
         await this.whenReady;
 
-        const tabId = await this._tryGetCurrentTab();
+        const tabId = message.tabId ?? await this._tryGetCurrentTab();
         let connPool = this.connections[tabId] ?? this.connections[-1];
         if (!connPool) {
             if (_retryCount >= 5) {
