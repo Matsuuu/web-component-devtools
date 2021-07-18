@@ -1,0 +1,94 @@
+/* feel free to override this file for your page - add a file docs/_assets/style.css */
+
+body[layout^='layout-home'] .markdown-body .call-to-action:nth-of-type(2) {
+  --primary-color: #222;
+  --primary-color-lighter: #333;
+  --primary-color-darker: #000;
+}
+
+body[layout^='layout-home'] .page-logo {
+    width: 10vw;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main #web-component-devtools {
+    font-size: 3rem;
+    color: var(--primary-color);
+}
+
+main p {
+    font-size: 1.4rem;
+
+}
+
+body[layout^='layout-home'] .reasons {
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+}
+
+.reasons article {
+    margin-bottom: 5rem;
+}
+
+.reasons img {
+    box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 8px 0 rgb(0 0 0 / 12%);;
+}
+
+.download-options {
+    display: flex; 
+    justify-content: space-between;
+}
+
+.download-section {
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.download-section .badge {
+    height: 1.6rem;
+    padding: 1rem 0 0;
+}
+
+.download-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 8px 0 rgb(0 0 0 / 12%);
+    cursor: pointer;
+    padding: 0.2rem 1rem;
+    transition: 200ms ease-in-out;
+    color: var(--text-color) !important;
+    text-decoration: none !important;
+    border-radius: 4px;
+}
+
+.download-button:hover {
+    background: #0a907622;
+}
+
+.download-button span {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.download-button img {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.2rem 1rem 0.2rem 0;
+}
+
+@media screen and (min-width: 1024px) {
+  body[layout='layout-home-background'] .page-background {
+    top: -210px;
+    right: -463px;
+    transform: rotate(45deg);
+  }
+}
