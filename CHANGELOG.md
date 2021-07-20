@@ -1,3 +1,7 @@
+v 0.1.5
+
+- Fix element list hiding / displaying to not show children of hidden elements
+
 v 0.1.4
 
 - Bugfix: Fix element list parsing and ordering when mixing light and shadow DOM and list items
