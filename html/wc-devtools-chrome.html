@@ -30,6 +30,20 @@
                     flex-direction: column;
                 }
             }
+
+            .loading {
+                display: none;
+                animation: appear 1000ms;
+            }
+
+            @keyframes appear {
+                from {
+                    display: none;
+                }
+                to {
+                    display: block;
+                }
+            }
         </style>
         <script type="module" src="/lib/view/init.js"></script>
     </head>

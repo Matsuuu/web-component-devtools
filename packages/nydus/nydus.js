@@ -295,14 +295,27 @@ export class Nydus {
         nydusConnection.connection = connection;
 
         connection.onMessage.addListener(
+            /** @this { Nydus } */
             function finishHandshake(/** @type {any} */ message) {
+                if (message.type !== NYDUS_CONNECTION_HANDSHAKE) return;
+
                 this._handleConnectionHandshakeMessage(message, nydusConnection);
                 connection.onMessage.removeListener(finishHandshake);
                 if (onMessage) {
                     connection.onMessage.addListener(onMessage);
+                    connection.onDisconnect.addListener(() => {
+                        connection.onMessage.removeListener(onMessage);
+                    });
                 }
             }.bind(this),
         );
+    }
+
+    disconnectAll() {
+        const connections = this._getConnectionsFlat();
+        connections.forEach(conn => {
+            conn.connection.disconnect();
+        });
     }
 
     /**
@@ -384,6 +397,9 @@ export class Nydus {
 
                 if (onMessage) {
                     connection.onMessage.addListener(onMessage);
+                    connection.onDisconnect.addListener(() => {
+                        connection.onMessage.removeListener(onMessage);
+                    });
                 }
                 this._addConnectionOnDisconnectListeners(
                     connection,
@@ -403,8 +419,6 @@ export class Nydus {
      * @param {NydusConnection} nydusConnection
      */
     _handleConnectionHandshakeMessage(message, nydusConnection) {
-        if (message.type !== NYDUS_CONNECTION_HANDSHAKE) return;
-
         const tabId = message.tabId;
         nydusConnection.tabId = tabId;
         nydusConnection.ready = true;
