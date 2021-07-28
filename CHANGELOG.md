@@ -1,6 +1,8 @@
 v 0.1.6
 
 - Reduce unnecessary messaging on pages with devtools closed
+- Move fetch operations to background pages to reduce console clutter
+- Improve extesion context re-validation
 
 v 0.1.5
 
