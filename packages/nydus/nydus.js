@@ -361,7 +361,7 @@ export class Nydus {
                 return resolve(this.nydusTab ?? -1);
             }
             chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                const tabId = tabs.length < 1 ? chrome.devtools.inspectedWindow.tabId : tabs[0].id;
+                const tabId = tabs.length < 1 ? chrome?.devtools?.inspectedWindow?.tabId : tabs[0].id;
                 resolve(tabId ?? -1);
             });
         });

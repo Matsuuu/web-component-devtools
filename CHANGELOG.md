@@ -1,3 +1,7 @@
+v 0.1.6
+
+- Reduce unnecessary messaging on pages with devtools closed
+
 v 0.1.5
 
 - Fix element list hiding / displaying to not show children of hidden elements
