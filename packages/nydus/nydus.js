@@ -352,6 +352,9 @@ export class Nydus {
     _addConnectionOnDisconnectListeners(connection, connectionId, tabId) {
         connection.onDisconnect.addListener(() => {
             delete this.connections[tabId][connectionId];
+            if (Object.keys(this.connections[tabId]).length <= 0) {
+                delete this.connections[tabId];
+            }
         });
     }
 
