@@ -26,18 +26,23 @@
             }
 
             body[aria-loading] .loading-spinner {
-                display: block;
+                opacity: 1;
+                z-index: 999;
+                mouse-events: all;
             }
 
             .loading-spinner {
-                display: none;
+                opacity: 0;
+                mouse-events: none;
+                z-index: -999;
+
                 width: 100%;
                 height: 100%;
                 position: fixed;
                 top: 0;
                 left: 0;
                 background: rgba(255, 255, 255, 0.7);
-                z-index: 999;
+                transition: 500ms ease-in-out;
             }
 
             .loading-spinner svg {
