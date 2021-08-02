@@ -9,7 +9,7 @@
         "build": "rimraf dist && rollup -c rollup.config.js",
         "build:watch": "rimraf dist && rollup -c --watch rollup.config.js",
         "package": "npm run build && zip -j -r extension.zip dist/*",
-        "package-source-firefox": " zip --exclude=*node_modules* --exclude=*.git* --exclude=*docs* -r firefox-source.zip ."
+        "package-source-firefox": "zip --exclude=*node_modules* --exclude=*.git* --exclude=*docs* --exclude=*examples* -r firefox-source.zip ."
     },
     "devDependencies": {
         "@open-wc/building-rollup": "^1.10.0",
