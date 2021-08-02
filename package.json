@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "@custom-elements-manifest/analyzer": "^0.4.16",
+        "@custom-elements-manifest/analyzer": "^0.4.17",
         "lit": "*",
         "nydus": "file:packages/nydus"
     },

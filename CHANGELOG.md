@@ -1,10 +1,14 @@
 v 0.1.6
 
+- Integrate Custom Elements Manifest analyzer to devtools
 - Reduce unnecessary messaging on pages with devtools closed
 - Move fetch operations to background pages to reduce console clutter
-- Improve extesion context re-validation
+- Improve extension context re-validation
 - Custom context menu in devtools
 - Scroll to element option in context menu
+- Add error handling
+- Add error messaging
+- General bug fixes
 
 v 0.1.5
 
