@@ -1,3 +1,8 @@
+v 0.1.7
+
+- Fix bug with Windows machine Path parsing
+- Fix bug where devtools kept re-selecting element on refresh
+
 v 0.1.6
 
 - Integrate Custom Elements Manifest analyzer to devtools
