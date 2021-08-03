@@ -13,11 +13,11 @@
 
         <script type="module">
             import { html, render } from 'lit-html';
-            import '../lit-with-cem.js';
+            import '../lit-example.js';
 
             const title = 'Hello owc World!';
             render(
-                html` <lit-with-cem .title=${title}> some more light-dom </lit-with-cem> `,
+                html` <lit-example .title=${title}> some more light-dom </lit-example> `,
                 document.querySelector('#demo'),
             );
         </script>
