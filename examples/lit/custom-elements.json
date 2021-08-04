@@ -43,11 +43,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "styles",
-              "static": true
-            },
-            {
-              "kind": "field",
               "name": "properties",
               "static": true
             },
@@ -58,6 +53,11 @@
             {
               "kind": "method",
               "name": "render"
+            },
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true
             },
             {
               "kind": "field",
@@ -85,11 +85,11 @@
             },
             {
               "kind": "field",
-              "name": "status",
+              "name": "listItems",
               "type": {
-                "text": "'waiting' | 'ready'"
+                "text": "array"
               },
-              "default": "\"waiting\""
+              "default": "[\n            { id: 1, text: 'Hello' },\n            { id: 2, text: 'Hi' },\n            { id: 3, text: 'Bonjour' },\n        ]"
             }
           ],
           "events": [
@@ -121,12 +121,12 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/fancy-title.js",
+      "path": "src/list-item.js",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "FancyTitle",
+          "name": "ListItem",
           "members": [
             {
               "kind": "field",
@@ -136,88 +136,19 @@
             {
               "kind": "method",
               "name": "render"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit-element"
-          },
-          "tagName": "fancy-title",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FancyTitle",
-          "declaration": {
-            "name": "FancyTitle",
-            "module": "src/fancy-title.js"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "fancy-title",
-          "declaration": {
-            "name": "FancyTitle",
-            "module": "src/fancy-title.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/list-icon.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ListIcon",
-          "members": [
+            },
             {
-              "kind": "method",
-              "name": "render"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit-element"
-          },
-          "tagName": "list-icon",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ListIcon",
-          "declaration": {
-            "name": "ListIcon",
-            "module": "src/list-icon.js"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "list-icon",
-          "declaration": {
-            "name": "ListIcon",
-            "module": "src/list-icon.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/list-item.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ListItem",
-          "members": [
+              "kind": "field",
+              "name": "styles",
+              "static": true
+            },
             {
-              "kind": "method",
-              "name": "render"
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
             }
           ],
           "superclass": {

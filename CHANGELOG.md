@@ -1,3 +1,11 @@
+v 0.1.8
+
+- Reduce unnecessary querying of DOM
+- Reduce unnecessary messaging between layers
+- Make the extension more error resistant
+- Reduce clutter in the developer's log
+- General bug fixes
+
 v 0.1.7
 
 - Fix bug with Windows machine Path parsing
