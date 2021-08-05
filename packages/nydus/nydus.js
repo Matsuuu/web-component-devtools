@@ -115,6 +115,21 @@ export class Nydus {
         });
     }
 
+    async _reConnectDisconnected() {
+        await this._determineTabIds();
+        const connectionsFlat = this._getConnectionsFlat();
+        this.connectionOptions.forEach(connectionOpts => {
+            if (!connectionsFlat.find(con => con.id === connectionOpts.id).ready) {
+                this.addConnection(
+                    connectionOpts.id,
+                    !connectionOpts.host,
+                    connectionOpts.onMessage,
+                    connectionOpts.isBackground,
+                );
+            }
+        });
+    }
+
     /**
      *
      * Communication is important to keep tab-specific so that if the user has
@@ -213,7 +228,7 @@ export class Nydus {
     async message(recipient, message, _retryCount = 0) {
         await this.whenReady;
 
-        const tabId = message.tabId ?? await this._tryGetCurrentTab();
+        const tabId = message.tabId ?? (await this._tryGetCurrentTab());
         let connPool = this.connections[tabId] ?? this.connections[-1];
         if (!connPool) {
             if (_retryCount >= 5) {
@@ -498,18 +513,11 @@ export class Nydus {
     _requirementsFulfilled() {
         // Check that all required connections are built and ready
         const connectionsFlat = this._getConnectionsFlat();
-        return (
-            connectionsFlat.length === this.connectionOptions.length &&
-            connectionsFlat.every(conn => conn.ready) &&
-            this._allConnectionsAreCreated(connectionsFlat)
-        );
-    }
 
-    _allConnectionsAreCreated(connectionsFlat) {
-        const connMap = {};
-        connectionsFlat.forEach(conn => (connMap[conn.id] = conn));
-        return this.connectionOptions.every(connOpt => {
-            return connMap[connOpt.id] != null;
+        const hasOneOfEachRequiredConnection = this.connectionOptions.every(opt => {
+            const connectionsToOpt = connectionsFlat.filter(con => con.id === opt.id);
+            return connectionsToOpt.some(con => con.ready);
         });
+        return hasOneOfEachRequiredConnection;
     }
 }
