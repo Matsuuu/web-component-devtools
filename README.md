@@ -3,8 +3,6 @@
 Web Component DevTools is aimed at all developers working with Web Components. 
 The tooling provided creates a new Chrome Devtools panel, which allows a quick look at the custom elements on the current page, and enables modification of attributes and properties of said components.
 
-Web Component DevTools works best when combined with the use of a [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest). To enable analysis on your project, use a analyzer like the [Open-WC Custom Elements Analyzer](https://github.com/open-wc/custom-elements-manifest/tree/master/packages/analyzer)
-
 ## Why?
 
 In the process of developing Web Components, wether it be with a library like [Lit](https://github.com/lit/lit/), or without any kind of library,
@@ -31,32 +29,9 @@ Web Component DevTools provides advanced features to the developer, straight fro
 - Listing custom elements on the page, and accessible iframes inside the page
 - Filtering custom elements on the list
 - Inspecting and modifying the attributes of custom elements
-- *Inspecting and modifying the properties of custom elements
-- *Observing dispatched events
-- *Calling functions of the custom element
-
-
--* Feature is limited to [supported libraries ](#supported-libraries) and projects with a [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest).
-
-**_For the best development experience it is recommended to integrate a Custom Elements analyzer to the project, so
-that the elements get analyzed on build-time, generating a up-to-date manifest for the devtools to use._**
-
-
-An example development setup of a [Modern Web Dev Server](https://modern-web.dev/docs/dev-server/overview/) paired with a CEM analyzer would look like this:
-
-  ```json
-  {
-   "scripts": {
-      "start": "concurrently \"wds\" \"cem analyze --watch\""
-   },
-   "devDependencies": {
-      "@custom-elements-manifest/analyzer": "^0.4.11",
-      "@web/dev-server": "^0.1.18",
-      "concurrently": "^6.2.0"
-    }
-  }
-  ```
-
+- Inspecting and modifying the properties of custom elements
+- Observing dispatched events
+- Calling functions of the custom element
 
 ## Download
 
