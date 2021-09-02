@@ -48,6 +48,14 @@
             },
             {
               "kind": "method",
+              "name": "_actUpon"
+            },
+            {
+              "kind": "method",
+              "name": "callSomething"
+            },
+            {
+              "kind": "method",
               "name": "doMethod",
               "parameters": [
                 {

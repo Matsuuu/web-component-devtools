@@ -29,6 +29,14 @@ export class LitExample extends LitElement {
         ];
     }
 
+    _actUpon() {
+
+    }
+
+    callSomething() {
+
+    }
+
     /**
      * @param { string } stringParam
      * @param { boolean } boolParam
