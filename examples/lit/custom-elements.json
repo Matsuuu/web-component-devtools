@@ -96,6 +96,10 @@
             },
             {
               "kind": "method",
+              "name": "firstUpdated"
+            },
+            {
+              "kind": "method",
               "name": "render"
             },
             {
@@ -134,6 +138,18 @@
                 "text": "array"
               },
               "default": "[\n            { id: 1, text: 'Hello' },\n            { id: 2, text: 'Hi' },\n            { id: 3, text: 'Bonjour' },\n        ]"
+            },
+            {
+              "kind": "field",
+              "name": "funcProp"
+            },
+            {
+              "kind": "field",
+              "name": "headerElem",
+              "type": {
+                "text": "null"
+              },
+              "default": "null"
             }
           ],
           "events": [

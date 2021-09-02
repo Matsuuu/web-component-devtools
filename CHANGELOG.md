@@ -1,3 +1,17 @@
+v 0.1.10
+
+- Re-implement checking for local Custom Elements manifest files
+    - Used data is a combination of a local CEM and the one analyzed by WCDT
+- Update cache handling when parsing properties, increasing parsing speed
+- Fix recognizing non-editable fields, like element references and functions
+- Sort items in the inspector window
+- Show properties as is instead of the modified version
+- Implement Roboto on all platforms
+
+v 0.1.9
+
+- Implement Custom Elements analyzer inside devtools
+
 v 0.1.8
 
 - Reduce unnecessary querying of DOM

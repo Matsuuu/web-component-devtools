@@ -10,6 +10,8 @@ export class LitExample extends LitElement {
             counter: { type: Number, reflect: true },
             user: { type: Object },
             listItems: { type: Array },
+            headerElem: { type: Object },
+            funcProp: { type: Object }
         };
     }
 
@@ -27,6 +29,8 @@ export class LitExample extends LitElement {
             { id: 2, text: 'Hi' },
             { id: 3, text: 'Bonjour' },
         ];
+        this.funcProp = this._actUpon;
+        this.headerElem = null;
     }
 
     _actUpon() {
@@ -62,6 +66,11 @@ export class LitExample extends LitElement {
     __increment() {
         this.counter += 1;
         this.dispatchEvent(new CustomEvent('counter-increment', { detail: { count: this.counter } }));
+    }
+
+    firstUpdated() {
+
+        this.headerElem = this.shadowRoot.querySelector("h2");
     }
 
     render() {
