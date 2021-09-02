@@ -48,6 +48,42 @@
             },
             {
               "kind": "method",
+              "name": "doMethod",
+              "parameters": [
+                {
+                  "name": "stringParam",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "boolParam",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "numberParam",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "objectParam",
+                  "type": {
+                    "text": "MyClass"
+                  }
+                },
+                {
+                  "name": "anyParam",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
               "name": "__increment"
             },
             {
