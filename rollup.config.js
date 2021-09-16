@@ -4,8 +4,15 @@ import copy from 'rollup-plugin-copy';
 
 export default [
     {
-        input: 'html/wc-devtools.html',
-        output: { dir: 'dist' },
+        external: ["analyzer", "nydus"],
+        input: 'html/*.html',
+        output: {
+            dir: 'dist',
+            paths: {
+                analyzer: './analyzer.js',
+                nydus: "./nydus.js"
+            }
+        },
         plugins: [
             html({
                 minify: false,
@@ -16,9 +23,43 @@ export default [
                     { src: 'manifest.json', dest: 'dist' },
                 ],
             }),
+            resolve()
+        ],
+    },
+    {
+        external: ["analyzer"],
+        input: {
+            content_script: './lib/content/content_script.js',
+            nydus: './packages/nydus/nydus.js',
+            background: './lib/background/background.js',
+            "crawler-constants": './lib/crawler/crawler-constants.js',
+            'crawler-inject': './lib/crawler/crawler-inject.js',
+            'spotlight-border': './lib/elements/spotlight-border.js',
+            'content-messaging': './lib/content/content-messaging.js',
+        },
+        output: {
+            dir: 'dist',
+            paths: {
+                analyzer: './analyzer.js'
+            }
+        },
+        plugins: [
             resolve(),
         ],
     },
+    {
+        input: {
+            analyzer: './packages/analyzer/index.js',
+        },
+        output: { dir: 'dist' },
+        plugins: [
+            resolve(),
+        ],
+    }
+];
+
+/*
+    *
     {
         input: 'html/wc-devtools-init.html',
         output: { dir: 'dist' },
@@ -29,22 +70,4 @@ export default [
         output: { dir: 'dist' },
         plugins: [resolve(), html({ minify: false })],
     },
-    {
-        input: {
-            content_script: './lib/content/content_script.js',
-            nydus: './packages/nydus/nydus.js',
-            analyzer: './packages/analyzer/index.js',
-            background: './lib/background/background.js',
-            "crawler-constants": './lib/crawler/crawler-constants.js',
-            'crawler-inject': './lib/crawler/crawler-inject.js',
-            'spotlight-border': './lib/elements/spotlight-border.js',
-            'content-messaging': './lib/content/content-messaging.js',
-        },
-        output: { dir: 'dist' },
-        plugins: [
-            resolve({
-                dedupe: ['nydus', 'analyzer'],
-            }),
-        ],
-    },
-];
+    * */
