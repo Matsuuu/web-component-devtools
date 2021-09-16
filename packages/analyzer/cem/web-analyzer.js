@@ -1,5 +1,4 @@
 import { ts, create, litPlugin, fastPlugin } from '@custom-elements-manifest/analyzer/browser/index';
-import { ELEMENT_TYPES } from '../crawler/element-types';
 import { findModuleByCustomElementTagName, isCustomElementExport } from './custom-elements-helpers';
 import { declarationToManifestDataEntry, mergeManifestDatas } from './custom-elements-manifest-parser';
 import { getLocalCEM } from './web-fetcher';
@@ -200,23 +199,6 @@ async function fetchExportModule(exports, tagName, origin, manifest) {
     return [];
 }
 
-/**
- * @param {string} parentModule
- */
-async function fetchParentModule(parentModule) {
-    /*if (parentModule) {
-        const alreadyAnalyzed = getAnalyzed(parentModule);
-        if (alreadyAnalyzed) return alreadyAnalyzed;
-
-        const scriptSource = await fetchSource(parentModule);
-        return analyzeScript(parentModule, scriptSource);
-    }*/
-    return [];
-}
-
-function getAnalyzed(scriptSource) {
-    return analyzedScripts[scriptSource];
-}
 
 /**
  * @param {string} moduleUrl
@@ -349,10 +331,11 @@ export async function createManifest(source, neededPlugins, sourcePath) {
     }
 }
 function getNeededPlugins(elementData) {
-    switch (elementData.typeInDevTools) {
-        case ELEMENT_TYPES.LIT:
+    // Get the id's from /lib/crawler/element-types.js
+    switch (elementData.typeInDevTools.id) {
+        case 1:
             return [...litPlugin()];
-        case ELEMENT_TYPES.FAST:
+        case 2:
             return [...fastPlugin()];
         default:
             return [];
