@@ -48,7 +48,55 @@
             },
             {
               "kind": "method",
+              "name": "_actUpon"
+            },
+            {
+              "kind": "method",
+              "name": "callSomething"
+            },
+            {
+              "kind": "method",
+              "name": "doMethod",
+              "parameters": [
+                {
+                  "name": "stringParam",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "boolParam",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "numberParam",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "objectParam",
+                  "type": {
+                    "text": "MyClass"
+                  }
+                },
+                {
+                  "name": "anyParam",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
               "name": "__increment"
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated"
             },
             {
               "kind": "method",
@@ -90,6 +138,18 @@
                 "text": "array"
               },
               "default": "[\n            { id: 1, text: 'Hello' },\n            { id: 2, text: 'Hi' },\n            { id: 3, text: 'Bonjour' },\n        ]"
+            },
+            {
+              "kind": "field",
+              "name": "funcProp"
+            },
+            {
+              "kind": "field",
+              "name": "headerElem",
+              "type": {
+                "text": "null"
+              },
+              "default": "null"
             }
           ],
           "events": [
