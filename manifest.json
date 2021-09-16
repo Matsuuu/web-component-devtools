@@ -5,27 +5,19 @@
     "minimum_chrome_version": "10.0",
     "description": "Developer tooling for Web Components and Web Component Libraries",
     "author": "Matsuuu <huhta.matias@gmail.com>",
-    "devtools_page": "wc-devtools-chrome-init.html",
+    "devtools_page": "wc-devtools-init.html",
     "background": {
-        "scripts": [
-            "background.js"
-        ]
+        "page": "wc-devtools-background.html"
     },
     "content_scripts": [
         {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "content_script.js"
-            ],
+            "matches": ["<all_urls>"],
+            "js": ["content_script.js"],
             "run_at": "document_idle"
         }
     ],
-    "permissions": [
-        "tabs",
-        "contextMenus"
-    ],
+    "web_accessible_resources": ["*.js"],
+    "permissions": ["tabs", "contextMenus"],
     "icons": {
         "16": "logo-16.png",
         "48": "logo-48.png",

@@ -4,7 +4,7 @@ import copy from "rollup-plugin-copy";
 
 export default [
     {
-        input: "html/wc-devtools-chrome.html",
+        input: "html/wc-devtools.html",
         output: { dir: "dist" },
         plugins: [
             html({
@@ -20,7 +20,12 @@ export default [
         ],
     },
     {
-        input: "html/wc-devtools-chrome-init.html",
+        input: "html/wc-devtools-init.html",
+        output: { dir: "dist" },
+        plugins: [resolve(), html({ minify: false })],
+    },
+    {
+        input: "html/wc-devtools-background.html",
         output: { dir: "dist" },
         plugins: [resolve(), html({ minify: false })],
     },
@@ -30,6 +35,10 @@ export default [
             nydus: "./packages/nydus/nydus.js",
             analyzer: "./packages/analyzer/index.js",
             background: "./lib/background/background.js",
+            crawler_constants: "./lib/crawler/crawler-constants.js",
+            crawler_inject: "./lib/crawler/crawler-inject.js",
+            spotlight_border: "./lib/elements/spotlight-border.js",
+            content_messaging: "./lib/content/content-messaging.js"
         },
         output: { dir: "dist" },
         plugins: [resolve({
