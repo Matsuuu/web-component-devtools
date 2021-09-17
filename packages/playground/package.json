@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "wds --node-resolve --app-index demo/index.html --open"
+    "start": "wds --node-resolve --app-index demo/index.html --watch --open"
   },
   "keywords": [],
   "author": "",

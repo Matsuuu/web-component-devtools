@@ -2,20 +2,31 @@
 <html>
     <head>
         <script type="module" src="../playground.js"></script>
+        <style>
+            playground-file-editor {
+                box-shadow: 1px 1px 0 0;
+            }
+        </style>
     </head>
     <body>
-        <playground-ide editable-file-system line-numbers resizable>
-            <script type="sample/html" filename="index.html">
-                <!doctype html>
-                <body>
-                  Hello
-                  <script type="module" src="./index.js">&lt;/script>
-                </body>
+        <playground-project id="project1">
+            <script type="sample/ts" filename="index.ts">
+                window.addEventListener('DOMContentLoaded', () => {
+                  const world = document.createTextNode(' World!');
+                  document.body.appendChild(world);
+                });
             </script>
 
-            <script type="sample/ts" filename="index.ts">
-                document.body.appendChild(document.createTextNode("World!"))
+            <script type="sample/html" filename="index.html">
+                <!doctype html>
+                <head>
+                  <script type="module" src="./index.js">&lt;/script>
+                </head>
+                <body>Hello</body>
             </script>
-        </playground-ide>
+        </playground-project>
+        <playground-file-editor project="project1">
+            document.body.appendChild(document.createTextNode("World!"))
+        </playground-file-editor>
     </body>
 </html>
