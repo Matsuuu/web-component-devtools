@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module" src="../playground.js"></script>
+    </head>
+    <body>
+        <playground-ide editable-file-system line-numbers resizable>
+            <script type="sample/html" filename="index.html">
+                <!doctype html>
+                <body>
+                  Hello
+                  <script type="module" src="./index.js">&lt;/script>
+                </body>
+            </script>
+
+            <script type="sample/ts" filename="index.ts">
+                document.body.appendChild(document.createTextNode("World!"))
+            </script>
+        </playground-ide>
+    </body>
+</html>
