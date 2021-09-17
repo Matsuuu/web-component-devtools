@@ -57,17 +57,3 @@ export default [
         ],
     }
 ];
-
-/*
-    *
-    {
-        input: 'html/wc-devtools-init.html',
-        output: { dir: 'dist' },
-        plugins: [resolve(), html({ minify: false })],
-    },
-    {
-        input: 'html/wc-devtools-background.html',
-        output: { dir: 'dist' },
-        plugins: [resolve(), html({ minify: false })],
-    },
-    * */
