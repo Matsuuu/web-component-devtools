@@ -332,7 +332,7 @@ export async function createManifest(source, neededPlugins, sourcePath) {
 }
 function getNeededPlugins(elementData) {
     // Get the id's from /lib/crawler/element-types.js
-    switch (elementData.typeInDevTools.id) {
+    switch (elementData?.typeInDevTools?.id) {
         case 1:
             return [...litPlugin()];
         case 2:
