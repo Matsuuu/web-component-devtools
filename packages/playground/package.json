@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "playground-elements": "^0.13.0"
+    "lit": "^2.0.0",
+    "playground-elements": "^0.14.1"
   },
   "devDependencies": {
     "@web/dev-server": "^0.1.22"

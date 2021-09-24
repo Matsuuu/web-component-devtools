@@ -2,31 +2,20 @@
 <html>
     <head>
         <script type="module" src="../playground.js"></script>
-        <style>
-            playground-file-editor {
-                box-shadow: 1px 1px 0 0;
-            }
-        </style>
     </head>
     <body>
-        <playground-project id="project1">
-            <script type="sample/ts" filename="index.ts">
-                window.addEventListener('DOMContentLoaded', () => {
-                  const world = document.createTextNode(' World!');
-                  document.body.appendChild(world);
-                });
-            </script>
+        <devtools-console></devtools-console>
+        <script type="module" src="../lib/console.js"></script>
 
-            <script type="sample/html" filename="index.html">
-                <!doctype html>
-                <head>
-                  <script type="module" src="./index.js">&lt;/script>
-                </head>
-                <body>Hello</body>
-            </script>
-        </playground-project>
-        <playground-file-editor project="project1">
-            document.body.appendChild(document.createTextNode("World!"))
-        </playground-file-editor>
+        <script>
+            const devtoolsConsole = document.querySelector('devtools-console');
+            devtoolsConsole.addEventListener('devtools-console-submit', e => {
+                console.log(e);
+                const context = devtoolsConsole; // This will be set to the currently selected object
+                const code = e.detail.code;
+                const newFunc = new Function(code);
+                newFunc.call(context);
+            });
+        </script>
     </body>
 </html>
