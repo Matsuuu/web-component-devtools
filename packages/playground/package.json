@@ -2,7 +2,7 @@
   "name": "playground",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "playground.js",
   "scripts": {
     "start": "wds --node-resolve --app-index demo/index.html --watch --open"
   },

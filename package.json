@@ -3,7 +3,8 @@
         "@custom-elements-manifest/analyzer": "^0.5.3",
         "analyzer": "file:packages/analyzer",
         "lit": "*",
-        "nydus": "file:packages/nydus"
+        "nydus": "file:packages/nydus",
+        "playground": "file:packages/playground"
     },
     "scripts": {
         "start": "npm run build:watch",
