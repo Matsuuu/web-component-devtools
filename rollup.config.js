@@ -34,7 +34,7 @@ export default [
             background: './lib/background/background.js',
             "crawler-constants": './lib/crawler/crawler-constants.js',
             'crawler-inject': './lib/crawler/crawler-inject.js',
-            'spotlight-border': './lib/elements/spotlight-border.js',
+            'spotlight-border': './lib/crawler/spotlight-border.js',
             'content-messaging': './lib/content/content-messaging.js',
         },
         output: {
