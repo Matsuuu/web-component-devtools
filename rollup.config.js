@@ -29,13 +29,14 @@ export default [
     {
         external: ["analyzer"],
         input: {
-            content_script: './lib/content/content_script.js',
-            nydus: './packages/nydus/nydus.js',
-            background: './lib/background/background.js',
+            'content_script': './lib/content/content_script.js',
+            'nydus': './packages/nydus/nydus.js',
+            'background': './lib/background/background.js',
             "crawler-constants": './lib/crawler/crawler-constants.js',
             'crawler-inject': './lib/crawler/crawler-inject.js',
             'spotlight-border': './lib/crawler/spotlight-border.js',
             'content-messaging': './lib/content/content-messaging.js',
+            'playground': './packages/playground/playground.js'
         },
         output: {
             dir: 'dist',
