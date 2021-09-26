@@ -11,7 +11,7 @@ export class LitExample extends LitElement {
             user: { type: Object },
             listItems: { type: Array },
             headerElem: { type: Object },
-            funcProp: { type: Object }
+            funcProp: { type: Object },
         };
     }
 
@@ -31,15 +31,16 @@ export class LitExample extends LitElement {
         ];
         this.funcProp = this._actUpon;
         this.headerElem = null;
+
+        /**
+         * @type { "Foo" | "Bar" | "Baz" }
+         * */
+        this.unionField = 'Foo';
     }
 
-    _actUpon() {
+    _actUpon() { }
 
-    }
-
-    callSomething() {
-
-    }
+    callSomething() { }
 
     /**
      * @param { string } stringParam
@@ -54,7 +55,7 @@ export class LitExample extends LitElement {
             boolParam,
             numberParam,
             objectParam,
-            anyParam
+            anyParam,
         });
         console.log(typeof stringParam);
         console.log(typeof boolParam);
@@ -69,8 +70,7 @@ export class LitExample extends LitElement {
     }
 
     firstUpdated() {
-
-        this.headerElem = this.shadowRoot.querySelector("h2");
+        this.headerElem = this.shadowRoot.querySelector('h2');
     }
 
     render() {

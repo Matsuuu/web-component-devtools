@@ -148,7 +148,7 @@ export class Nydus {
     _determineTabIds() {
         return new Promise(resolve => {
             if (chrome.tabs) {
-                chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+                chrome?.runtime?.onMessage.addListener(function(request, sender, sendResponse) {
                     if (request.type === NYDUS_TAB_PING) {
                         const senderTabId = sender.tab?.id;
                         sendResponse({ type: NYDUS_TAB_PING, tabId: senderTabId });
@@ -159,7 +159,7 @@ export class Nydus {
                     resolve();
                 });
             } else {
-                chrome.runtime.sendMessage({ type: NYDUS_TAB_PING }, response => {
+                chrome?.runtime?.sendMessage({ type: NYDUS_TAB_PING }, response => {
                     let tabId = response.tabId;
                     if (!tabId) {
                         tabId = chrome?.devtools?.inspectedWindow?.tabId;

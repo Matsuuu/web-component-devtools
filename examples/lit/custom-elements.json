@@ -150,6 +150,14 @@
                 "text": "null"
               },
               "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "unionField",
+              "type": {
+                "text": "\"Foo\" | \"Bar\" | \"Baz\""
+              },
+              "default": "'Foo'"
             }
           ],
           "events": [
