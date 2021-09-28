@@ -1,6 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import 'playground-elements/playground-code-editor.js';
 import gruvboxTheme from 'playground-elements/themes/gruvbox-dark.css.js';
+import ttcnTheme from 'playground-elements/themes/ttcn.css.js';
 import { isConsoleClear, isConsoleSubmit } from './util';
 
 export class DevToolsConsole extends LitElement {
@@ -36,8 +37,18 @@ export class DevToolsConsole extends LitElement {
                 histories.forEach((hist, i) => {
                     const historyCodes = this.shadowRoot.querySelectorAll('.history-code-editor');
                     const historyResults = this.shadowRoot.querySelectorAll('.history-result-editor');
+
+                    let returnVal = hist.returnValue;
+                    if (hist.error && hist.errorID === '_ERR_RUNTIME') {
+                        returnVal = hist.error;
+                    }
+
+                    if (typeof returnVal === 'object') {
+                        returnVal = JSON.stringify(returnVal, null, 2);
+                    }
+
                     historyCodes[i].value = hist.code;
-                    historyResults[i].value = hist.returnValue;
+                    historyResults[i].value = returnVal;
                 });
             });
         });
@@ -91,10 +102,6 @@ export class DevToolsConsole extends LitElement {
 
     renderHistoryEntries() {
         return this.commandHistory.map(historyEntry => {
-            let resultType = 'js';
-            if (historyEntry.error && historyEntry.errorID === '_ERR_IS_NODE') {
-                resultType = 'html';
-            }
             return html`
                 <span>
                     ${caret}
@@ -106,23 +113,46 @@ export class DevToolsConsole extends LitElement {
                     >
                     </playground-code-editor>
                 </span>
-                <span>
-                    ${resultCaret}
-                    <playground-code-editor
-                        class="history-result-editor ${this.theme === 'light' ? '' : 'playground-theme-gruvbox-dark'}"
-                        type="${resultType}"
-                        value="${historyEntry.returnValue}"
-                        readonly
-                    >
-                    </playground-code-editor>
-                </span>
+                ${this.renderHistoryReturnValue(historyEntry)}
             `;
         });
+    }
+
+    renderHistoryReturnValue(historyEntry) {
+        let resultType = 'js';
+        if (historyEntry.error && historyEntry.errorID === '_ERR_IS_NODE') {
+            resultType = 'html';
+        }
+
+        let themeClass = this.theme === 'light' ? '' : 'playground-theme-gruvbox-dark';
+        let returnVal = historyEntry.returnValue;
+        if (historyEntry.error && historyEntry.errorID === '_ERR_RUNTIME') {
+            returnVal = historyEntry.error;
+            themeClass = 'playground-theme-ttcn';
+        }
+
+        if (typeof returnVal === 'object') {
+            returnVal = JSON.stringify(returnVal, null, 2);
+        }
+
+        return html`
+            <span>
+                ${resultCaret}
+                <playground-code-editor
+                    class="history-result-editor ${themeClass}"
+                    type="${resultType}"
+                    value="${returnVal}"
+                    readonly
+                >
+                </playground-code-editor>
+            </span>
+        `;
     }
 
     static get styles() {
         return [
             gruvboxTheme,
+            ttcnTheme,
             css`
                 :host {
                     display: flex;
