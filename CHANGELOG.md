@@ -1,3 +1,17 @@
+v 0.1.11
+
+- A new panel: "Source".
+    - Used for observing the source code of custom elements
+- A new panel: "Console".
+    - Used to interact with the inspected element
+    - Uses the inspected object as it's context, allowing for easy function calls and property binding
+- Add preliminary Angular support
+- Updated the UI
+- Improved data flow and developer experience
+- Implemented Dark Mode
+- Optimized packaging
+- General bugfixes
+
 v 0.1.10
 
 - Re-implement checking for local Custom Elements manifest files
