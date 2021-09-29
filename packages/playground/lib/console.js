@@ -23,13 +23,14 @@ export class DevToolsConsole extends LitElement {
     }
 
     firstUpdated() {
-        this.editor = this.shadowRoot.querySelector('playground-code-editor');
         window.requestAnimationFrame(() => {
             this.focusEditor();
         });
     }
 
     updated() {
+        this.editor = this.shadowRoot.querySelector('#main-editor');
+
         // Hack until the value patch lands on playgrounds
         window.requestAnimationFrame(() => {
             window.requestAnimationFrame(() => {
@@ -38,20 +39,24 @@ export class DevToolsConsole extends LitElement {
                     const historyCodes = this.shadowRoot.querySelectorAll('.history-code-editor');
                     const historyResults = this.shadowRoot.querySelectorAll('.history-result-editor');
 
-                    let returnVal = hist.returnValue;
-                    if (hist.error && hist.errorID === '_ERR_RUNTIME') {
-                        returnVal = hist.error;
-                    }
-
-                    if (typeof returnVal === 'object') {
-                        returnVal = JSON.stringify(returnVal, null, 2);
-                    }
-
+                    debugger;
                     historyCodes[i].value = hist.code;
-                    historyResults[i].value = returnVal;
+                    historyResults[i].value = this.getHistoryResultValue(hist);
                 });
             });
         });
+    }
+
+    getHistoryResultValue(historyResult) {
+        let returnVal = historyResult.returnValue;
+        if (historyResult.error && historyResult.errorID === '_ERR_RUNTIME') {
+            returnVal = historyResult.error;
+        }
+
+        if (typeof returnVal === 'object') {
+            returnVal = JSON.stringify(returnVal, null, 2);
+        }
+        return returnVal ? returnVal.toString() : returnVal;
     }
 
     focusEditor() {
@@ -90,6 +95,7 @@ export class DevToolsConsole extends LitElement {
             <span>
                 ${caret}
                 <playground-code-editor
+                    id="main-editor"
                     class="${this.theme === 'light' ? '' : 'playground-theme-gruvbox-dark'}"
                     type="js"
                     @keydown=${this.onKeyDown}
@@ -125,15 +131,7 @@ export class DevToolsConsole extends LitElement {
         }
 
         let themeClass = this.theme === 'light' ? '' : 'playground-theme-gruvbox-dark';
-        let returnVal = historyEntry.returnValue;
-        if (historyEntry.error && historyEntry.errorID === '_ERR_RUNTIME') {
-            returnVal = historyEntry.error;
-            themeClass = 'playground-theme-ttcn';
-        }
-
-        if (typeof returnVal === 'object') {
-            returnVal = JSON.stringify(returnVal, null, 2);
-        }
+        const returnVal = this.getHistoryResultValue(historyEntry);
 
         return html`
             <span>

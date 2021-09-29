@@ -1,6 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import 'playground-elements/playground-code-editor.js';
 import gruvboxTheme from 'playground-elements/themes/gruvbox-dark.css.js';
+import 'js-beautify/js/lib/beautify.js';
 
 export class DevToolsSourceViewer extends LitElement {
     static get properties() {
@@ -8,7 +9,7 @@ export class DevToolsSourceViewer extends LitElement {
             editor: { type: Object },
             value: { type: String },
             theme: { type: String },
-            fontsize: { type: Number }
+            fontsize: { type: Number },
         };
     }
 
@@ -24,16 +25,13 @@ export class DevToolsSourceViewer extends LitElement {
      * @param {import('lit').PropertyValues} _changedProperties
      */
     updated(_changedProperties) {
+        this.editor = this.shadowRoot.querySelector('playground-code-editor');
         if (_changedProperties.has('fontsize')) {
             this.style.setProperty('--font-size', this.fontsize + 'px');
         }
         if (_changedProperties.has('value')) {
             this.editor.value = this.value;
         }
-    }
-
-    firstUpdated() {
-        this.editor = this.shadowRoot.querySelector('playground-code-editor');
     }
 
     fontSizeUp() {
@@ -51,6 +49,12 @@ export class DevToolsSourceViewer extends LitElement {
         </div>`;
     }
 
+    format() {
+        // Imported as a global
+        // @ts-ignore
+        this.value = js_beautify(this.value);
+    }
+
     render() {
         return html`
             ${this.renderSizeOptions()}
@@ -61,6 +65,7 @@ export class DevToolsSourceViewer extends LitElement {
                 type="js"
             >
             </playground-code-editor>
+            <button @click=${() => this.format()}>Format</button>
         `;
     }
 

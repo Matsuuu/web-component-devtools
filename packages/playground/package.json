@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "js-beautify": "^1.14.0",
     "lit": "^2.0.0",
     "playground-elements": "^0.14.1"
   },
