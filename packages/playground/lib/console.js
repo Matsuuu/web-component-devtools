@@ -1,6 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import 'playground-elements/playground-code-editor.js';
 import gruvboxTheme from 'playground-elements/themes/gruvbox-dark.css.js';
+import materialTheme from 'playground-elements/themes/material-darker.css.js';
 import ttcnTheme from 'playground-elements/themes/ttcn.css.js';
 import { isConsoleClear, isConsoleSubmit } from './util';
 
@@ -56,7 +57,7 @@ export class DevToolsConsole extends LitElement {
         if (typeof returnVal === 'object') {
             returnVal = JSON.stringify(returnVal, null, 2);
         }
-        return returnVal ? returnVal.toString() : returnVal;
+        return returnVal ? returnVal.toString() : "undefined";
     }
 
     focusEditor() {
@@ -102,7 +103,7 @@ export class DevToolsConsole extends LitElement {
                 >
                 </playground-code-editor>
             </span>
-            ${this.commandHistory.length <= 0 ? html`<p class="subtitle">Press Ctrl + Enter to submit</p>` : ''}
+            ${this.commandHistory.length <= 0 ? html`<p class="subtitle">Press Ctrl + Enter to submit, Ctrl + L to clear the console</p>` : ''}
         `;
     }
 
@@ -131,6 +132,9 @@ export class DevToolsConsole extends LitElement {
         }
 
         let themeClass = this.theme === 'light' ? '' : 'playground-theme-gruvbox-dark';
+        if (this.theme === "dark" && historyEntry.errorID === "_ERR_RUNTIME") {
+            themeClass = "playground-theme-material-darker";
+        }
         const returnVal = this.getHistoryResultValue(historyEntry);
 
         return html`
@@ -151,6 +155,7 @@ export class DevToolsConsole extends LitElement {
         return [
             gruvboxTheme,
             ttcnTheme,
+            materialTheme,
             css`
                 :host {
                     display: flex;
