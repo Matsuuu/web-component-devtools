@@ -32,6 +32,8 @@ Web Component DevTools provides advanced features to the developer, straight fro
 - Inspecting and modifying the properties of custom elements
 - Observing dispatched events
 - Calling functions of the custom element
+- View the source code of web components on page
+- Interact directly with web components through the console
 
 ## Download
 
