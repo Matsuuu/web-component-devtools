@@ -181,6 +181,7 @@ export class DevToolsConsole extends LitElement {
                 .subtitle {
                     margin: 0 0 0 2rem;
                     opacity: 0.6;
+                    color: var(--paragraph-color);
                 }
 
                 svg {

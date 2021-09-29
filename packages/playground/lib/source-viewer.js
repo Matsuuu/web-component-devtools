@@ -1,4 +1,4 @@
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { css, html, LitElement } from 'lit';
 import 'playground-elements/playground-code-editor.js';
 import gruvboxTheme from 'playground-elements/themes/gruvbox-dark.css.js';
 
@@ -24,10 +24,10 @@ export class DevToolsSourceViewer extends LitElement {
      * @param {import('lit').PropertyValues} _changedProperties
      */
     updated(_changedProperties) {
-        if (_changedProperties.has("fontsize")) {
-            this.style.setProperty("--font-size", this.fontsize + "px");
+        if (_changedProperties.has('fontsize')) {
+            this.style.setProperty('--font-size', this.fontsize + 'px');
         }
-        if (_changedProperties.has("value")) {
+        if (_changedProperties.has('value')) {
             this.editor.value = this.value;
         }
     }
