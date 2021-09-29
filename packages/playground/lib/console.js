@@ -3,7 +3,7 @@ import 'playground-elements/playground-code-editor.js';
 import gruvboxTheme from 'playground-elements/themes/gruvbox-dark.css.js';
 import materialTheme from 'playground-elements/themes/material-darker.css.js';
 import ttcnTheme from 'playground-elements/themes/ttcn.css.js';
-import { isConsoleClear, isConsoleSubmit } from './util';
+import { isArrowUpOrDown, isConsoleClear, isConsoleSubmit, isSideArrow } from './util';
 
 export class DevToolsConsole extends LitElement {
     static get properties() {
@@ -12,15 +12,20 @@ export class DevToolsConsole extends LitElement {
             theme: { type: String },
             value: { type: String },
             commandHistory: { type: Array },
+            historyIndex: { type: Number },
+            currentCommandStore: { type: String },
         };
     }
 
     constructor() {
         super();
-        this.editor = null;
+        /** @type { HTMLElement | undefined } */
+        this.editor = undefined;
         this.theme = 'light';
         this.value = '';
         this.commandHistory = [];
+        this.historyIndex = -1;
+        this.currentCommandStore = '';
     }
 
     firstUpdated() {
@@ -29,8 +34,11 @@ export class DevToolsConsole extends LitElement {
         });
     }
 
-    updated() {
+    updated(_changedProperties) {
         this.editor = this.shadowRoot.querySelector('#main-editor');
+        if (_changedProperties.has('value')) {
+            this.editor.value = this.value;
+        }
 
         // Hack until the value patch lands on playgrounds
         window.requestAnimationFrame(() => {
@@ -40,7 +48,6 @@ export class DevToolsConsole extends LitElement {
                     const historyCodes = this.shadowRoot.querySelectorAll('.history-code-editor');
                     const historyResults = this.shadowRoot.querySelectorAll('.history-result-editor');
 
-                    debugger;
                     historyCodes[i].value = hist.code;
                     historyResults[i].value = this.getHistoryResultValue(hist);
                 });
@@ -57,7 +64,7 @@ export class DevToolsConsole extends LitElement {
         if (typeof returnVal === 'object') {
             returnVal = JSON.stringify(returnVal, null, 2);
         }
-        return returnVal ? returnVal.toString() : "undefined";
+        return returnVal ? returnVal.toString() : 'undefined';
     }
 
     focusEditor() {
@@ -74,6 +81,9 @@ export class DevToolsConsole extends LitElement {
      * @param {KeyboardEvent} e
      */
     onKeyDown(e) {
+        // Herein lies the spaghetti monster.
+        // Only the bravest of warriors can look into the eyes of the monster
+        // without being lashed into a uncontrollable rage
         if (isConsoleSubmit(e)) {
             const consoleContent = this.editor.value;
             if (consoleContent.trim().length <= 0) return;
@@ -83,11 +93,56 @@ export class DevToolsConsole extends LitElement {
             if (eventSuccess) {
                 this.editor.value = '';
             }
+            this.historyIndex = -1;
         }
         if (isConsoleClear(e)) {
             this.commandHistory = [];
             this.requestUpdate();
+            this.historyIndex = -1;
         }
+        if (isArrowUpOrDown(e)) {
+            const cm = this.editor._codemirror;
+            const cursorPosition = cm.getCursor();
+            const isArrowUp = e.key === 'ArrowUp';
+            const isValidHistoryPress = cursorPosition.outside !== undefined || cursorPosition.line + cursorPosition.ch === 0;
+            if (isArrowUp && isValidHistoryPress) {
+                if (this.historyIndex === 0) return;
+
+                if (this.historyIndex > 0) {
+                    this.historyIndex -= 1;
+                } else {
+                    this.historyIndex = this.commandHistory.length - 1;
+                }
+            }
+            if (!isArrowUp && isValidHistoryPress) {
+                if (this.historyIndex < 0) return;
+                // Is down
+                if (this.historyIndex < this.commandHistory.length - 1) {
+                    this.historyIndex += 1;
+                } else {
+                    this.value = this.currentCommandStore;
+                    this.historyIndex = -1;
+                    return;
+                }
+            }
+            if (this.historyIndex >= 0) {
+                this.value = this.commandHistory[this.historyIndex].code;
+                window.requestAnimationFrame(() => {
+                    cm.focus();
+                    cm.setCursor(cm.lineCount(), 0);
+                });
+            }
+            // If arrows, ignore the rest of the handlers
+            return;
+        }
+        if (isSideArrow(e)) return;
+
+        let newStoreVal = this.editor.value;
+        // Add the newly added char
+        if (e.key && e.key.length === 1) {
+            newStoreVal += e.key;
+        }
+        this.currentCommandStore = newStoreVal;
     }
 
     render() {
@@ -103,7 +158,9 @@ export class DevToolsConsole extends LitElement {
                 >
                 </playground-code-editor>
             </span>
-            ${this.commandHistory.length <= 0 ? html`<p class="subtitle">Press Ctrl + Enter to submit, Ctrl + L to clear the console</p>` : ''}
+            ${this.commandHistory.length <= 0
+                ? html`<p class="subtitle">Press Ctrl + Enter to submit, Ctrl + L to clear the console</p>`
+                : ''}
         `;
     }
 
@@ -132,8 +189,8 @@ export class DevToolsConsole extends LitElement {
         }
 
         let themeClass = this.theme === 'light' ? '' : 'playground-theme-gruvbox-dark';
-        if (this.theme === "dark" && historyEntry.errorID === "_ERR_RUNTIME") {
-            themeClass = "playground-theme-material-darker";
+        if (this.theme === 'dark' && historyEntry.errorID === '_ERR_RUNTIME') {
+            themeClass = 'playground-theme-material-darker';
         }
         const returnVal = this.getHistoryResultValue(historyEntry);
 
