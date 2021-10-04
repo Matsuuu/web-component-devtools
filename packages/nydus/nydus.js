@@ -7,9 +7,9 @@
  * */
 
 /**
- *   @callback NydusConnectCallback
- *   @param {Nydus} nydus
- *   @param {chrome.runtime.Port} connection
+ * @callback NydusConnectCallback
+ * @param {Nydus} nydus
+ * @param {chrome.runtime.Port} connection
  * */
 
 /**
@@ -36,6 +36,7 @@
  * @property {string | number} id
  * @property {OnMessageCallback} [onMessage]
  * @property {boolean} host
+ * @property {string | number} [bridge]
  * @property {boolean} [isBackground]
  * */
 
@@ -111,6 +112,7 @@ export class Nydus {
                 !connectionOpts.host,
                 connectionOpts.onMessage,
                 connectionOpts.isBackground,
+                connectionOpts.bridge,
             );
         });
     }
@@ -125,6 +127,7 @@ export class Nydus {
                     !connectionOpts.host,
                     connectionOpts.onMessage,
                     connectionOpts.isBackground,
+                    connectionOpts.bridge,
                 );
             }
         });
@@ -178,8 +181,9 @@ export class Nydus {
      * @param {boolean} isClient
      * @param {OnMessageCallback} onMessage
      * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    addConnection(connectionId, isClient, onMessage, isBackground = false) {
+    addConnection(connectionId, isClient, onMessage, isBackground = false, bridge = false) {
         if (this.connections[connectionId]) return; // No duplicates
 
         const nydusConnection = {
@@ -188,7 +192,7 @@ export class Nydus {
             ready: false,
         };
 
-        this._doConnectionHandshake(nydusConnection, onMessage, isBackground);
+        this._doConnectionHandshake(nydusConnection, onMessage, isBackground, bridge);
     }
 
     /**
@@ -200,9 +204,10 @@ export class Nydus {
      * @param {string | number} connectionId
      * @param {OnMessageCallback} onMessage
      * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    addHostConnection(connectionId, onMessage, isBackground = false) {
-        this.addConnection(connectionId, false, onMessage, isBackground);
+    addHostConnection(connectionId, onMessage, isBackground = false, bridge) {
+        this.addConnection(connectionId, false, onMessage, isBackground, bridge);
     }
 
     /**
@@ -213,9 +218,10 @@ export class Nydus {
      *
      * @param {string | number} connectionId
      * @param {OnMessageCallback} onMessage
+     * @param {string | number} bridge
      */
-    addClientConnection(connectionId, onMessage) {
-        this.addConnection(connectionId, true, onMessage, false);
+    addClientConnection(connectionId, onMessage, bridge) {
+        this.addConnection(connectionId, true, onMessage, false, bridge);
     }
 
     /**
@@ -232,11 +238,14 @@ export class Nydus {
         let connPool = this.connections[tabId] ?? this.connections[-1];
         if (!connPool) {
             if (_retryCount >= 5) {
-                console.warn('[WebComponentDevTools]: Message send missed. Tab connection pool not found.', {
-                    recipient,
-                    message,
-                    tabId,
-                });
+                console.warn(
+                    `[WebComponentDevTools]: Message send missed. Tab connection pool for tab ${tabId} not found.`,
+                    JSON.stringify({
+                        recipient,
+                        message,
+                        tabId,
+                    }),
+                );
             } else {
                 await this._delay(200);
                 this.message(recipient, message, _retryCount + 1);
@@ -247,11 +256,14 @@ export class Nydus {
         const conn = connPool[recipient]?.connection;
         if (!conn) {
             if (_retryCount >= 5) {
-                console.warn('[WebComponentDevTools]: Message send missed. Connection not found.', {
-                    recipient,
-                    message,
-                    tabId,
-                });
+                console.warn(
+                    `[WebComponentDevTools]: Message send missed. Connection ${recipient} not found.`,
+                    JSON.stringify({
+                        recipient,
+                        message,
+                        tabId,
+                    }),
+                );
             } else {
                 await this._delay(200);
                 this.message(recipient, message, _retryCount + 1);
@@ -287,12 +299,13 @@ export class Nydus {
      * @param {NydusConnection} nydusConnection
      * @param {OnMessageCallback} onMessage
      * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    _doConnectionHandshake(nydusConnection, onMessage, isBackground) {
+    _doConnectionHandshake(nydusConnection, onMessage, isBackground, bridge) {
         if (nydusConnection.role === NYDUS_CONNECTION_ROLE.HOST) {
-            this._doHostHandshake(nydusConnection, onMessage, isBackground);
+            this._doHostHandshake(nydusConnection, onMessage, isBackground, bridge);
         } else {
-            this._doClientHandshake(nydusConnection, onMessage, isBackground);
+            this._doClientHandshake(nydusConnection, onMessage, isBackground, bridge);
         }
     }
 
@@ -300,8 +313,9 @@ export class Nydus {
      * @param {NydusConnection} nydusConnection
      * @param {OnMessageCallback} onMessage
      * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    async _doClientHandshake(nydusConnection, onMessage, isBackground) {
+    async _doClientHandshake(nydusConnection, onMessage, isBackground, bridge) {
         // We delay the connector init a bit to avoid race conditions
         // This could maybe be removed later, but needs testing
         await this._delay(100);
@@ -316,6 +330,15 @@ export class Nydus {
 
                 this._handleConnectionHandshakeMessage(message, nydusConnection);
                 connection.onMessage.removeListener(finishHandshake);
+
+                if (bridge) {
+                    const onBridgeMessage = message => this.message(bridge, message);
+                    connection.onMessage.addListener(onBridgeMessage);
+                    connection.onDisconnect.addListener(() => {
+                        connection.onMessage.removeListener(onBridgeMessage);
+                    });
+                }
+
                 if (onMessage) {
                     connection.onMessage.addListener(onMessage);
                     connection.onDisconnect.addListener(() => {
@@ -398,8 +421,10 @@ export class Nydus {
     /**
      * @param {NydusConnection} nydusConnection
      * @param {OnMessageCallback} onMessage
+     * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    _doHostHandshake(nydusConnection, onMessage, isBackground) {
+    _doHostHandshake(nydusConnection, onMessage, isBackground, bridge) {
         chrome.runtime.onConnect.addListener(
             /** @this Nydus */
             async function startHandshake(/** @type chrome.runtime.Port */ connection) {
@@ -413,7 +438,18 @@ export class Nydus {
                 nydusConnectionCopy.tabId = isBackground ? -1 : tabId ?? this.nydusTab;
                 this._handleClientHandshake(connection, nydusConnectionCopy);
 
+                // If we are instructed to bridge the connection, just send the message
+                // to the bridges recipient
+                if (bridge) {
+                    const onBridgeMessage = message => this.message(bridge, message);
+                    connection.onMessage.addListener(message => this.message(bridge, message));
+                    connection.onDisconnect.addListener(() => {
+                        connection.onMessage.removeListener(onBridgeMessage);
+                    });
+                }
                 if (onMessage) {
+                    // If we're not bridging, we check if we have
+                    // a onmessage listener and apply that instead
                     connection.onMessage.addListener(onMessage);
                     connection.onDisconnect.addListener(() => {
                         connection.onMessage.removeListener(onMessage);
