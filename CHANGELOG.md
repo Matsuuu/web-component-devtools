@@ -1,3 +1,8 @@
+v 0.1.12
+
+- Remove leftover WC DevTools properties from console output
+- Improve the performance of Nydus messaging
+
 v 0.1.11
 
 - A new panel: "Source".
