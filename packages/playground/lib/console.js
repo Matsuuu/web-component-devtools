@@ -104,7 +104,8 @@ export class DevToolsConsole extends LitElement {
             const cm = this.editor._codemirror;
             const cursorPosition = cm.getCursor();
             const isArrowUp = e.key === 'ArrowUp';
-            const isValidHistoryPress = cursorPosition.outside !== undefined || cursorPosition.line + cursorPosition.ch === 0;
+            const isValidHistoryPress =
+                cursorPosition.outside !== undefined || cursorPosition.line + cursorPosition.ch === 0;
             if (isArrowUp && isValidHistoryPress) {
                 if (this.historyIndex === 0) return;
 
@@ -159,7 +160,15 @@ export class DevToolsConsole extends LitElement {
                 </playground-code-editor>
             </span>
             ${this.commandHistory.length <= 0
-                ? html`<p class="subtitle">Press Ctrl + Enter to submit, Ctrl + L to clear the console</p>`
+                ? html`
+                      <p class="subtitle">
+                          Press Ctrl + Enter (Cmd + Enter on OSX) to submit, Ctrl + L, (Cmd + K on OSX) to clear the
+                          console
+                      </p>
+                      <p class="subtitle">
+                          You can use <code>this</code> or <code>$0</code> to access the selected element.
+                      </p>
+                  `
                 : ''}
         `;
     }
@@ -239,7 +248,7 @@ export class DevToolsConsole extends LitElement {
                 }
 
                 .subtitle {
-                    margin: 0 0 0 2rem;
+                    margin: 0.6rem 0 0 1rem;
                     opacity: 0.6;
                     color: var(--paragraph-color);
                 }
