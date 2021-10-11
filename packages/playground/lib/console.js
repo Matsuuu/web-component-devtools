@@ -64,7 +64,7 @@ export class DevToolsConsole extends LitElement {
         if (typeof returnVal === 'object') {
             returnVal = JSON.stringify(returnVal, null, 2);
         }
-        return returnVal ? returnVal.toString() : 'undefined';
+        return returnVal !== null && returnVal !== undefined ? returnVal.toString() : 'undefined';
     }
 
     focusEditor() {
