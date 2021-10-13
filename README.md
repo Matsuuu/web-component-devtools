@@ -77,18 +77,21 @@ Join here: https://join.slack.com/t/lit-and-friends/shared_invite/zt-llwznvsy-LZ
 The current architecture of the project goes as follow:
 
 - html => Pages of the devtools
-- lib => All of the extension code, excluding html pages, and packages like Nydus
+- lib => All of the extension code, excluding html pages, and packages
     - background => All of the background pages of the DevTools. Background page acts as a bridge between background tasks and the content scripts
-    - cem => Custom Elements Manifest parsing and tooling
     - content => [Content scripts](https://developer.chrome.com/docs/extensions/mv3/content_scripts/)
     - crawler => All of the code injected onto the inspected page to query elements and act upon events
     - elements => All of the custom elements used by the DevTools
     - types => Typings and Enums
     - util => Utility functions
-    - view => The actual devtools view and it's init scripts
 
 - context-menus.js => Context menu actions and communication
 - devtools.js => Panel and general initialization actions. Lifecycle callbacks
+
+- Packages => Separate tools used for WCDT, maybe later on built into their own tools
+    - Nydus => Message passing and management between layers
+    - Analyzer => [Custom Elements Manifest analyzer](https://github.com/open-wc/custom-elements-manifest/tree/master/packages/analyzer) integration
+    - Playground => [Playground Elements](https://github.com/google/playground-elements) integration with source view and console view 
 
 
 ## Local Development
