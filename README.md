@@ -99,7 +99,7 @@ The current architecture of the project goes as follow:
 Required tools:
 
 - NPM (any up to date version should do)
-- A preferably up to date version of Chrome/Firefox
+- A preferably up to date version of Chrome/Edge/Firefox
 - A zipping tool (when working with firefox).
 - Any OS (windows/mac/linux)
 
