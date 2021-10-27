@@ -93,6 +93,8 @@ export class LitExample extends LitElement {
             item => html`<list-item id=${item.id}>${item.text}</list-item>`,
         )}
             </list-wrapper>
+
+            <demo-undefined-item></demo-undefined-item>
         `;
     }
 

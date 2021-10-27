@@ -1,6 +1,7 @@
 v 0.1.13
 
 - Fixed sorting of custom element properties to not throw an error on undefined values
+- List undefined custom elements on the listing and inform the developer if about them
 
 v 0.1.12
 
