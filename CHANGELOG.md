@@ -1,16 +1,16 @@
 v 0.1.13
 
+
+v 0.1.12
+
+- Remove leftover WC DevTools properties from console output
+- Improve the performance of Nydus messaging
 - Clean up devtools console output
 - Add more information about the use of devtools console
 - Allow OSX bindings on devtools console
 - Bridge messaging connections more effectively
 - Allow "$0" to refer to selected component in devtools console
 - Fix re-selecting selected element on refresh
-
-v 0.1.12
-
-- Remove leftover WC DevTools properties from console output
-- Improve the performance of Nydus messaging
 
 v 0.1.11
 
