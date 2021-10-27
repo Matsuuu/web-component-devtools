@@ -1,5 +1,6 @@
 v 0.1.13
 
+- Fixed sorting of custom element properties to not throw an error on undefined values
 
 v 0.1.12
 
