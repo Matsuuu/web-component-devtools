@@ -41,6 +41,9 @@ You can get the Web Component DevTools from the [Chrome Web Store](https://chrom
 
 ### Setting up
 
+To get started with WCDT, you only need to install the extension into your browser, and you should be able to see a "Web Components" -panel
+on your devtols window.
+
 A brief video of setting up your development environment to get the most out of DevTools: https://youtu.be/D6W5iX3-E9E
 
 ---
