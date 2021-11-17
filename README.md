@@ -37,7 +37,7 @@ Web Component DevTools provides advanced features to the developer, straight fro
 
 ## Download
 
-You can get the Web Component DevTools from the [Chrome Web Store](https://chrome.google.com/webstore/detail/web-component-devtools/gdniinfdlmmmjpnhgnkmfpffipenjljo/related) 
+You can get the Web Component DevTools from the [Chrome Web Store](https://chrome.google.com/webstore/detail/web-component-devtools/gdniinfdlmmmjpnhgnkmfpffipenjljo/related) and the [Mozilla Add-on marketplace](https://addons.mozilla.org/en-US/firefox/addon/web-component-devtools/)
 
 ### Setting up
 
