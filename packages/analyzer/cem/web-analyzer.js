@@ -160,9 +160,13 @@ function getDeclarationAndExportCount(modules) {
  */
 async function analyzeScript(scriptPath, scriptSource) {
     if (scriptPath.toString().length <= 0) return [];
-    if (analyzedScripts[scriptPath]) return analyzedScripts[scriptPath];
+    if (isAnalyzed(scriptPath)) return analyzedScripts[scriptPath];
 
+    // Mark it as analyzed ahead of time since this is a recursive action
+    // through the createManifest process.
+    analyzedScripts[scriptPath] = [];
     const mani = await createManifest(scriptSource, [], scriptPath);
+    // Mark the actual modules later on as we actually have them
     analyzedScripts[scriptPath] = mani.modules;
 
     return mani.modules;
@@ -193,7 +197,7 @@ async function fetchExportModule(exports, tagName, origin, manifest) {
             return [manifest.modules.find(mod => mod.path === moduleSourcePath)]
         }
         const declarationModuleSource = await fetchSource(moduleSourcePath);
-        return analyzeScript(moduleSourcePath, declarationModuleSource);
+        return await analyzeScript(moduleSourcePath, declarationModuleSource);
     }
 
     return [];
