@@ -3,8 +3,6 @@
 Web Component DevTools is aimed at all developers working with Web Components. 
 The tooling provided creates a new Chrome Devtools panel, which allows a quick look at the custom elements on the current page, and enables modification of attributes and properties of said components.
 
-Web Component DevTools works best when combined with the use of a [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest). To enable analysis on your project, use a analyzer like the [Open-WC Custom Elements Analyzer](https://github.com/open-wc/custom-elements-manifest/tree/master/packages/analyzer)
-
 ## Why?
 
 In the process of developing Web Components, wether it be with a library like [Lit](https://github.com/lit/lit/), or without any kind of library,
@@ -31,38 +29,20 @@ Web Component DevTools provides advanced features to the developer, straight fro
 - Listing custom elements on the page, and accessible iframes inside the page
 - Filtering custom elements on the list
 - Inspecting and modifying the attributes of custom elements
-- *Inspecting and modifying the properties of custom elements
-- *Observing dispatched events
-- *Calling functions of the custom element
-
-
--* Feature is limited to [supported libraries ](#supported-libraries) and projects with a [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest).
-
-**_For the best development experience it is recommended to integrate a Custom Elements analyzer to the project, so
-that the elements get analyzed on build-time, generating a up-to-date manifest for the devtools to use._**
-
-
-An example development setup of a [Modern Web Dev Server](https://modern-web.dev/docs/dev-server/overview/) paired with a CEM analyzer would look like this:
-
-  ```json
-  {
-   "scripts": {
-      "start": "concurrently \"wds\" \"cem analyze --watch\""
-   },
-   "devDependencies": {
-      "@custom-elements-manifest/analyzer": "^0.4.11",
-      "@web/dev-server": "^0.1.18",
-      "concurrently": "^6.2.0"
-    }
-  }
-  ```
-
+- Inspecting and modifying the properties of custom elements
+- Observing dispatched events
+- Calling functions of the custom element
+- View the source code of web components on page
+- Interact directly with web components through the console
 
 ## Download
 
-You can get the Web Component DevTools from the [Chrome Web Store](https://chrome.google.com/webstore/detail/web-component-devtools/gdniinfdlmmmjpnhgnkmfpffipenjljo/related) 
+You can get the Web Component DevTools from the [Chrome Web Store](https://chrome.google.com/webstore/detail/web-component-devtools/gdniinfdlmmmjpnhgnkmfpffipenjljo/related) and the [Mozilla Add-on marketplace](https://addons.mozilla.org/en-US/firefox/addon/web-component-devtools/)
 
 ### Setting up
+
+To get started with WCDT, you only need to install the extension into your browser, and you should be able to see a "Web Components" -panel
+on your devtols window.
 
 A brief video of setting up your development environment to get the most out of DevTools: https://youtu.be/D6W5iX3-E9E
 
@@ -93,25 +73,28 @@ Any issues you run into while using the DevTools should be submitted to the GitH
 
 Join the discussion in Lit and Friends slack in the channel #web-component-devtools
 
-Join here: https://join.slack.com/share/zt-sffg0x76-2t1QoM1JWXrzfEbL9XP2_w
+Join here: https://join.slack.com/t/lit-and-friends/shared_invite/zt-llwznvsy-LZwT13R66gOgnrg12PUGqw
 
 ## Architecture
 
 The current architecture of the project goes as follow:
 
 - html => Pages of the devtools
-- lib => All of the extension code, excluding html pages, and packages like Nydus
+- lib => All of the extension code, excluding html pages, and packages
     - background => All of the background pages of the DevTools. Background page acts as a bridge between background tasks and the content scripts
-    - cem => Custom Elements Manifest parsing and tooling
     - content => [Content scripts](https://developer.chrome.com/docs/extensions/mv3/content_scripts/)
     - crawler => All of the code injected onto the inspected page to query elements and act upon events
     - elements => All of the custom elements used by the DevTools
     - types => Typings and Enums
     - util => Utility functions
-    - view => The actual devtools view and it's init scripts
 
 - context-menus.js => Context menu actions and communication
 - devtools.js => Panel and general initialization actions. Lifecycle callbacks
+
+- Packages => Separate tools used for WCDT, maybe later on built into their own tools
+    - Nydus => Message passing and management between layers
+    - Analyzer => [Custom Elements Manifest analyzer](https://github.com/open-wc/custom-elements-manifest/tree/master/packages/analyzer) integration
+    - Playground => [Playground Elements](https://github.com/google/playground-elements) integration with source view and console view 
 
 
 ## Local Development
@@ -119,7 +102,7 @@ The current architecture of the project goes as follow:
 Required tools:
 
 - NPM (any up to date version should do)
-- A preferably up to date version of Chrome/Firefox
+- A preferably up to date version of Chrome/Edge/Firefox
 - A zipping tool (when working with firefox).
 - Any OS (windows/mac/linux)
 

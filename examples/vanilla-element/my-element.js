@@ -8,7 +8,7 @@ template.innerHTML = `
 <button>Click</button>
 `;
 
-class MyElement extends HTMLElement {
+export class MyElement extends HTMLElement {
     constructor() {
         super();
 

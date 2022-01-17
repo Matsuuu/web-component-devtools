@@ -1,0 +1,291 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "index.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LitNoCem",
+          "declaration": {
+            "name": "LitNoCem",
+            "module": "./src/LitNoCem.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "lit-example.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "lit-example",
+          "declaration": {
+            "name": "LitExample",
+            "module": "/src/LitExample.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/LitExample.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "LitExample",
+          "members": [
+            {
+              "kind": "field",
+              "name": "properties",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "_actUpon"
+            },
+            {
+              "kind": "method",
+              "name": "callSomething"
+            },
+            {
+              "kind": "method",
+              "name": "doMethod",
+              "parameters": [
+                {
+                  "name": "stringParam",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "boolParam",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "numberParam",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "objectParam",
+                  "type": {
+                    "text": "MyClass"
+                  }
+                },
+                {
+                  "name": "anyParam",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "__increment"
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            },
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Hey there'"
+            },
+            {
+              "kind": "field",
+              "name": "counter",
+              "type": {
+                "text": "number"
+              },
+              "default": "5"
+            },
+            {
+              "kind": "field",
+              "name": "user",
+              "type": {
+                "text": "object"
+              },
+              "default": "{\n            id: 22,\n            name: 'Matsuuu',\n            languages: ['Java', 'Javascript'],\n        }"
+            },
+            {
+              "kind": "field",
+              "name": "listItems",
+              "type": {
+                "text": "array"
+              },
+              "default": "[\n            { id: 1, text: 'Hello' },\n            { id: 2, text: 'Hi' },\n            { id: 3, text: 'Bonjour' },\n        ]"
+            },
+            {
+              "kind": "field",
+              "name": "funcProp"
+            },
+            {
+              "kind": "field",
+              "name": "headerElem",
+              "type": {
+                "text": "null"
+              },
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "unionField",
+              "type": {
+                "text": "\"Foo\" | \"Bar\" | \"Baz\""
+              },
+              "default": "'Foo'"
+            }
+          ],
+          "events": [
+            {
+              "name": "counter-increment",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "lit-example",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LitExample",
+          "declaration": {
+            "name": "LitExample",
+            "module": "src/LitExample.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/list-item.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ListItem",
+          "members": [
+            {
+              "kind": "field",
+              "name": "properties",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            },
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "list-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ListItem",
+          "declaration": {
+            "name": "ListItem",
+            "module": "src/list-item.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "list-item",
+          "declaration": {
+            "name": "ListItem",
+            "module": "src/list-item.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/list-wrapper.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ListWrapper",
+          "members": [
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "list-wrapper",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ListWrapper",
+          "declaration": {
+            "name": "ListWrapper",
+            "module": "src/list-wrapper.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "list-wrapper",
+          "declaration": {
+            "name": "ListWrapper",
+            "module": "src/list-wrapper.js"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "playground.js",
+  "scripts": {
+    "start": "wds --node-resolve --app-index demo/index.html --watch --open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "js-beautify": "^1.14.0",
+    "lit": "^2.0.0",
+    "playground-elements": "^0.14.1"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.22"
+  }
+}

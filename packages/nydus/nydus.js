@@ -7,9 +7,9 @@
  * */
 
 /**
- *   @callback NydusConnectCallback
- *   @param {Nydus} nydus
- *   @param {chrome.runtime.Port} connection
+ * @callback NydusConnectCallback
+ * @param {Nydus} nydus
+ * @param {chrome.runtime.Port} connection
  * */
 
 /**
@@ -36,6 +36,7 @@
  * @property {string | number} id
  * @property {OnMessageCallback} [onMessage]
  * @property {boolean} host
+ * @property {string | number} [bridge]
  * @property {boolean} [isBackground]
  * */
 
@@ -111,7 +112,24 @@ export class Nydus {
                 !connectionOpts.host,
                 connectionOpts.onMessage,
                 connectionOpts.isBackground,
+                connectionOpts.bridge,
             );
+        });
+    }
+
+    async _reConnectDisconnected() {
+        await this._determineTabIds();
+        const connectionsFlat = this._getConnectionsFlat();
+        this.connectionOptions.forEach(connectionOpts => {
+            if (!connectionsFlat.find(con => con.id === connectionOpts.id).ready) {
+                this.addConnection(
+                    connectionOpts.id,
+                    !connectionOpts.host,
+                    connectionOpts.onMessage,
+                    connectionOpts.isBackground,
+                    connectionOpts.bridge,
+                );
+            }
         });
     }
 
@@ -133,7 +151,7 @@ export class Nydus {
     _determineTabIds() {
         return new Promise(resolve => {
             if (chrome.tabs) {
-                chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+                chrome?.runtime?.onMessage.addListener(function(request, sender, sendResponse) {
                     if (request.type === NYDUS_TAB_PING) {
                         const senderTabId = sender.tab?.id;
                         sendResponse({ type: NYDUS_TAB_PING, tabId: senderTabId });
@@ -144,7 +162,7 @@ export class Nydus {
                     resolve();
                 });
             } else {
-                chrome.runtime.sendMessage({ type: NYDUS_TAB_PING }, response => {
+                chrome?.runtime?.sendMessage({ type: NYDUS_TAB_PING }, response => {
                     let tabId = response.tabId;
                     if (!tabId) {
                         tabId = chrome?.devtools?.inspectedWindow?.tabId;
@@ -163,8 +181,9 @@ export class Nydus {
      * @param {boolean} isClient
      * @param {OnMessageCallback} onMessage
      * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    addConnection(connectionId, isClient, onMessage, isBackground = false) {
+    addConnection(connectionId, isClient, onMessage, isBackground = false, bridge = false) {
         if (this.connections[connectionId]) return; // No duplicates
 
         const nydusConnection = {
@@ -173,7 +192,7 @@ export class Nydus {
             ready: false,
         };
 
-        this._doConnectionHandshake(nydusConnection, onMessage, isBackground);
+        this._doConnectionHandshake(nydusConnection, onMessage, isBackground, bridge);
     }
 
     /**
@@ -185,9 +204,10 @@ export class Nydus {
      * @param {string | number} connectionId
      * @param {OnMessageCallback} onMessage
      * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    addHostConnection(connectionId, onMessage, isBackground = false) {
-        this.addConnection(connectionId, false, onMessage, isBackground);
+    addHostConnection(connectionId, onMessage, isBackground = false, bridge) {
+        this.addConnection(connectionId, false, onMessage, isBackground, bridge);
     }
 
     /**
@@ -198,9 +218,10 @@ export class Nydus {
      *
      * @param {string | number} connectionId
      * @param {OnMessageCallback} onMessage
+     * @param {string | number} bridge
      */
-    addClientConnection(connectionId, onMessage) {
-        this.addConnection(connectionId, true, onMessage, false);
+    addClientConnection(connectionId, onMessage, bridge) {
+        this.addConnection(connectionId, true, onMessage, false, bridge);
     }
 
     /**
@@ -213,15 +234,18 @@ export class Nydus {
     async message(recipient, message, _retryCount = 0) {
         await this.whenReady;
 
-        const tabId = await this._tryGetCurrentTab();
+        const tabId = message.tabId ?? (await this._tryGetCurrentTab());
         let connPool = this.connections[tabId] ?? this.connections[-1];
         if (!connPool) {
             if (_retryCount >= 5) {
-                console.warn('[WebComponentDevTools]: Message send missed. Tab connection pool not found.', {
-                    recipient,
-                    message,
-                    tabId,
-                });
+                console.warn(
+                    `[WebComponentDevTools]: Message send missed. Tab connection pool for tab ${tabId} not found.`,
+                    JSON.stringify({
+                        recipient,
+                        message,
+                        tabId,
+                    }),
+                );
             } else {
                 await this._delay(200);
                 this.message(recipient, message, _retryCount + 1);
@@ -232,11 +256,14 @@ export class Nydus {
         const conn = connPool[recipient]?.connection;
         if (!conn) {
             if (_retryCount >= 5) {
-                console.warn('[WebComponentDevTools]: Message send missed. Connection not found.', {
-                    recipient,
-                    message,
-                    tabId,
-                });
+                console.warn(
+                    `[WebComponentDevTools]: Message send missed. Connection ${recipient} not found.`,
+                    JSON.stringify({
+                        recipient,
+                        message,
+                        tabId,
+                    }),
+                );
             } else {
                 await this._delay(200);
                 this.message(recipient, message, _retryCount + 1);
@@ -272,12 +299,13 @@ export class Nydus {
      * @param {NydusConnection} nydusConnection
      * @param {OnMessageCallback} onMessage
      * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    _doConnectionHandshake(nydusConnection, onMessage, isBackground) {
+    _doConnectionHandshake(nydusConnection, onMessage, isBackground, bridge) {
         if (nydusConnection.role === NYDUS_CONNECTION_ROLE.HOST) {
-            this._doHostHandshake(nydusConnection, onMessage, isBackground);
+            this._doHostHandshake(nydusConnection, onMessage, isBackground, bridge);
         } else {
-            this._doClientHandshake(nydusConnection, onMessage, isBackground);
+            this._doClientHandshake(nydusConnection, onMessage, isBackground, bridge);
         }
     }
 
@@ -285,8 +313,9 @@ export class Nydus {
      * @param {NydusConnection} nydusConnection
      * @param {OnMessageCallback} onMessage
      * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    async _doClientHandshake(nydusConnection, onMessage, isBackground) {
+    async _doClientHandshake(nydusConnection, onMessage, isBackground, bridge) {
         // We delay the connector init a bit to avoid race conditions
         // This could maybe be removed later, but needs testing
         await this._delay(100);
@@ -295,14 +324,36 @@ export class Nydus {
         nydusConnection.connection = connection;
 
         connection.onMessage.addListener(
+            /** @this { Nydus } */
             function finishHandshake(/** @type {any} */ message) {
+                if (message.type !== NYDUS_CONNECTION_HANDSHAKE) return;
+
                 this._handleConnectionHandshakeMessage(message, nydusConnection);
                 connection.onMessage.removeListener(finishHandshake);
+
+                if (bridge) {
+                    const onBridgeMessage = message => this.message(bridge, message);
+                    connection.onMessage.addListener(onBridgeMessage);
+                    connection.onDisconnect.addListener(() => {
+                        connection.onMessage.removeListener(onBridgeMessage);
+                    });
+                }
+
                 if (onMessage) {
                     connection.onMessage.addListener(onMessage);
+                    connection.onDisconnect.addListener(() => {
+                        connection.onMessage.removeListener(onMessage);
+                    });
                 }
             }.bind(this),
         );
+    }
+
+    disconnectAll() {
+        const connections = this._getConnectionsFlat();
+        connections.forEach(conn => {
+            conn.connection.disconnect();
+        });
     }
 
     /**
@@ -339,6 +390,9 @@ export class Nydus {
     _addConnectionOnDisconnectListeners(connection, connectionId, tabId) {
         connection.onDisconnect.addListener(() => {
             delete this.connections[tabId][connectionId];
+            if (Object.keys(this.connections[tabId]).length <= 0) {
+                delete this.connections[tabId];
+            }
         });
     }
 
@@ -348,7 +402,7 @@ export class Nydus {
                 return resolve(this.nydusTab ?? -1);
             }
             chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                const tabId = tabs.length < 1 ? chrome.devtools.inspectedWindow.tabId : tabs[0].id;
+                const tabId = tabs.length < 1 ? chrome?.devtools?.inspectedWindow?.tabId : tabs[0].id;
                 resolve(tabId ?? -1);
             });
         });
@@ -367,8 +421,10 @@ export class Nydus {
     /**
      * @param {NydusConnection} nydusConnection
      * @param {OnMessageCallback} onMessage
+     * @param {boolean} isBackground
+     * @param {string | number} bridge
      */
-    _doHostHandshake(nydusConnection, onMessage, isBackground) {
+    _doHostHandshake(nydusConnection, onMessage, isBackground, bridge) {
         chrome.runtime.onConnect.addListener(
             /** @this Nydus */
             async function startHandshake(/** @type chrome.runtime.Port */ connection) {
@@ -382,8 +438,22 @@ export class Nydus {
                 nydusConnectionCopy.tabId = isBackground ? -1 : tabId ?? this.nydusTab;
                 this._handleClientHandshake(connection, nydusConnectionCopy);
 
+                // If we are instructed to bridge the connection, just send the message
+                // to the bridges recipient
+                if (bridge) {
+                    const onBridgeMessage = message => this.message(bridge, message);
+                    connection.onMessage.addListener(message => this.message(bridge, message));
+                    connection.onDisconnect.addListener(() => {
+                        connection.onMessage.removeListener(onBridgeMessage);
+                    });
+                }
                 if (onMessage) {
+                    // If we're not bridging, we check if we have
+                    // a onmessage listener and apply that instead
                     connection.onMessage.addListener(onMessage);
+                    connection.onDisconnect.addListener(() => {
+                        connection.onMessage.removeListener(onMessage);
+                    });
                 }
                 this._addConnectionOnDisconnectListeners(
                     connection,
@@ -403,8 +473,6 @@ export class Nydus {
      * @param {NydusConnection} nydusConnection
      */
     _handleConnectionHandshakeMessage(message, nydusConnection) {
-        if (message.type !== NYDUS_CONNECTION_HANDSHAKE) return;
-
         const tabId = message.tabId;
         nydusConnection.tabId = tabId;
         nydusConnection.ready = true;
@@ -481,18 +549,11 @@ export class Nydus {
     _requirementsFulfilled() {
         // Check that all required connections are built and ready
         const connectionsFlat = this._getConnectionsFlat();
-        return (
-            connectionsFlat.length === this.connectionOptions.length &&
-            connectionsFlat.every(conn => conn.ready) &&
-            this._allConnectionsAreCreated(connectionsFlat)
-        );
-    }
 
-    _allConnectionsAreCreated(connectionsFlat) {
-        const connMap = {};
-        connectionsFlat.forEach(conn => (connMap[conn.id] = conn));
-        return this.connectionOptions.every(connOpt => {
-            return connMap[connOpt.id] != null;
+        const hasOneOfEachRequiredConnection = this.connectionOptions.every(opt => {
+            const connectionsToOpt = connectionsFlat.filter(con => con.id === opt.id);
+            return connectionsToOpt.some(con => con.ready);
         });
+        return hasOneOfEachRequiredConnection;
     }
 }

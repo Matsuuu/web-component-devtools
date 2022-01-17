@@ -1,0 +1,36 @@
+{
+    "type": 7,
+    "data": {
+        "type": 6,
+        "indexInDevTools": 0,
+        "name": "devtools-panel",
+        "tagName": "devtools-panel",
+        "tabId": 223,
+        "declaration": "export class DevToolsPanel extends LitElement {\n    static get properties() {\n        return {\n            verticalView: { type: Boolean },\n        };\n    }\n\n    constructor() {\n        super();\n\n        const mediaQ = window.matchMedia('(max-width: 1000px)');\n        mediaQ.addEventListener('change', mediaQresponse => {\n            this.verticalView = mediaQresponse.matches;\n        });\n        this.verticalView = mediaQ.matches;\n    }\n\n    onResize(e) {\n        if (this.verticalView) {\n            const newFlexPercentage = (100 - (e.detail.y / window.innerHeight) * 100).toFixed(0);\n            this.style.setProperty('--action-area-size', newFlexPercentage + '%');\n        } else {\n            const newFlexPercentage = (100 - (e.detail.x / window.innerWidth) * 100).toFixed(0);\n            this.style.setProperty('--action-area-size', newFlexPercentage + '%');\n        }\n    }\n\n    render() {\n        return html`\n            <devtools-elements-list></devtools-elements-list>\n            <devtools-divider @devtools-resize=${this.onResize}></devtools-divider>\n            <devtools-action-area></devtools-action-area>\n        `;\n    }\n\n    static get styles() {\n        return css`\n            :host {\n                height: 100%;\n                max-height: 100%;\n                display: flex;\n                flex-direction: row;\n                --action-area-size: 40%;\n                width: 100%;\n            }\n\n            devtools-action-area {\n                --area-size: var(--action-area-size);\n            }\n            @media only screen and (max-width: 1000px) {\n                :host {\n                    flex-direction: column;\n                }\n            }\n        `;\n    }\n}",
+        "attributes": [{ "name": "verticalview", "type": { "text": "undefined" } }],
+        "properties": [
+            { "kind": "field", "name": "verticalView" },
+            { "kind": "field", "name": "properties", "static": true },
+            { "kind": "field", "name": "styles", "static": true }
+        ],
+        "events": [],
+        "methods": [
+            { "kind": "method", "name": "onResize", "parameters": [{ "name": "e" }] },
+            { "kind": "method", "name": "render" }
+        ],
+        "messageType": "__WC_DEV_TOOLS_SELECT_REQUEST",
+        "scrollToTargetInDevTools": false,
+        "parentClass": { "name": "h" },
+        "typeInDevTools": 1,
+        "attributeValues": { "verticalview": null },
+        "propertyValues": {
+            "properties": { "verticalView": { "type": "#NO_EDIT#Boolean" } },
+            "styles": {
+                "cssText": "\n            :host {\n                height: 100%;\n                max-height: 100%;\n                display: flex;\n                flex-direction: row;\n                --action-area-size: 40%;\n                width: 100%;\n            }\n\n            devtools-action-area {\n                --area-size: var(--action-area-size);\n            }\n            @media only screen and (max-width: 1000px) {\n                :host {\n                    flex-direction: column;\n                }\n            }\n        ",
+                "t": {}
+            },
+            "verticalView": true
+        }
+    },
+    "tabId": 223
+}
