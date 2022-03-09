@@ -1,10 +1,12 @@
 import { css, html, LitElement } from 'lit';
+import 'playground-elements/playground-project.js';
 import 'playground-elements/playground-code-editor.js';
+import 'playground-elements/playground-file-editor.js';
 import { PlaygroundCodeEditor } from 'playground-elements/playground-code-editor.js';
 import gruvboxTheme from 'playground-elements/themes/gruvbox-dark.css.js';
 import materialTheme from 'playground-elements/themes/material-darker.css.js';
 import ttcnTheme from 'playground-elements/themes/ttcn.css.js';
-import { isArrowUpOrDown, isConsoleClear, isConsoleSubmit, isSideArrow } from './util';
+import { isArrowUpOrDown, isConsoleClear, isConsoleSubmit, isSideArrow, raf } from './util';
 
 export class DevToolsConsole extends LitElement {
     static get properties() {
@@ -15,7 +17,7 @@ export class DevToolsConsole extends LitElement {
             commandHistory: { type: Array },
             historyIndex: { type: Number },
             currentCommandStore: { type: String },
-            previousCursorPosition: { type: Object }
+            previousCursorPosition: { type: Object },
         };
     }
 
@@ -40,9 +42,10 @@ export class DevToolsConsole extends LitElement {
     /**
      * @param {import('lit').PropertyValues} _changedProperties
      */
-    updated(_changedProperties) {
+    async updated(_changedProperties) {
+        await raf();
         /** @type PlaygroundCodeEditor */
-        this.editor = this.shadowRoot.querySelector('#main-editor');
+        this.editor = this.shadowRoot.querySelector('#main-editor').shadowRoot.querySelector("playground-code-editor");
         if (_changedProperties.has('value')) {
             this.editor.value = this.value;
         }
@@ -78,7 +81,7 @@ export class DevToolsConsole extends LitElement {
 
     focusEditor() {
         // Quite hacky, maybe there's a better way?
-        /** @type HTMLElement */ (this.editor.shadowRoot.querySelector('.CodeMirror-code')).focus();
+        /** @type HTMLElement */ (this.editor?.shadowRoot?.querySelector('.CodeMirror-code'))?.focus();
     }
 
     addHistoryEntry(historyEntry) {
@@ -115,7 +118,10 @@ export class DevToolsConsole extends LitElement {
             const isArrowUp = e.key === 'ArrowUp';
             const lineCount = (this.editor.value.match(/\n/g) || []).length;
             const isValidHistoryUpPress = isArrowUp && cursorPosition?.line + cursorPosition.ch === 0;
-            const isValidHistoryDownPress = !isArrowUp && lineCount === cursorPosition?.line && this.previousCursorPosition.line === cursorPosition.line;
+            const isValidHistoryDownPress =
+                !isArrowUp &&
+                lineCount === cursorPosition?.line &&
+                this.previousCursorPosition.line === cursorPosition.line;
 
             if (isValidHistoryUpPress) {
                 if (this.historyIndex === 0) return;
@@ -140,9 +146,7 @@ export class DevToolsConsole extends LitElement {
             if (this.historyIndex >= 0) {
                 this.value = this.commandHistory[this.historyIndex].code;
                 window.requestAnimationFrame(() => {
-                    //cm.focus();
                     this.editor.focus();
-                    //cm.setCursor(cm.lineCount(), 0);
                 });
             }
             // If arrows, save the cursor position and ignore the rest of the handlers
@@ -167,13 +171,23 @@ export class DevToolsConsole extends LitElement {
             ${this.renderHistoryEntries()}
             <span>
                 ${caret}
-                <playground-code-editor
+                <playground-project id="console-project">
+                    <script type="sample/ts" filename="index.ts">
+                        window.addEventListener('DOMContentLoaded', () => {
+                          const world = document.createTextNode(' World!');
+                          document.body.appendChild(world);
+                        });
+                    </script>
+                </playground-project>
+
+                <playground-file-editor
                     id="main-editor"
+                    project="console-project"
                     class="${this.theme === 'light' ? '' : 'playground-theme-gruvbox-dark'}"
-                    type="js"
+                    type="ts"
                     @keydown=${this.onKeyDown}
                 >
-                </playground-code-editor>
+                </playground-file-editor>
             </span>
             ${this.commandHistory.length <= 0
                 ? html`
@@ -287,7 +301,8 @@ export class DevToolsConsole extends LitElement {
                     transform: rotate(90deg);
                 }
 
-                playground-code-editor {
+                playground-code-editor,
+                playground-file-editor {
                     height: fit-content;
                     width: 100%;
                     --playground-code-font-size: var(--font-size);

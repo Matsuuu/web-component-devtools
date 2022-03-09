@@ -18,3 +18,7 @@ export function isArrowUpOrDown(event) {
 export function isSideArrow(event) {
     return event.key === "ArrowLeft" || event.key === "ArrowRight";
 }
+
+export function raf() {
+    return new Promise((resolve) => window.requestAnimationFrame(resolve));
+}
