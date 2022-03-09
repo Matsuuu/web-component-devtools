@@ -1,5 +1,6 @@
 import { css, html, LitElement } from 'lit';
 import 'playground-elements/playground-code-editor.js';
+import { PlaygroundCodeEditor } from 'playground-elements/playground-code-editor.js';
 import gruvboxTheme from 'playground-elements/themes/gruvbox-dark.css.js';
 import materialTheme from 'playground-elements/themes/material-darker.css.js';
 import ttcnTheme from 'playground-elements/themes/ttcn.css.js';
@@ -14,18 +15,20 @@ export class DevToolsConsole extends LitElement {
             commandHistory: { type: Array },
             historyIndex: { type: Number },
             currentCommandStore: { type: String },
+            previousCursorPosition: { type: Object }
         };
     }
 
     constructor() {
         super();
-        /** @type { HTMLElement | undefined } */
+        /** @type PlaygroundCodeEditor */
         this.editor = undefined;
         this.theme = 'light';
         this.value = '';
         this.commandHistory = [];
         this.historyIndex = -1;
         this.currentCommandStore = '';
+        this.previousCursorPosition = { line: 0, ch: 0 };
     }
 
     firstUpdated() {
@@ -34,7 +37,11 @@ export class DevToolsConsole extends LitElement {
         });
     }
 
+    /**
+     * @param {import('lit').PropertyValues} _changedProperties
+     */
     updated(_changedProperties) {
+        /** @type PlaygroundCodeEditor */
         this.editor = this.shadowRoot.querySelector('#main-editor');
         if (_changedProperties.has('value')) {
             this.editor.value = this.value;
@@ -45,7 +52,9 @@ export class DevToolsConsole extends LitElement {
             window.requestAnimationFrame(() => {
                 const histories = this.commandHistory;
                 histories.forEach((hist, i) => {
+                    /** @type NodeListOf<PlaygroundCodeEditor> */
                     const historyCodes = this.shadowRoot.querySelectorAll('.history-code-editor');
+                    /** @type NodeListOf<PlaygroundCodeEditor> */
                     const historyResults = this.shadowRoot.querySelectorAll('.history-result-editor');
 
                     historyCodes[i].value = hist.code;
@@ -85,8 +94,8 @@ export class DevToolsConsole extends LitElement {
         // Only the bravest of warriors can look into the eyes of the monster
         // without being lashed into a uncontrollable rage
         if (isConsoleSubmit(e)) {
-            const consoleContent = this.editor.value;
-            if (consoleContent.trim().length <= 0) return;
+            const consoleContent = this.editor.value.trim();
+            if (consoleContent.length <= 0) return;
 
             const submitEvent = new CustomEvent('devtools-console-submit', { detail: { code: consoleContent } });
             const eventSuccess = this.dispatchEvent(submitEvent);
@@ -101,12 +110,14 @@ export class DevToolsConsole extends LitElement {
             this.historyIndex = -1;
         }
         if (isArrowUpOrDown(e)) {
-            const cm = this.editor._codemirror;
-            const cursorPosition = cm.getCursor();
+            const cursorPosition = this.editor.cursorPosition;
+            console.log(JSON.stringify(cursorPosition));
             const isArrowUp = e.key === 'ArrowUp';
-            const isValidHistoryPress =
-                cursorPosition.outside !== undefined || cursorPosition.line + cursorPosition.ch === 0;
-            if (isArrowUp && isValidHistoryPress) {
+            const lineCount = (this.editor.value.match(/\n/g) || []).length;
+            const isValidHistoryUpPress = isArrowUp && cursorPosition?.line + cursorPosition.ch === 0;
+            const isValidHistoryDownPress = !isArrowUp && lineCount === cursorPosition?.line && this.previousCursorPosition.line === cursorPosition.line;
+
+            if (isValidHistoryUpPress) {
                 if (this.historyIndex === 0) return;
 
                 if (this.historyIndex > 0) {
@@ -115,7 +126,7 @@ export class DevToolsConsole extends LitElement {
                     this.historyIndex = this.commandHistory.length - 1;
                 }
             }
-            if (!isArrowUp && isValidHistoryPress) {
+            if (isValidHistoryDownPress) {
                 if (this.historyIndex < 0) return;
                 // Is down
                 if (this.historyIndex < this.commandHistory.length - 1) {
@@ -129,13 +140,18 @@ export class DevToolsConsole extends LitElement {
             if (this.historyIndex >= 0) {
                 this.value = this.commandHistory[this.historyIndex].code;
                 window.requestAnimationFrame(() => {
-                    cm.focus();
-                    cm.setCursor(cm.lineCount(), 0);
+                    //cm.focus();
+                    this.editor.focus();
+                    //cm.setCursor(cm.lineCount(), 0);
                 });
             }
-            // If arrows, ignore the rest of the handlers
+            // If arrows, save the cursor position and ignore the rest of the handlers
+            this.previousCursorPosition = this.editor.cursorPosition;
             return;
         }
+
+        this.previousCursorPosition = this.editor.cursorPosition;
+
         if (isSideArrow(e)) return;
 
         let newStoreVal = this.editor.value;
@@ -191,6 +207,9 @@ export class DevToolsConsole extends LitElement {
         });
     }
 
+    /**
+     * @param {{ error: any; errorID: string; }} historyEntry
+     */
     renderHistoryReturnValue(historyEntry) {
         let resultType = 'js';
         if (historyEntry.error && historyEntry.errorID === '_ERR_IS_NODE') {
