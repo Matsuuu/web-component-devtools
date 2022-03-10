@@ -173,10 +173,13 @@ export class DevToolsConsole extends LitElement {
                 ${caret}
                 <playground-project id="console-project">
                     <script type="sample/ts" filename="index.ts">
-                        window.addEventListener('DOMContentLoaded', () => {
-                          const world = document.createTextNode(' World!');
-                          document.body.appendChild(world);
-                        });
+                    </script>
+                    <script filename="package.json">
+                        {
+                            "dependencies": {
+
+                            }
+                        }
                     </script>
                 </playground-project>
 
