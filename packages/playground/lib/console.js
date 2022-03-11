@@ -8,6 +8,7 @@ import materialTheme from 'playground-elements/themes/material-darker.css.js';
 import ttcnTheme from 'playground-elements/themes/ttcn.css.js';
 import { isArrowUpOrDown, isConsoleClear, isConsoleSubmit, isSideArrow, raf } from './util';
 
+// TODO: Hide fold symbol from code editor
 export class DevToolsConsole extends LitElement {
     static get properties() {
         return {
@@ -26,6 +27,8 @@ export class DevToolsConsole extends LitElement {
         /** @type PlaygroundCodeEditor */
         this.editor = undefined;
         this.theme = 'light';
+        // Value is used to modify the value of the editor from the outside.
+        // If you want to modify the current editor value, use this.editor.value instead.
         this.value = '';
         this.commandHistory = [];
         this.historyIndex = -1;
@@ -114,7 +117,6 @@ export class DevToolsConsole extends LitElement {
         }
         if (isArrowUpOrDown(e)) {
             const cursorPosition = this.editor.cursorPosition;
-            console.log(JSON.stringify(cursorPosition));
             const isArrowUp = e.key === 'ArrowUp';
             const lineCount = (this.editor.value.match(/\n/g) || []).length;
             const isValidHistoryUpPress = isArrowUp && cursorPosition?.line + cursorPosition.ch === 0;
@@ -138,13 +140,14 @@ export class DevToolsConsole extends LitElement {
                 if (this.historyIndex < this.commandHistory.length - 1) {
                     this.historyIndex += 1;
                 } else {
-                    this.value = this.currentCommandStore;
+                    this.editor.value = this.currentCommandStore;
                     this.historyIndex = -1;
                     return;
                 }
             }
             if (this.historyIndex >= 0) {
-                this.value = this.commandHistory[this.historyIndex].code;
+                console.log("FOO");
+                this.editor.value = this.commandHistory[this.historyIndex].code;
                 window.requestAnimationFrame(() => {
                     this.editor.focus();
                 });
@@ -158,12 +161,18 @@ export class DevToolsConsole extends LitElement {
 
         if (isSideArrow(e)) return;
 
+        // If we get here, we can trust it's an actual input
         let newStoreVal = this.editor.value;
         // Add the newly added char
         if (e.key && e.key.length === 1) {
             newStoreVal += e.key;
         }
         this.currentCommandStore = newStoreVal;
+    }
+
+    _getPreInjectValue() {
+        console.log(this.value.lastIndexOf("}"))
+        return this.value.substring(0, this.value.lastIndexOf("}"));
     }
 
     render() {
@@ -173,6 +182,16 @@ export class DevToolsConsole extends LitElement {
                 ${caret}
                 <playground-project id="console-project">
                     <script type="sample/ts" filename="index.ts">
+                        /* playground-fold */
+                        ${this._getPreInjectValue()}
+                        ______devtools_inject_ignorable_scope_function() {
+                        /* playground-fold-end */
+
+
+                        /* playground-fold */
+                        }
+                        }
+                        /* playground-fold-end */
                     </script>
                     <script filename="package.json">
                         {
