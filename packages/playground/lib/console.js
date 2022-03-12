@@ -6,9 +6,8 @@ import { PlaygroundCodeEditor } from 'playground-elements/playground-code-editor
 import gruvboxTheme from 'playground-elements/themes/gruvbox-dark.css.js';
 import materialTheme from 'playground-elements/themes/material-darker.css.js';
 import ttcnTheme from 'playground-elements/themes/ttcn.css.js';
-import { isArrowUpOrDown, isConsoleClear, isConsoleSubmit, isSideArrow, raf } from './util';
+import { isArrowUpOrDown, isConsoleClear, isConsoleSubmit, isEscape, isSelectAll, isSideArrow, raf } from './util';
 
-// TODO: Hide fold symbol from code editor
 export class DevToolsConsole extends LitElement {
     static get properties() {
         return {
@@ -92,6 +91,12 @@ export class DevToolsConsole extends LitElement {
         this.requestUpdate();
     }
 
+    _getEditorValue() {
+        const rawValue = this.editor.value;
+        const actualValue = rawValue.substring(rawValue.indexOf("/* playground-hide-end */") + "/* playground-hide-end */".length);
+        return actualValue;
+    }
+
     /**
      * @param {KeyboardEvent} e
      */
@@ -99,14 +104,19 @@ export class DevToolsConsole extends LitElement {
         // Herein lies the spaghetti monster.
         // Only the bravest of warriors can look into the eyes of the monster
         // without being lashed into a uncontrollable rage
+        if (isSelectAll(e)) {
+            e.preventDefault();
+            return;
+        }
         if (isConsoleSubmit(e)) {
-            const consoleContent = this.editor.value.trim();
+            const consoleContent = this._getEditorValue().trim();
             if (consoleContent.length <= 0) return;
 
+            console.log(consoleContent);
             const submitEvent = new CustomEvent('devtools-console-submit', { detail: { code: consoleContent } });
             const eventSuccess = this.dispatchEvent(submitEvent);
             if (eventSuccess) {
-                this.editor.value = '';
+                this.editor.value = this._getEditorValueInjected() || '';
             }
             this.historyIndex = -1;
         }
@@ -146,7 +156,6 @@ export class DevToolsConsole extends LitElement {
                 }
             }
             if (this.historyIndex >= 0) {
-                console.log("FOO");
                 this.editor.value = this.commandHistory[this.historyIndex].code;
                 window.requestAnimationFrame(() => {
                     this.editor.focus();
@@ -170,9 +179,18 @@ export class DevToolsConsole extends LitElement {
         this.currentCommandStore = newStoreVal;
     }
 
-    _getPreInjectValue() {
-        console.log(this.value.lastIndexOf("}"))
-        return this.value.substring(0, this.value.lastIndexOf("}"));
+    /**
+        * Fetch all of class, but the last closing bracket, allowing us
+        * to inject a context-aware function there so that we can access
+        * the local variables.
+        */
+    _getEditorValueInjected() {
+        return `
+        /* playground-hide */
+        ${this.value.substring(0, this.value.lastIndexOf("}"))}
+        constructor() {
+                        /* playground-hide-end */
+    `;
     }
 
     render() {
@@ -182,18 +200,9 @@ export class DevToolsConsole extends LitElement {
                 ${caret}
                 <playground-project id="console-project">
                     <script type="sample/ts" filename="index.ts">
-                        /* playground-fold */
-                        ${this._getPreInjectValue()}
-                        ______devtools_inject_ignorable_scope_function() {
-                        /* playground-fold-end */
-
-
-                        /* playground-fold */
-                        }
-                        }
-                        /* playground-fold-end */
+                        ${this._getEditorValueInjected()}
                     </script>
-                    <script filename="package.json">
+                    <script filename="package.json" hidden>
                         {
                             "dependencies": {
 
