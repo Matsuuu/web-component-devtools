@@ -12,7 +12,7 @@
   "dependencies": {
     "js-beautify": "^1.14.0",
     "lit": "^2.2.0",
-    "playground-elements": "^0.15.0"
+    "playground-elements": "^0.15.2"
   },
   "devDependencies": {
     "@web/dev-server": "^0.1.22"
