@@ -119,6 +119,7 @@ export class DevToolsConsole extends LitElement {
     }
 
     _getHiddenContentLength() {
+        if (!this.editor.value.includes("/* playground-hide-end */")) return 0;
         return this.editor.value.indexOf('/* playground-hide-end */') + '/* playground-hide-end */'.length
     }
 
@@ -165,7 +166,8 @@ export class DevToolsConsole extends LitElement {
             const cursorPosition = this.editor.cursorPosition;
             const isArrowUp = e.key === 'ArrowUp';
             const lineCount = (this.editor.value.match(/\n/g) || []).length;
-            const isValidHistoryUpPress = isArrowUp && cursorPosition?.line + cursorPosition.ch === 0;
+            //const isValidHistoryUpPress = isArrowUp && cursorPosition?.line + cursorPosition.ch === 0;
+            const isValidHistoryUpPress = isArrowUp && this.editor.cursorIndex <= this._getHiddenContentLength();
             const isValidHistoryDownPress =
                 !isArrowUp &&
                 lineCount === cursorPosition?.line &&
