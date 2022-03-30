@@ -12,6 +12,10 @@ export class ListItem extends LitElement {
         this.selected = false;
     }
 
+    launchAlert(message) {
+        alert(message);
+    }
+
     render() {
         return html` <p><slot></slot></p> `;
     }

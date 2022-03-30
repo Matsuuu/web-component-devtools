@@ -203,6 +203,15 @@
             },
             {
               "kind": "method",
+              "name": "launchAlert",
+              "parameters": [
+                {
+                  "name": "message"
+                }
+              ]
+            },
+            {
+              "kind": "method",
               "name": "render"
             },
             {

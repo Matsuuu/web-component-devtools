@@ -47,7 +47,7 @@ export class DevToolsConsole extends LitElement {
     async updated(_changedProperties) {
         await raf();
         /** @type PlaygroundCodeEditor */
-        this.editor = this.shadowRoot.querySelector('#main-editor').shadowRoot.querySelector("playground-code-editor");
+        this.editor = this.shadowRoot.querySelector('#main-editor').shadowRoot.querySelector('playground-code-editor');
         if (_changedProperties.has('value')) {
             this.editor.value = this.value;
         }
@@ -83,7 +83,26 @@ export class DevToolsConsole extends LitElement {
 
     focusEditor() {
         // Quite hacky, maybe there's a better way?
-        /** @type HTMLElement */ (this.editor?.shadowRoot?.querySelector('.CodeMirror-code'))?.focus();
+        this._getCodeMirrorElement()?.focus();
+    }
+
+    /**
+     * @returns {HTMLElement | undefined}
+     */
+    _getCodeMirrorElement() {
+        return this.editor?.shadowRoot?.querySelector('.CodeMirror-code');
+    }
+
+    /**
+     * @returns {import("codemirror").Editor | undefined}
+     */
+    _getCodeMirrorCodeInstance() {
+        return this.editor?._codemirror;
+    }
+
+    _focusCorrectArea() {
+        const instance = this._getCodeMirrorCodeInstance();
+        instance.setCursor(instance.lineCount(), 0);
     }
 
     addHistoryEntry(historyEntry) {
@@ -93,8 +112,25 @@ export class DevToolsConsole extends LitElement {
 
     _getEditorValue() {
         const rawValue = this.editor.value;
-        const actualValue = rawValue.substring(rawValue.indexOf("/* playground-hide-end */") + "/* playground-hide-end */".length);
+        const actualValue = rawValue.substring(
+            rawValue.indexOf('/* playground-hide-end */') + '/* playground-hide-end */'.length,
+        );
         return actualValue;
+    }
+
+    _getHiddenContentLength() {
+        return this.editor.value.indexOf('/* playground-hide-end */') + '/* playground-hide-end */'.length
+    }
+
+    /**
+        * As we have this kinda hacky hidden portion to get the context correct,
+        * we want to make sure the user's cursor is at the end of the portion, 
+        * so that the context is injected correctly.
+        */
+    correctCursorPosition() {
+        if (this.editor.cursorIndex < this._getHiddenContentLength()) {
+            this._focusCorrectArea();
+        }
     }
 
     /**
@@ -108,11 +144,11 @@ export class DevToolsConsole extends LitElement {
             e.preventDefault();
             return;
         }
+        this.correctCursorPosition();
         if (isConsoleSubmit(e)) {
             const consoleContent = this._getEditorValue().trim();
             if (consoleContent.length <= 0) return;
 
-            console.log(consoleContent);
             const submitEvent = new CustomEvent('devtools-console-submit', { detail: { code: consoleContent } });
             const eventSuccess = this.dispatchEvent(submitEvent);
             if (eventSuccess) {
@@ -180,17 +216,15 @@ export class DevToolsConsole extends LitElement {
     }
 
     /**
-        * Fetch all of class, but the last closing bracket, allowing us
-        * to inject a context-aware function there so that we can access
-        * the local variables.
-        */
+     * Fetch all of class, but the last closing bracket, allowing us
+     * to inject a context-aware function there so that we can access
+     * the local variables.
+     */
     _getEditorValueInjected() {
-        return `
-        /* playground-hide */
-        ${this.value.substring(0, this.value.lastIndexOf("}"))}
-        constructor() {
-                        /* playground-hide-end */
-    `;
+        return `/* playground-hide */${this.value.substring(
+            0,
+            this.value.lastIndexOf('}'),
+        )}constructor() {/* playground-hide-end */`.trim();
     }
 
     render() {
