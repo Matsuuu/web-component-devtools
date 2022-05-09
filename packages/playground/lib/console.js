@@ -149,7 +149,6 @@ export class DevToolsConsole extends LitElement {
      * @param {KeyboardEvent} e
      */
     onKeyDown(e) {
-        console.log(this.editor.value);
         if (this.editor.value.length <= 0) {
             this.resetEditorValue();
         }
