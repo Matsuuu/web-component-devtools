@@ -49,7 +49,7 @@ export class DevToolsConsole extends LitElement {
         /** @type PlaygroundCodeEditor */
         this.editor = this.shadowRoot.querySelector('#main-editor').shadowRoot.querySelector('playground-code-editor');
         if (_changedProperties.has('value')) {
-            this.editor.value = this.value;
+            this.resetEditorValue();
         }
 
         // Hack until the value patch lands on playgrounds
@@ -94,6 +94,9 @@ export class DevToolsConsole extends LitElement {
     }
 
     /**
+     * This is something that should not be a permantent solution but it
+     * is done now since it's something that isn't exposed
+     *
      * @returns {import("codemirror").Editor | undefined}
      */
     _getCodeMirrorCodeInstance() {
@@ -105,6 +108,9 @@ export class DevToolsConsole extends LitElement {
         instance.setCursor(instance.lineCount(), 0);
     }
 
+    /**
+     * @param {any} historyEntry
+     */
     addHistoryEntry(historyEntry) {
         this.commandHistory.push(historyEntry);
         this.requestUpdate();
@@ -119,31 +125,33 @@ export class DevToolsConsole extends LitElement {
     }
 
     _getHiddenContentLength() {
-        if (!this.editor.value.includes("/* playground-hide-end */")) return 0;
-        return this.editor.value.indexOf('/* playground-hide-end */') + '/* playground-hide-end */'.length
+        if (!this.editor.value.includes('/* playground-hide-end */')) return 0;
+        return this.editor.value.indexOf('/* playground-hide-end */') + '/* playground-hide-end */'.length;
     }
 
     /**
-        * As we have this kinda hacky hidden portion to get the context correct,
-        * we want to make sure the user's cursor is at the end of the portion, 
-        * so that the context is injected correctly.
-        */
+     * As we have this kinda hacky hidden portion to get the context correct,
+     * we want to make sure the user's cursor is at the end of the portion,
+     * so that the context is injected correctly.
+     */
     correctCursorPosition() {
         if (this.editor.cursorIndex < this._getHiddenContentLength()) {
             this._focusCorrectArea();
         }
     }
 
+    resetEditorValue() {
+        this.editor.value = this._getEditorValueInjected();
+        this._focusCorrectArea();
+    }
+
     /**
      * @param {KeyboardEvent} e
      */
     onKeyDown(e) {
-        // Herein lies the spaghetti monster.
-        // Only the bravest of warriors can look into the eyes of the monster
-        // without being lashed into a uncontrollable rage
-        if (isSelectAll(e)) {
-            e.preventDefault();
-            return;
+        console.log(this.editor.value);
+        if (this.editor.value.length <= 0) {
+            this.resetEditorValue();
         }
         this.correctCursorPosition();
         if (isConsoleSubmit(e)) {
@@ -153,7 +161,7 @@ export class DevToolsConsole extends LitElement {
             const submitEvent = new CustomEvent('devtools-console-submit', { detail: { code: consoleContent } });
             const eventSuccess = this.dispatchEvent(submitEvent);
             if (eventSuccess) {
-                this.editor.value = this._getEditorValueInjected() || '';
+                this.resetEditorValue();
             }
             this.historyIndex = -1;
         }
@@ -166,7 +174,6 @@ export class DevToolsConsole extends LitElement {
             const cursorPosition = this.editor.cursorPosition;
             const isArrowUp = e.key === 'ArrowUp';
             const lineCount = (this.editor.value.match(/\n/g) || []).length;
-            //const isValidHistoryUpPress = isArrowUp && cursorPosition?.line + cursorPosition.ch === 0;
             const isValidHistoryUpPress = isArrowUp && this.editor.cursorIndex <= this._getHiddenContentLength();
             const isValidHistoryDownPress =
                 !isArrowUp &&
