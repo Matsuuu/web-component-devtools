@@ -35,8 +35,7 @@ export default [
             "crawler-constants": './lib/crawler/crawler-constants.js',
             'crawler-inject': './lib/crawler/crawler-inject.js',
             'spotlight-border': './lib/crawler/spotlight-border.js',
-            'content-messaging': './lib/content/content-messaging.js',
-            'playground': './packages/playground/playground.js'
+            'content-messaging': './lib/content/content-messaging.js'
         },
         output: {
             dir: 'dist',
