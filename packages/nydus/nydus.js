@@ -81,13 +81,20 @@ export class Nydus {
      * @param {NydusOptions} nydusOptions
      */
     constructor(nydusOptions) {
+        /** @type {number} */
+        this._latestActivatedTab = -1;
         /** @type {Array<NydusConnectionOptions>} */
         this.connectionOptions = nydusOptions.connections;
         /** @type {NydusCallback} */
         this.onReady = nydusOptions.onReady;
         /** @type {NydusConnectCallback} */
         this.onConnect = nydusOptions.onConnect;
+        /** @type {boolean} */
+        this.isBackground = nydusOptions.isBackground;
 
+        if (this.isBackground) {
+            console.log("[Nydus]: Instantiating nydus. ", nydusOptions);
+        }
         /** @type { NydusConnectionPoolTabMap } */
         this.connections = {};
         /** @type {boolean} */
@@ -101,7 +108,19 @@ export class Nydus {
         this._needsToSpecifyTab = this._canAccessTabs();
         this.nydusTab = null;
 
+        this._listenForTabChanges();
         this._createAllConnections();
+    }
+
+    _listenForTabChanges() {
+        if (!chrome.tabs) return;
+
+        chrome.tabs.onActivated.addListener(({ tabId, windowId }) => {
+            console.log("Tab id changed to ", tabId);
+            if (tabId >= 0) {
+                this._latestActivatedTab = tabId;
+            }
+        });
     }
 
     async _createAllConnections() {
@@ -121,7 +140,7 @@ export class Nydus {
         await this._determineTabIds();
         const connectionsFlat = this._getConnectionsFlat();
         this.connectionOptions.forEach(connectionOpts => {
-            if (!connectionsFlat.find(con => con.id === connectionOpts.id).ready) {
+            if (!connectionsFlat.find(con => con.id === connectionOpts.id)?.ready) {
                 this.addConnection(
                     connectionOpts.id,
                     !connectionOpts.host,
@@ -158,7 +177,7 @@ export class Nydus {
                     }
                 });
                 chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                    this.nydusTab = tabs[0]?.id ?? chrome.devtools.inspectedWindow.tabId;
+                    this.nydusTab = tabs[0]?.id ?? chrome?.devtools?.inspectedWindow?.tabId ?? this._latestActivatedTab;
                     resolve();
                 });
             } else {
@@ -364,6 +383,7 @@ export class Nydus {
         return new Promise(async resolve => {
             let connection;
             let tabId;
+
             // In devtools context we need to specify which tab to target
             if (this._canAccessTabs() && !isBackground) {
                 tabId = await this._tryGetCurrentTab();
@@ -431,11 +451,14 @@ export class Nydus {
                 if (connection.name !== nydusConnection.id) return;
 
                 let tabId = connection?.sender?.tab?.id;
-                if (!tabId) {
+                if (!tabId || tabId < 0) {
                     tabId = await this._tryGetCurrentTab();
                 }
                 let nydusConnectionCopy = { ...nydusConnection };
                 nydusConnectionCopy.tabId = isBackground ? -1 : tabId ?? this.nydusTab;
+                if (this.isBackground) {
+                    console.log("Setting up connection ", nydusConnectionCopy)
+                }
                 this._handleClientHandshake(connection, nydusConnectionCopy);
 
                 // If we are instructed to bridge the connection, just send the message
