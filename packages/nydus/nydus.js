@@ -51,6 +51,7 @@ const NYDUS_CONNECTION_ROLE = {
 
 const NYDUS_CONNECTION_HANDSHAKE = 'NYDUS_CONNECTION_HANDSHAKE';
 const NYDUS_TAB_PING = 'NYDUS_TAB_PING';
+const NYDUS_LATEST_ACTIVE_TAB_UPDATE = 'NYDUS_LATEST_ACTIVE_TAB_UPDATE';
 
 /**
  * @param {NydusOptions} nydusOptions
@@ -116,10 +117,16 @@ export class Nydus {
         if (!chrome.tabs) return;
 
         chrome.tabs.onActivated.addListener(({ tabId, windowId }) => {
-            console.log("Tab id changed to ", tabId);
             if (tabId >= 0) {
                 this._latestActivatedTab = tabId;
             }
+        });
+    }
+
+    _setActiveTabAsLatestActivatedTab() {
+        chrome.tabs?.query({ active: true, currentWindow: true }, tabs => {
+            console.log("[Nydus]: Setting up latest active tab", tabs[0]?.id);
+            this._latestActivatedTab = tabs[0]?.id ?? this._latestActivatedTab;
         });
     }
 
@@ -203,7 +210,10 @@ export class Nydus {
      * @param {string | number} bridge
      */
     addConnection(connectionId, isClient, onMessage, isBackground = false, bridge = false) {
-        if (this.connections[connectionId]) return; // No duplicates
+        if (this.connections[connectionId]) {
+            console.warn("[WebComponentDevTools]: Duplicate connection attempt");
+            return; // No duplicates
+        }
 
         const nydusConnection = {
             id: connectionId,
@@ -422,7 +432,7 @@ export class Nydus {
                 return resolve(this.nydusTab ?? -1);
             }
             chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                const tabId = tabs.length < 1 ? chrome?.devtools?.inspectedWindow?.tabId : tabs[0].id;
+                const tabId = (tabs.length < 1 ? chrome?.devtools?.inspectedWindow?.tabId : tabs[0].id) ?? this._latestActivatedTab;
                 resolve(tabId ?? -1);
             });
         });
@@ -450,6 +460,10 @@ export class Nydus {
             async function startHandshake(/** @type chrome.runtime.Port */ connection) {
                 if (connection.name !== nydusConnection.id) return;
 
+                if (this.isBackground) {
+                    this._setActiveTabAsLatestActivatedTab();
+                }
+
                 let tabId = connection?.sender?.tab?.id;
                 if (!tabId || tabId < 0) {
                     tabId = await this._tryGetCurrentTab();
@@ -457,7 +471,7 @@ export class Nydus {
                 let nydusConnectionCopy = { ...nydusConnection };
                 nydusConnectionCopy.tabId = isBackground ? -1 : tabId ?? this.nydusTab;
                 if (this.isBackground) {
-                    console.log("Setting up connection ", nydusConnectionCopy)
+                    console.log("[Nydus]: Setting up connection ", nydusConnectionCopy)
                 }
                 this._handleClientHandshake(connection, nydusConnectionCopy);
 
