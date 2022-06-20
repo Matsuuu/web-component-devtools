@@ -1,3 +1,11 @@
+v 0.1.17
+
+- Improve responsiveness to user actions in devtools
+
+v 0.1.14- - 0.1.16
+
+- General performance improvements
+
 v 0.1.13
 
 - Fixed sorting of custom element properties to not throw an error on undefined values
