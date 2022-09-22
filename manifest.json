@@ -19,7 +19,9 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["message-types.js", "connection-channels.js" ],
+            "resources": ["message-types.js", "connection-channels.js", 
+                "content-messaging.js", "nydus.js",
+                "crawler-constants.js", "analyzer.js"],
             "matches": ["<all_urls>"],
             "use_dynamic_urls": true
         }
