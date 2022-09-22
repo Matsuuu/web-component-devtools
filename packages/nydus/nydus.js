@@ -188,6 +188,8 @@ export class Nydus {
                 });
             } else {
                 chrome?.runtime?.sendMessage({ type: NYDUS_TAB_PING }, response => {
+                    if (!response) return resolve();
+
                     let tabId = response.tabId;
                     if (!tabId) {
                         tabId = chrome?.devtools?.inspectedWindow?.tabId;
