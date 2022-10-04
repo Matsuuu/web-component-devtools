@@ -28,7 +28,7 @@
     ],
     "permissions": ["tabs", "contextMenus"],
     "content_security_policy": {
-        "extension_pages": "script-src 'self'; object-src 'self'"
+        "extension_pages": "script-src 'self'; object-src 'self';"
     },
     "icons": {
         "16": "logo-16.png",
