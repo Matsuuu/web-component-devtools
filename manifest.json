@@ -19,14 +19,27 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["message-types.js", "connection-channels.js", 
-                "content-messaging.js", "nydus.js",
-                "crawler-constants.js", "analyzer.js"],
+            "resources": [
+                "message-types.js", 
+                "connection-channels.js", 
+                "content-messaging.js",
+                "nydus.js",
+                "crawler-constants.js",
+                "analyzer.js",
+                "crawler-inject.js",
+                "spotlight-border.js"
+            ],
             "matches": ["<all_urls>"],
             "use_dynamic_urls": true
         }
     ],
-    "permissions": ["tabs", "contextMenus"],
+    "permissions": ["tabs", "contextMenus", "scripting"],
+    "host_permissions": [
+        "http://localhost/"
+      ],
+      "optional_host_permissions": [
+        "*://*/*"
+      ],
     "content_security_policy": {
         "extension_pages": "script-src 'wasm-unsafe-eval'; object-src 'self';script-src-elem 'self';"
     },

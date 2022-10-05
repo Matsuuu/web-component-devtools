@@ -38,7 +38,8 @@ export default [
             'spotlight-border': './lib/crawler/spotlight-border.js',
             'content-messaging': './lib/content/content-messaging.js',
             'connection-channels': './lib/types/connection-channels.js',
-            'message-types': './lib/types/message-types.js'
+            'message-types': './lib/types/message-types.js',
+            'web-component-devtools-dom-action-injector': './lib/crawler/web-component-devtools-dom-action-injector.js'
         },
         output: {
             dir: 'dist',
