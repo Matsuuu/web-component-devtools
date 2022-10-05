@@ -35,7 +35,7 @@
     ],
     "permissions": ["tabs", "contextMenus", "scripting"],
     "host_permissions": [
-        "http://localhost/"
+        "<all_urls>"
       ],
       "optional_host_permissions": [
         "*://*/*"
