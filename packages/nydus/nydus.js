@@ -272,7 +272,7 @@ export class Nydus {
                     `[WebComponentDevTools]: Message send missed. Tab connection pool for tab ${tabId} not found.`,
                     JSON.stringify({
                         recipient,
-                        message,
+                        message: message.length > 200 ? message.substring(0, 200) + "..." : message,
                         tabId,
                     }),
                 );
@@ -290,7 +290,7 @@ export class Nydus {
                     `[WebComponentDevTools]: Message send missed. Connection ${recipient} not found.`,
                     JSON.stringify({
                         recipient,
-                        message,
+                        message: message.length > 200 ? message.substring(0, 200) + "..." : message,
                         tabId,
                     }),
                 );
