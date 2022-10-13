@@ -1,13 +1,14 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Web Component DevTools",
-    "version": "0.1.17",
+    "version": "0.2.0",
     "minimum_chrome_version": "10.0",
     "description": "Developer tooling for Web Components and Web Component Libraries",
     "author": "Matsuuu <huhta.matias@gmail.com>",
     "devtools_page": "wc-devtools-init.html",
     "background": {
-        "page": "wc-devtools-background.html"
+        "service_worker": "background-worker.js",
+        "type": "module"
     },
     "content_scripts": [
         {
@@ -16,9 +17,29 @@
             "run_at": "document_idle"
         }
     ],
-    "web_accessible_resources": ["*.js"],
-    "permissions": ["tabs", "contextMenus"],
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "message-types.js", 
+                "connection-channels.js", 
+                "content-messaging.js",
+                "nydus.js",
+                "crawler-constants.js",
+                "analyzer.js",
+                "crawler-inject.js",
+                "spotlight-border.js"
+            ],
+            "matches": ["<all_urls>"],
+            "use_dynamic_urls": true
+        }
+    ],
+    "permissions": ["tabs", "contextMenus", "scripting"],
+    "host_permissions": [
+        "<all_urls>"
+      ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'wasm-unsafe-eval'; object-src 'self';script-src-elem 'self';"
+    },
     "icons": {
         "16": "logo-16.png",
         "48": "logo-48.png",

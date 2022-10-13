@@ -32,10 +32,12 @@ export default [
             'content_script': './lib/content/content_script.js',
             'nydus': './packages/nydus/nydus.js',
             'background': './lib/background/background.js',
-            "crawler-constants": './lib/crawler/crawler-constants.js',
-            'crawler-inject': './lib/crawler/crawler-inject.js',
+            'background-worker': './lib/background/background-worker.js',
+            //"crawler-constants": './lib/crawler/crawler-constants.js',
             'spotlight-border': './lib/crawler/spotlight-border.js',
-            'content-messaging': './lib/content/content-messaging.js'
+            'content-messaging': './lib/content/content-messaging.js',
+            'connection-channels': './lib/types/connection-channels.js',
+            'message-types': './lib/types/message-types.js'
         },
         output: {
             dir: 'dist',
@@ -43,6 +45,15 @@ export default [
                 analyzer: './analyzer.js'
             }
         },
+        plugins: [
+            resolve(),
+        ],
+    },
+    {
+        input: {
+            'crawler-inject': './lib/crawler/crawler-inject.js',
+        },
+        output: { dir: 'dist' },
         plugins: [
             resolve(),
         ],

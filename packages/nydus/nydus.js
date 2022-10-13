@@ -188,6 +188,8 @@ export class Nydus {
                 });
             } else {
                 chrome?.runtime?.sendMessage({ type: NYDUS_TAB_PING }, response => {
+                    if (!response) return resolve();
+
                     let tabId = response.tabId;
                     if (!tabId) {
                         tabId = chrome?.devtools?.inspectedWindow?.tabId;
@@ -270,7 +272,7 @@ export class Nydus {
                     `[WebComponentDevTools]: Message send missed. Tab connection pool for tab ${tabId} not found.`,
                     JSON.stringify({
                         recipient,
-                        message,
+                        message: message.length > 200 ? message.substring(0, 200) + "..." : message,
                         tabId,
                     }),
                 );
@@ -288,7 +290,7 @@ export class Nydus {
                     `[WebComponentDevTools]: Message send missed. Connection ${recipient} not found.`,
                     JSON.stringify({
                         recipient,
-                        message,
+                        message: message.length > 200 ? message.substring(0, 200) + "..." : message,
                         tabId,
                     }),
                 );
