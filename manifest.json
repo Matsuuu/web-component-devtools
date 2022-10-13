@@ -37,9 +37,6 @@
     "host_permissions": [
         "<all_urls>"
       ],
-      "optional_host_permissions": [
-        "*://*/*"
-      ],
     "content_security_policy": {
         "extension_pages": "script-src 'wasm-unsafe-eval'; object-src 'self';script-src-elem 'self';"
     },
