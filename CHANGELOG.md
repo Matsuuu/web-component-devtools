@@ -1,3 +1,9 @@
+v 0.2.0
+
+- Port project to Manifest Version 3
+- Optimize connections between layers
+- Optimize stability
+
 v 0.1.17
 
 - Improve responsiveness to user actions in devtools
