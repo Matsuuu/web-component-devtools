@@ -1,3 +1,8 @@
+v 0.2.1
+
+- Optimize querying of DOM elements
+- Optimize how IFrames are treated in the query step
+
 v 0.2.0
 
 - Port project to Manifest Version 3
