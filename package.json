@@ -24,5 +24,6 @@
         "rollup": "^2.50.0",
         "rollup-plugin-copy": "^3.4.0"
     },
-    "prettier": "@simplr-wc/prettier-config"
+    "prettier": "@simplr-wc/prettier-config",
+    "version": "0.1.0"
 }
