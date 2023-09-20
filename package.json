@@ -1,6 +1,7 @@
 {
     "dependencies": {
         "@custom-elements-manifest/analyzer": "^0.5.3",
+        "@shoelace-style/shoelace": "^2.8.0",
         "analyzer": "file:packages/analyzer",
         "lit": "*",
         "nydus": "file:packages/nydus",
