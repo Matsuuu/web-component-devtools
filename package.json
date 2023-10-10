@@ -3,6 +3,7 @@
         "@custom-elements-manifest/analyzer": "^0.5.3",
         "@shoelace-style/shoelace": "^2.8.0",
         "analyzer": "file:packages/analyzer",
+        "custom-element-tree": "file:packages/element-tree",
         "lit": "*",
         "nydus": "file:packages/nydus",
         "playground": "file:packages/playground"
