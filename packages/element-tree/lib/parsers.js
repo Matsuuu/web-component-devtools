@@ -144,10 +144,31 @@ function elementIsInsideChildComponent(parentElem, allElements, element) {
 /**
  * @param {HTMLElement} element
  */
-function elementIsDefined(element) {
+export function elementIsDefined(element) {
     const elementDocument = element.ownerDocument;
     const elementWindow = elementDocument.defaultView;
 
     const tagName = element.tagName.toLowerCase();
     return typeof elementWindow.customElements.get(tagName) !== "undefined";
+}
+
+
+/**
+ * @param {Node | Element} node
+ */
+export function buildNodeText(node) {
+    let nodeText = `<${node.nodeName.toLowerCase()}`;
+    // @ts-ignore
+    const attributes = node.attributes ?? [];
+    for (const attr of attributes) {
+        let val = attr.value;
+        if (val != null && val.length === 0) {
+            val = '';
+        } else {
+            val = `="${attr.value}"`;
+        }
+        nodeText += ` ${attr.name}${val}`;
+    }
+    nodeText += '>';
+    return nodeText;
 }

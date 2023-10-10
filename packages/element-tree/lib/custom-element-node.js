@@ -1,4 +1,4 @@
-import { getElements } from "./parsers";
+import { buildNodeText, elementIsDefined, getElements } from './parsers.js';
 
 export class CustomElementNode {
     /**
@@ -17,10 +17,7 @@ export class CustomElementNode {
         /** @type { CustomElementNode } parent */
         this.parent = parentTreeOrNode;
         /** @type { number | undefined } parentId */
-        this.parentId =
-            parentTreeOrNode instanceof CustomElementNode
-                ? parentTreeOrNode.id
-                : undefined;
+        this.parentId = parentTreeOrNode instanceof CustomElementNode ? parentTreeOrNode.id : undefined;
         /** @type { Document } document */
         this.document = this.element.ownerDocument;
         /** @type { Node } */
@@ -31,8 +28,27 @@ export class CustomElementNode {
         this.siblings = [];
         /** @type { boolean } inShadowRoot */
         this.inShadowRoot = inShadow;
+        /** @type { boolean } isDefined */
+        this.isDefined = elementIsDefined(element);
+        /** @type { string } nodeText */
+        this.nodeText = buildNodeText(element);
 
         this._getChildren();
+    }
+
+    /**
+     * @returns { import('./custom-element-tree.js').CustomElementNodeInMessageFormat }
+     * */
+    toMessageFormat() {
+        return {
+            id: this.id,
+            tagName: this.tagName,
+            // parent: this.parent.toMessageFormat(), // If we add this, we need to memo/cache this function
+            parentId: this.parentId,
+            children: this.children.map(child => child.toMessageFormat()),
+            isDefined: this.isDefined,
+            nodeText: this.nodeText,
+        };
     }
 
     /**
@@ -88,10 +104,10 @@ export class CustomElementNode {
         } else {
             console.group(this.element);
         }
-        console.groupCollapsed("Data");
-        Object.entries(this).forEach((entry) => console.log(entry[0], entry[1]));
+        console.groupCollapsed('Data');
+        Object.entries(this).forEach(entry => console.log(entry[0], entry[1]));
         console.groupEnd();
-        this.children.forEach((child) => child.logNode());
+        this.children.forEach(child => child.logNode());
         console.groupEnd();
     }
 }

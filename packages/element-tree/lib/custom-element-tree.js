@@ -1,6 +1,23 @@
-import { CustomElementNode } from "./custom-element-node";
-import { logElementTree } from "./loggers";
-import { getElements } from "./parsers";
+import { CustomElementNode } from './custom-element-node';
+import { logElementTree } from './loggers';
+import { getElements } from './parsers';
+
+/**
+ * @typedef CustomElementTreeInMessageFormat
+ * @property { number } elementCount
+ * @property { Array<CustomElementNodeInMessageFormat> } elements
+ * */
+
+/**
+ * @typedef CustomElementNodeInMessageFormat
+ * @property { number } id
+ * @property { string } tagName
+ * @property { number } parentId
+ * @property { Array<CustomElementNodeInMessageFormat> } children
+ * @property { boolean } isDefined
+ * @property { string } nodeText
+ * */
+
 
 export class CustomElementTree {
     constructor(dom = document.body) {
@@ -19,6 +36,13 @@ export class CustomElementTree {
         this.elementCount = this.flat().length;
     }
 
+    toMessageFormat() {
+        return {
+            elementCount: this.elementCount,
+            elements: this.elements.map(el => el.toMessageFormat()),
+        };
+    }
+
     /**
      * Returns a flat representation of the CustomElementTree
      * */
@@ -28,13 +52,13 @@ export class CustomElementTree {
          * @param {CustomElementNode} elementNode
          */
         function getChildren(elementArray, elementNode) {
-            elementNode.children.forEach((el) => {
+            elementNode.children.forEach(el => {
                 elementArray.push(el);
                 getChildren(elementArray, el);
             });
         }
         const elements = [];
-        this.elements.forEach((e) => {
+        this.elements.forEach(e => {
             elements.push(e);
             getChildren(elements, e);
         });
@@ -55,12 +79,12 @@ export class CustomElementTree {
      */
     _log(collapsed) {
         if (collapsed) {
-            console.groupCollapsed("Custom Element Tree");
+            console.groupCollapsed('Custom Element Tree');
         } else {
-            console.group("Custom Element Tree");
+            console.group('Custom Element Tree');
         }
-        console.log("Elements #: ", this.elementCount);
-        this.elements.forEach((el) => el.logNode());
+        console.log('Elements #: ', this.elementCount);
+        this.elements.forEach(el => el.logNode());
         console.groupEnd();
     }
 }
