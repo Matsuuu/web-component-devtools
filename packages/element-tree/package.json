@@ -11,5 +11,6 @@
   },
   "keywords": [],
   "author": "Matsuuu <huhta.matias@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "types": "./types/custom-element-tree.d.ts"
 }
