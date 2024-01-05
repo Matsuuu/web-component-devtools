@@ -1,0 +1,16 @@
+{
+  "name": "custom-element-tree",
+  "version": "0.0.3",
+  "description": "",
+  "main": "lib/custom-element-tree.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Matsuuu <huhta.matias@gmail.com>",
+  "license": "MIT",
+  "types": "./types/custom-element-tree.d.ts"
+}

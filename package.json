@@ -1,14 +1,16 @@
 {
     "dependencies": {
         "@custom-elements-manifest/analyzer": "^0.5.3",
+        "@shoelace-style/shoelace": "^2.8.0",
         "analyzer": "file:packages/analyzer",
+        "custom-element-tree": "file:packages/element-tree",
         "lit": "*",
         "nydus": "file:packages/nydus",
         "playground": "file:packages/playground"
     },
     "scripts": {
         "start": "npm run build:watch",
-        "start:ui": "npx @web/dev-server --node-resolve --watch --app-index html/wc-devtools.html --open",
+        "start:ui": "npx @web/dev-server --node-resolve --watch --app-index html/wc-devtools.html --open html/wc-devtools.html?devmode=true",
         "build": "rimraf dist && rollup -c rollup.config.js",
         "build:watch": "rimraf dist && rollup -c --watch rollup.config.js",
         "package": "npm run build && rimraf extension.zip && zip -j -r extension.zip dist/*",
