@@ -17,10 +17,11 @@ function getRandomIdArray() {
 
 /**
  * @param {CustomElementTree | CustomElementNode} treeOrNode
+ * @param {string[]} ignoredElements
  *
  * @returns { Array<CustomElementNode> }
  */
-export function getElements(treeOrNode) {
+export function getElements(treeOrNode, ignoredElements) {
     /** @type { Array<CustomElementNode> } */
     const elements = [];
     /** @type { NodeListOf<HTMLElement | HTMLIFrameElement> } */
@@ -35,22 +36,24 @@ export function getElements(treeOrNode) {
     const allElements = new Array(
         lightDomElements.length + (shadowDomElements?.length ?? 0)
     );
-    addElements(elements, lightDomElements, allElements, ids, treeOrNode, false);
-    addElements(elements, shadowDomElements, allElements, ids, treeOrNode, true);
+    addElements(elements, lightDomElements, allElements, ids, treeOrNode, ignoredElements, false);
+    addElements(elements, shadowDomElements, allElements, ids, treeOrNode, ignoredElements, true);
 
     elements.forEach(elem => {
         const siblings = getSiblings(elem, elements);
         elem.siblings = siblings;
     });
 
-    return elements.filter(
-        (el) =>
-            !elementIsInsideChildComponent(
-                treeOrNode.element,
-                allElements,
-                el.element
-            )
-    );
+    return elements
+        .filter(el => !ignoredElements.includes(el.tagName.toLowerCase()))
+        .filter(
+            (el) =>
+                !elementIsInsideChildComponent(
+                    treeOrNode.element,
+                    allElements,
+                    el.element
+                )
+        );
 }
 
 /**
@@ -86,6 +89,7 @@ function getSiblings(elementNode, otherElements) {
  * @param {Array<CustomElementNode>} allElements
  * @param {IterableIterator<number>} randomIds
  * @param {CustomElementTree | CustomElementNode} treeOrNode
+ * @param {string[]} ignoredElements
  * @param {boolean} isShadow
  */
 function addElements(
@@ -94,6 +98,7 @@ function addElements(
     allElements,
     randomIds,
     treeOrNode,
+    ignoredElements,
     isShadow
 ) {
     const parent = treeOrNode instanceof CustomElementNode ? treeOrNode : undefined;
@@ -104,7 +109,8 @@ function addElements(
                     elem,
                     randomIds.next().value,
                     parent,
-                    isShadow
+                    isShadow,
+                    ignoredElements
                 )
             );
             allElements.push(elem);

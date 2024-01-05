@@ -13,13 +13,19 @@
  * @property { string } nodeText
  * */
 export class CustomElementTree {
-    constructor(dom?: HTMLElement);
+    /**
+     * @param {string[]} ignoredElements
+     */
+    constructor(dom?: HTMLElement, ignoredElements?: string[]);
     /** @type { number } */
     elementCount: number;
     /** @type { Array<CustomElementNode> } */
     elements: Array<CustomElementNode>;
     element: HTMLElement;
-    _findElements(): void;
+    /**
+     * @param {string[]} ignoredElements
+     */
+    _findElements(ignoredElements: string[]): void;
     toMessageFormat(): {
         elementCount: number;
         elements: CustomElementNodeInMessageFormat[];

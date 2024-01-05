@@ -20,7 +20,10 @@ import { getElements } from './parsers';
 
 
 export class CustomElementTree {
-    constructor(dom = document.body) {
+    /**
+     * @param {string[]} ignoredElements
+     */
+    constructor(dom = document.body, ignoredElements = []) {
         /** @type { number } */
         this.elementCount = 0;
         /** @type { Array<CustomElementNode> } */
@@ -28,11 +31,16 @@ export class CustomElementTree {
 
         this.element = dom;
 
-        this._findElements();
+        const usableIgnoredElements = ignoredElements.map(ie => ie.toLowerCase());
+
+        this._findElements(usableIgnoredElements);
     }
 
-    _findElements() {
-        this.elements = getElements(this);
+    /**
+     * @param {string[]} ignoredElements
+     */
+    _findElements(ignoredElements) {
+        this.elements = getElements(this, ignoredElements);
         this.elementCount = this.flat().length;
     }
 

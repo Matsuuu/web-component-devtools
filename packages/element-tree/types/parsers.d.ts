@@ -1,9 +1,10 @@
 /**
  * @param {CustomElementTree | CustomElementNode} treeOrNode
+ * @param {string[]} ignoredElements
  *
  * @returns { Array<CustomElementNode> }
  */
-export function getElements(treeOrNode: CustomElementTree | CustomElementNode): Array<CustomElementNode>;
+export function getElements(treeOrNode: CustomElementTree | CustomElementNode, ignoredElements: string[]): Array<CustomElementNode>;
 /**
  * @param {HTMLElement} element
  */

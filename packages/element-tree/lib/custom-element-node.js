@@ -6,8 +6,9 @@ export class CustomElementNode {
      * @param {number} id
      * @param {CustomElementNode} parentTreeOrNode
      * @param {boolean} inShadow
+     * @param {string[]} ignoredElements
      */
-    constructor(element, id, parentTreeOrNode, inShadow) {
+    constructor(element, id, parentTreeOrNode, inShadow, ignoredElements) {
         /** @type { number } id */
         this.id = id;
         /** @type { string } tagName */
@@ -32,6 +33,8 @@ export class CustomElementNode {
         this.isDefined = elementIsDefined(element);
         /** @type { string } nodeText */
         this.nodeText = buildNodeText(element);
+        /** @type { string[] } ignoredElements */
+        this.ignoredElements = ignoredElements;
 
         this._getChildren();
     }
@@ -92,7 +95,7 @@ export class CustomElementNode {
 
     /** @private */
     _getChildren() {
-        this.children = getElements(this);
+        this.children = getElements(this, this.ignoredElements);
     }
 
     /**
