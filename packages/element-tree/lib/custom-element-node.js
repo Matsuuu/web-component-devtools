@@ -12,7 +12,7 @@ export class CustomElementNode {
         /** @type { number } id */
         this.id = id;
         /** @type { string } tagName */
-        this.tagName = element.tagName;
+        this.tagName = element.tagName.toLowerCase();
         /** @type { HTMLElement } element */
         this.element = element;
         /** @type { CustomElementNode } parent */
