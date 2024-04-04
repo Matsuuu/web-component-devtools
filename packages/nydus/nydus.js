@@ -391,25 +391,29 @@ export class Nydus {
      * @param {boolean} isBackground
      */
     _createConnection(nydusConnection, isBackground) {
-        return new Promise(async resolve => {
+        return new Promise(async (resolve, reject) => {
             let connection;
             let tabId;
 
             // In devtools context we need to specify which tab to target
-            if (this._canAccessTabs() && !isBackground) {
-                tabId = await this._tryGetCurrentTab();
-                connection = chrome.tabs.connect(tabId, {
-                    name: nydusConnection.id.toString(),
-                });
-            } else {
-                tabId = -1;
-                connection = chrome.runtime.connect({
-                    name: nydusConnection.id.toString(),
-                });
+            try {
+                if (this._canAccessTabs() && !isBackground) {
+                    tabId = await this._tryGetCurrentTab();
+                    connection = chrome.tabs.connect(tabId, {
+                        name: nydusConnection.id.toString(),
+                    });
+                } else {
+                    tabId = -1;
+                    connection = chrome.runtime.connect({
+                        name: nydusConnection.id.toString(),
+                    });
+                }
+                this._addConnectionToPool(tabId, nydusConnection);
+                this._addConnectionOnDisconnectListeners(connection, nydusConnection.id.toString(), tabId);
+                resolve(connection);
+            } catch (ex) {
+                reject("Could not establish connection between layers.\n\n" + ex)
             }
-            this._addConnectionToPool(tabId, nydusConnection);
-            this._addConnectionOnDisconnectListeners(connection, nydusConnection.id.toString(), tabId);
-            resolve(connection);
         });
     }
 
