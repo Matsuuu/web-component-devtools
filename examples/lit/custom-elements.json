@@ -129,7 +129,7 @@
               "type": {
                 "text": "object"
               },
-              "default": "{\n            id: 22,\n            name: 'Matsuuu',\n            languages: ['Java', 'Javascript'],\n        }"
+              "default": "{\n      id: 22,\n      name: 'Matsuuu',\n      languages: ['Java', 'Javascript'],\n    }"
             },
             {
               "kind": "field",
@@ -137,7 +137,7 @@
               "type": {
                 "text": "array"
               },
-              "default": "[\n            { id: 1, text: 'Hello' },\n            { id: 2, text: 'Hi' },\n            { id: 3, text: 'Bonjour' },\n        ]"
+              "default": "[\n      { id: 1, text: 'Hello' },\n      { id: 2, text: 'Hi' },\n      { id: 3, text: 'Bonjour' },\n      { id: 5, text: 'Hello' },\n      { id: 8, text: 'Hi' },\n      { id: 11, text: 'Bonjour' },\n      { id: 7, text: 'Hello' },\n      { id: 13, text: 'Hi' },\n      { id: 6, text: 'Bonjour' },\n      { id: 5, text: 'Hello' },\n      { id: 3, text: 'Hi' },\n      { id: 6, text: 'Bonjour' },\n      { id: 1, text: 'Hello' },\n      { id: 2, text: 'Hi' },\n      { id: 3, text: 'Bonjour' },\n      { id: 1, text: 'Hello' },\n      { id: 2, text: 'Hi' },\n      { id: 3, text: 'Bonjour' },\n      { id: 3, text: 'Hi' },\n      { id: 6, text: 'Bonjour' },\n      { id: 1, text: 'Hello' },\n      { id: 2, text: 'Hi' },\n      { id: 3, text: 'Bonjour' },\n      { id: 1, text: 'Hello' },\n      { id: 2, text: 'Hi' },\n      { id: 3, text: 'Bonjour' },\n    ]"
             },
             {
               "kind": "field",
