@@ -4,13 +4,14 @@ import copy from 'rollup-plugin-copy';
 
 export default [
     {
-        external: ["analyzer", "nydus"],
+        external: ["analyzer", "nydus", "custom-element-tree"],
         input: 'html/*.html',
         output: {
             dir: 'dist',
             paths: {
                 analyzer: './analyzer.js',
-                nydus: "./nydus.js"
+                nydus: "./nydus.js",
+                "custom-element-tree": "./custom-element-tree.js"
             }
         },
         plugins: [
@@ -31,6 +32,7 @@ export default [
         input: {
             'content_script': './lib/content/content_script.js',
             'nydus': './packages/nydus/nydus.js',
+            'custom-element-tree': './packages/element-tree/lib/custom-element-tree.js',
             'background': './lib/background/background.js',
             'background-worker': './lib/background/background-worker.js',
             //"crawler-constants": './lib/crawler/crawler-constants.js',
