@@ -226,6 +226,10 @@
                 "text": "boolean"
               },
               "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "numb"
             }
           ],
           "superclass": {
