@@ -352,8 +352,6 @@ export class Nydus {
         const connection = await this._createConnection(nydusConnection, isBackground);
         nydusConnection.connection = connection;
 
-        console.log("Adding handshake listener")
-
         let handShakeFinisher;
         /** @this { Nydus } */
         function finishHandshake(/** @type {any} */ message) {
@@ -368,6 +366,7 @@ export class Nydus {
 
                 connection.onMessage.addListener(onBridgeMessage);
                 connection.onDisconnect.addListener(() => {
+                    console.log("ON DISCONNECT");
                     connection.onMessage.removeListener(onBridgeMessage);
                 });
             }
@@ -375,6 +374,7 @@ export class Nydus {
             if (onMessage) {
                 connection.onMessage.addListener(onMessage);
                 connection.onDisconnect.addListener(() => {
+                    console.log("ON DISCONNECT");
                     connection.onMessage.removeListener(onMessage);
                 });
             }
