@@ -9,10 +9,10 @@
         "playground": "file:packages/playground"
     },
     "scripts": {
-        "start": "npm run build:watch",
+        "start": "export NODE_ENV=DEV; npm run build:watch",
         "start:ui": "npx @web/dev-server --node-resolve --watch --app-index html/wc-devtools.html --open html/wc-devtools.html?devmode=true",
         "build": "rimraf dist && rollup -c rollup.config.js",
-        "build:watch": "rimraf dist && rollup -c --watch rollup.config.js",
+        "build:watch": "rollup -c --watch rollup.config.js",
         "package": "npm run build && rimraf extension.zip && zip -j -r extension.zip dist/*",
         "package-source-firefox": "zip --exclude=*node_modules* --exclude=*.git* --exclude=*docs* --exclude=*examples* -r firefox-source.zip ."
     },
