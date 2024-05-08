@@ -27,7 +27,8 @@
                 "crawler-constants.js",
                 "analyzer.js",
                 "crawler-inject.js",
-                "spotlight-border.js"
+                "spotlight-border.js",
+                "messaging.js"
             ],
             "matches": ["<all_urls>"],
             "use_dynamic_urls": true

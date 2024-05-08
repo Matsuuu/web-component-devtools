@@ -39,7 +39,8 @@ export default [
             'spotlight-border': './lib/crawler/spotlight-border.js',
             'content-messaging': './lib/content/content-messaging.js',
             'connection-channels': './lib/types/connection-channels.js',
-            'message-types': './lib/types/message-types.js'
+            'message-types': './lib/types/message-types.js',
+            'messaging': './lib/messaging/messaging.js'
         },
         output: {
             dir: 'dist',

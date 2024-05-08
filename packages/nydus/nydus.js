@@ -58,6 +58,7 @@ const NYDUS_TAB_PING = 'NYDUS_TAB_PING';
  * @returns {Nydus} nydus;
  */
 export function buildNydus(nydusOptions) {
+    return;
     const nydus = new Nydus(nydusOptions);
 
     return nydus;
