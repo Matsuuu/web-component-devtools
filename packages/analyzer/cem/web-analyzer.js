@@ -300,8 +300,8 @@ export async function createManifest(source, neededPlugins, sourcePath) {
     try {
         const modules = [ts.createSourceFile(sourcePath ?? '', source, ts.ScriptTarget.ES2015, true)];
 
-        const importStatements = modules[0].statements.filter(stat => stat.kind === ts.SyntaxKind.ImportDeclaration);
-        const exportStatements = modules[0].statements.filter(stat => stat.kind === ts.SyntaxKind.ExportDeclaration);
+        const importStatements = modules[0].statements.filter(stat => stat.kind === ts.SyntaxKind.ImportDeclaration && stat.moduleSpecifier !== undefined);
+        const exportStatements = modules[0].statements.filter(stat => stat.kind === ts.SyntaxKind.ExportDeclaration && stat.moduleSpecifier !== undefined);
         const importPaths = [...importStatements.map(is => is.moduleSpecifier.text), ...exportStatements.map(es => es.moduleSpecifier.text)];
 
         const manifest = create({
