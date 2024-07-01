@@ -18,7 +18,8 @@ const DEV_MODE_INPUTS = [
             'content-messaging': './lib/content/content-messaging.js',
             'connection-channels': './lib/types/connection-channels.js',
             'message-types': './lib/types/message-types.js',
-            'messaging': './lib/messaging/messaging.js'
+            'messaging': './lib/messaging/messaging.js',
+            'block-list': './lib/util/block-list.js'
         },
         output: {
             dir: 'dist',
