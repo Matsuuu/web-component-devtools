@@ -1,48 +1,35 @@
 {
-    "manifest_version": 3,
-    "name": "Web Component DevTools",
-    "version": "0.2.2",
-    "minimum_chrome_version": "88.0",
-    "description": "Developer tooling for Web Components and Web Component Libraries",
-    "author": "Matsuuu <huhta.matias@gmail.com>",
-    "devtools_page": "wc-devtools-init.html",
-    "background": {
-        "service_worker": "background-worker.js",
-        "type": "module"
-    },
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["content_script.js"],
-            "run_at": "document_idle"
-        }
-    ],
-    "web_accessible_resources": [
-        {
-            "resources": [
-                "message-types.js", 
-                "connection-channels.js", 
-                "content-messaging.js",
-                "nydus.js",
-                "crawler-constants.js",
-                "analyzer.js",
-                "crawler-inject.js",
-                "spotlight-border.js"
-            ],
-            "matches": ["<all_urls>"],
-            "use_dynamic_urls": true
-        }
-    ],
-    "permissions": ["tabs", "contextMenus", "scripting"],
-    "host_permissions": [
-        "<all_urls>"
-      ],
-    "content_security_policy": {
-        "extension_pages": "script-src 'wasm-unsafe-eval'; object-src 'self';script-src-elem 'self';"
-    },
-    "icons": {
-        "16": "logo-16.png",
-        "48": "logo-48.png",
-        "128": "logo-128.png"
+  "manifest_version": 3,
+  "name": "Web Component DevTools",
+  "description": "description in manifest.json",
+  "options_ui": {
+    "page": "src/pages/options/index.html"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": {
+      "32": "icon-32.png"
     }
+  },
+  "chrome_url_overrides": {
+    "newtab": "src/pages/newtab/index.html"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "js": ["src/pages/content/index.tsx"],
+      "css": ["contentStyle.css"]
+    }
+  ],
+  "devtools_page": "src/pages/devtools/index.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["contentStyle.css", "icon-128.png", "icon-32.png"],
+      "matches": []
+    }
+  ]
 }
