@@ -1,4 +1,7 @@
 import Browser from "webextension-polyfill";
+import "./style.css";
+import "./web-awesome";
+import "./panel";
 
 Browser.devtools.panels
   .create(
