@@ -28,7 +28,7 @@ const MENU_ITEMS: MenuItem[][] = [
 @withTailwind
 export class PanelMenu extends LitElement {
   className =
-    "flex flex-col border-red-500 border-r-2 border-solid w-min h-full";
+    "flex flex-col border-gray-500 border-r-2 border-solid w-min h-full";
 
   protected firstUpdated(): void {
     // TODO: Better way for this
