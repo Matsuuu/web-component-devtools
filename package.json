@@ -1,45 +1,45 @@
 {
-  "name": "vite-web-extension",
-  "version": "1.4.0",
-  "description": "A simple chrome & firefox extension template with Vite, React, TypeScript and Tailwind CSS.",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JohnBra/vite-web-extension.git"
-  },
-  "scripts": {
-    "start": "npm run dev",
-    "build": "vite build --config vite.config.chrome.ts",
-    "build:chrome": "vite build --config vite.config.chrome.ts",
-    "build:firefox": "vite build --config vite.config.firefox.ts",
-    "dev": "nodemon --config nodemon.chrome.json",
-    "dev:chrome": "nodemon --config nodemon.chrome.json",
-    "dev:firefox": "nodemon --config nodemon.firefox.json"
-  },
-  "type": "module",
-  "dependencies": {
-    "@awesome.me/webawesome": "^3.0.0-beta.6",
-    "lit": "^3.3.1",
-    "lucide": "^0.548.0",
-    "webextension-polyfill": "^0.12.0"
-  },
-  "devDependencies": {
-    "@crxjs/vite-plugin": "^2.0.3",
-    "@tailwindcss/vite": "^4.1.11",
-    "@types/chrome": "^0.1.11",
-    "@types/node": "^24.4.0",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@types/webextension-polyfill": "^0.12.3",
-    "@typescript-eslint/eslint-plugin": "^7.8.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "@vitejs/plugin-react": "^4.7.0",
-    "fs-extra": "^11.3.0",
-    "nodemon": "^3.1.10",
-    "tailwindcss": "^4.1.8",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.5",
-    "vite-tsconfig-paths": "^5.1.4"
-  }
+    "name": "vite-web-extension",
+    "version": "1.4.0",
+    "description": "A simple chrome & firefox extension template with Vite, React, TypeScript and Tailwind CSS.",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/JohnBra/vite-web-extension.git"
+    },
+    "scripts": {
+        "start": "npm run dev",
+        "build": "vite build --config vite.config.chrome.ts",
+        "build:chrome": "vite build --config vite.config.chrome.ts",
+        "build:firefox": "vite build --config vite.config.firefox.ts",
+        "dev": "nodemon --config nodemon.chrome.json",
+        "dev:chrome": "nodemon --config nodemon.chrome.json",
+        "dev:firefox": "nodemon --config nodemon.firefox.json"
+    },
+    "type": "module",
+    "dependencies": {
+        "@awesome.me/webawesome": "^3.0.0-beta.6",
+        "lit": "3.3.0",
+        "lucide": "^0.548.0",
+        "webextension-polyfill": "^0.12.0"
+    },
+    "devDependencies": {
+        "@crxjs/vite-plugin": "^2.0.3",
+        "@tailwindcss/vite": "^4.1.11",
+        "@types/chrome": "^0.1.11",
+        "@types/node": "^24.4.0",
+        "@types/react": "^19.1.8",
+        "@types/react-dom": "^19.1.6",
+        "@types/webextension-polyfill": "^0.12.3",
+        "@typescript-eslint/eslint-plugin": "^7.8.0",
+        "@typescript-eslint/parser": "^7.18.0",
+        "@vitejs/plugin-react": "^4.7.0",
+        "fs-extra": "^11.3.0",
+        "nodemon": "^3.1.10",
+        "tailwindcss": "^4.1.8",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3",
+        "vite": "^6.3.5",
+        "vite-tsconfig-paths": "^5.1.4"
+    }
 }

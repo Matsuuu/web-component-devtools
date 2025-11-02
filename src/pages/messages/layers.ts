@@ -1,0 +1,5 @@
+export const LAYER = {
+    DEVTOOLS: "DEVTOOLS",
+    CONTENT: "CONTENT",
+    BACKGROUND: "BACKGROUND",
+};

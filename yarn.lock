@@ -1892,10 +1892,10 @@ lit-html@^3.3.0:
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
-lit@^3.2.1, lit@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.npmjs.org/lit/-/lit-3.3.1.tgz"
-  integrity sha512-Ksr/8L3PTapbdXJCk+EJVB78jDodUMaP54gD24W186zGRARvwrsPfS60wae/SSCTCNZVPd1chXqio1qHQmu4NA==
+lit@^3.2.1, lit@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/lit/-/lit-3.3.0.tgz"
+  integrity sha512-DGVsqsOIHBww2DqnuZzW7QsuCdahp50ojuDaBPC7jUDRpYoH0z7kHBBYZewRzer75FwtrkmkKk7iOAwSaWdBmw==
   dependencies:
     "@lit/reactive-element" "^2.1.0"
     lit-element "^4.2.0"
