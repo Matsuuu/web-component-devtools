@@ -20,9 +20,7 @@ export class DebugPanel extends LitElement {
   }
 
   setAutoRefreshTimeout() {
-    console.log("FOo");
     this.autoRefreshTimeout = setTimeout(() => {
-      console.log("FOo");
       window.location.reload();
     }, 3000);
   }
