@@ -1,11 +1,13 @@
 import { MessageBase } from "./message-base";
 
+const MESSAGE_ID = "INIT";
+
 export class InitMessage extends MessageBase {
     constructor(public tabId: number) {
-        super("INIT");
+        super(MESSAGE_ID);
     }
 }
 
 export function isInitMessage(message: any): message is InitMessage {
-    return message.type === "INIT";
+    return message.type === MESSAGE_ID;
 }

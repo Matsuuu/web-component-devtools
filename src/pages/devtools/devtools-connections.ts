@@ -1,4 +1,5 @@
-import { InitMessage, isInitMessage } from "../messages/init";
+import { isElementTreeMessage } from "../messages/element-tree-message";
+import { InitMessage, isInitMessage } from "../messages/init-message";
 import { LAYER } from "../messages/layers";
 
 export function initConnections() {
@@ -9,6 +10,9 @@ export function initConnections() {
         const data = message.data;
         if (isInitMessage(data)) {
             window.panel.setConnectedTab(data.tabId);
+        }
+        if (isElementTreeMessage(data)) {
+            window.panel.setElementTree(data.tree);
         }
     });
 

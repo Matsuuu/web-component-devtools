@@ -2,6 +2,7 @@
 
 body,
 html {
-  height: 100%;
-}
+    height: 100%;
 
+    --wa-color-brand-fill-loud: #ca3500;
+}

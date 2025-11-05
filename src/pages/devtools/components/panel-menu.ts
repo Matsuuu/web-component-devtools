@@ -3,7 +3,7 @@ import { LucideIcon } from "@src/lib/icons/lucide";
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { Cog, IconNode, ListTree } from "lucide";
-import { TABS } from "../lib/devool-tabs";
+import { TABS } from "../lib/devtool-tabs";
 
 interface MenuItem {
     id: string;

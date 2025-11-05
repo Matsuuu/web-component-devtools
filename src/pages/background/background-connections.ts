@@ -1,4 +1,4 @@
-import { isInitMessage } from "../messages/init";
+import { isInitMessage } from "../messages/init-message";
 import { LAYER } from "../messages/layers";
 
 const devToolsPorts: Record<number, chrome.runtime.Port> = {};
