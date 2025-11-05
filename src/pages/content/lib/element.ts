@@ -1,4 +1,7 @@
+import { type UUID } from "crypto";
+
 export class TreeElement {
+    public id: UUID;
     children: TreeElement[] = [];
     isCustomElement: boolean = false;
     nodeText: string = "[NODE_PARSE_FAILED]";
@@ -7,6 +10,7 @@ export class TreeElement {
     lazy = true;
 
     constructor(public element: Element) {
+        this.id = window.crypto.randomUUID();
         // TODO: Maybe check the customElements -api if we end up injecting this
         this.isCustomElement = element.nodeName.includes("-");
         this.nodeText = this.createNodeText();

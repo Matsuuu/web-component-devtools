@@ -1,4 +1,11 @@
+import { type UUID } from "crypto";
 import { TreeElement } from "./element";
+
+export const contentTreeState = {
+    tree: undefined! as TreeElement,
+    treeElementWeakMap: new WeakMap<Element, TreeElement>(),
+    treeElementByIdMap: new Map<UUID, TreeElement>(),
+};
 
 /**
  * Runs through the whole DOM tree using the TreeWalker and
@@ -6,37 +13,35 @@ import { TreeElement } from "./element";
  * Element, here being the Document Body.
  * */
 export function getDOMTree(): TreeElement {
-    const treeElementWeakMap = new WeakMap<Element, TreeElement>();
     const target = document.body;
     const tree = new TreeElement(target);
 
-    treeElementWeakMap.set(document.body, tree);
+    contentTreeState.treeElementWeakMap.set(document.body, tree);
 
-    parseDOMTree(target, treeElementWeakMap);
+    parseDOMTree(target);
 
     return tree;
 }
 
-function parseDOMTree(
-    target: HTMLElement | ShadowRoot = document.body,
-    treeElementWeakMap: WeakMap<Element, TreeElement>,
-) {
+function parseDOMTree(target: HTMLElement | ShadowRoot = document.body) {
     const walker = document.createTreeWalker(target, NodeFilter.SHOW_ELEMENT, null);
 
     while (walker.nextNode()) {
         const node = walker.currentNode;
         if (node instanceof Element) {
             const treeElement = new TreeElement(node);
-            treeElementWeakMap.set(node, treeElement);
+
+            contentTreeState.treeElementWeakMap.set(node, treeElement);
+            contentTreeState.treeElementByIdMap.set(treeElement.id, treeElement);
 
             if (node.shadowRoot) {
-                parseDOMTree(node.shadowRoot, treeElementWeakMap);
+                parseDOMTree(node.shadowRoot);
             }
 
             // Handle normal case, where we have a normal parent
             const parentElem = node.parentElement;
             if (parentElem) {
-                const parent = treeElementWeakMap.get(node.parentElement);
+                const parent = contentTreeState.treeElementWeakMap.get(node.parentElement);
                 if (parent) {
                     parent.addChild(treeElement);
                 }
@@ -44,7 +49,7 @@ function parseDOMTree(
                 // Handle special cases, e.g. boreing into a Shadow Root
                 if (node.parentNode && nodeIsShadowRoot(node.parentNode)) {
                     const parentHost = node.parentNode.host;
-                    const parent = treeElementWeakMap.get(parentHost);
+                    const parent = contentTreeState.treeElementWeakMap.get(parentHost);
                     if (parent) {
                         parent.addChild(treeElement);
                     }

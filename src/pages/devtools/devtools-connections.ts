@@ -1,6 +1,7 @@
 import { isElementTreeMessage } from "../messages/element-tree-message";
 import { InitMessage, isInitMessage } from "../messages/init-message";
 import { LAYER } from "../messages/layers";
+import { devtoolsState } from "./state/devtools-context";
 
 export function initConnections() {
     const port = chrome.runtime.connect({ name: LAYER.DEVTOOLS });
@@ -18,4 +19,6 @@ export function initConnections() {
 
     const tabId = chrome.devtools.inspectedWindow.tabId;
     port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.CONTENT, data: new InitMessage(tabId) });
+
+    devtoolsState.messagePort = port;
 }

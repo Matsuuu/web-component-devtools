@@ -1,0 +1,13 @@
+#wc-devtools-spotlight-element {
+    border: 2px solid #ca3500;
+    position: absolute;
+    display: flex;
+    z-index: 9999;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    width: var(--width);
+    height: var(--height);
+    top: var(--y);
+    left: var(--x);
+}

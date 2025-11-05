@@ -1,6 +1,6 @@
 import { WaCollapseEvent, WaExpandEvent, WaLazyLoadEvent } from "@awesome.me/webawesome";
 import WaTreeItem from "@awesome.me/webawesome/dist/components/tree-item/tree-item.js";
-import { Signal, SignalWatcher } from "@lit-labs/signals";
+import { SignalWatcher } from "@lit-labs/signals";
 import { stylizeNodeText } from "@src/lib/code/stylize-node-text";
 import { withTailwind } from "@src/lib/css/tailwind";
 import { LucideIcon } from "@src/lib/icons/lucide";
@@ -10,6 +10,8 @@ import { customElement, property } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ChevronRight } from "lucide";
 import { devtoolsState } from "../state/devtools-context";
+import { ref } from "lit/directives/ref.js";
+import { createDevtoolsHoverEvent, createDevtoolsHoverLeaveEvent } from "../events/devtools-hover-event";
 
 const expansionMap = new WeakSet<TreeElement>();
 
@@ -49,9 +51,31 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
         return html` <wa-tree> ${baseLayer.map(elem => this.renderItem(elem))} </wa-tree> `;
     }
 
+    async addHoverListener(element: Element | undefined, treeElement: TreeElement) {
+        if (!element) {
+            return;
+        }
+        if (!(element instanceof WaTreeItem)) {
+            return;
+        }
+        await element.updateComplete;
+        const itemRow = element.shadowRoot?.querySelector("[part='item']");
+
+        itemRow?.addEventListener("mouseenter", () => {
+            itemRow.setAttribute("style", "background: var(--wa-color-neutral-fill-quiet);");
+            createDevtoolsHoverEvent(treeElement);
+        });
+
+        itemRow?.addEventListener("mouseleave", () => {
+            itemRow.removeAttribute("style");
+            createDevtoolsHoverLeaveEvent(treeElement);
+        });
+    }
+
     renderItem(element: TreeElement): TemplateResult {
         return html`
             <wa-tree-item
+                ${ref(el => this.addHoverListener(el, element))}
                 ?lazy=${!expansionMap.has(element) && element.children.length > 0}
                 ?expanded=${expansionMap.has(element)}
                 @wa-lazy-load=${(ev: WaLazyLoadEvent) => this.loadTreeBranch(ev, element)}
@@ -79,9 +103,9 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
             overflow: hidden;
         }
 
-        wa-tree-item:has(> span:hover)::part(item) {
+        /*wa-tree-item:has(> span:hover)::part(item) {
             background: var(--wa-color-neutral-fill-quiet);
-        }
+        }*/
 
         wa-tree-item::part(expand-button) {
             width: 1em;

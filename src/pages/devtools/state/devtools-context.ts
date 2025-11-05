@@ -2,6 +2,7 @@ import { Signal } from "@lit-labs/signals";
 import { TreeElement } from "@src/pages/content/lib/element";
 
 export class DevtoolsState {
+    public messagePort!: chrome.runtime.Port;
     public elementTree = new Signal.State<TreeElement>(new TreeElement(document.body));
     public highlightAll = new Signal.State(false);
 
