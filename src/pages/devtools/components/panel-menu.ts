@@ -31,7 +31,7 @@ const MENU_ITEMS: MenuItem[][] = [
 @customElement("wcdt-panel-menu")
 @withTailwind
 export class PanelMenu extends LitElement {
-    className = "flex flex-col border-gray-500 border-r-2 border-solid w-min h-full";
+    className = "flex flex-col border-gray-300 border-r-2 border-solid w-min h-full";
 
     @property({})
     activePanel = TABS.ELEMENTS;

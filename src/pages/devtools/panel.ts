@@ -7,10 +7,11 @@ import "./components/devtools-element.tree";
 import { withTailwind } from "@src/lib/css/tailwind";
 import { TABS } from "./lib/devtool-tabs";
 import { TreeElement } from "../content/lib/element";
+import { SignalWatcher } from "@lit-labs/signals";
 
 @customElement("wcdt-panel")
 @withTailwind
-export class WCDTPanel extends LitElement {
+export class WCDTPanel extends SignalWatcher(LitElement) {
     className = "flex h-full w-full";
 
     @property({})
@@ -24,9 +25,6 @@ export class WCDTPanel extends LitElement {
 
     @property({ type: Object })
     tree?: TreeElement;
-
-    @property({ type: Boolean })
-    highLightAll = false;
 
     setConnectedTab(tabId: number) {
         this.connected = true;
@@ -48,10 +46,6 @@ export class WCDTPanel extends LitElement {
         this.activePanel = sessionStorage.getItem("active-panel") || TABS.ELEMENTS;
     }
 
-    onHighLightAllChange(ev: CustomEvent) {
-        this.highLightAll = ev.detail.highLightAll;
-    }
-
     onPanelChanged(ev: CustomEvent) {
         this.activePanel = ev.detail.panel;
     }
@@ -63,12 +57,7 @@ export class WCDTPanel extends LitElement {
             ></wcdt-panel-menu>
 
             <div class="flex flex-col w-full max-w-[92%]">
-                <tool-bar
-                    @highlight-all-changed=${this.onHighLightAllChange}
-                    ?connected=${this.connected}
-                    ?highlight-all=${this.highLightAll}
-                    .tabId=${this.tabId}
-                ></tool-bar>
+                <tool-bar ?connected=${this.connected} .tabId=${this.tabId}></tool-bar>
                 ${this.renderPanelContent()}
             </div>
 

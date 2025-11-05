@@ -1,26 +1,24 @@
+import { SignalWatcher } from "@lit-labs/signals";
 import { withTailwind } from "@src/lib/css/tailwind";
 import { LucideIcon } from "@src/lib/icons/lucide";
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { Braces, Check, FileCode, FileCode2, WifiSync } from "lucide";
+import { Braces, Check, FileCode, WifiSync } from "lucide";
+import { devtoolsState } from "../state/devtools-context";
 
 @customElement("tool-bar")
 @withTailwind
-export class Toolbar extends LitElement {
+export class Toolbar extends SignalWatcher(LitElement) {
     @property({ type: Boolean, reflect: true })
     connected = false;
-
-    @property({ type: Boolean, reflect: true, attribute: "highlight-all" })
-    highLightAll = false;
 
     @property({})
     tabId = "";
 
-    className = "flex justify-between w-full border-b-gray-500 border-b-2";
+    className = "flex justify-between w-full border-b-gray-300 border-b-2";
 
     toggleHighlightAll() {
-        this.highLightAll = !this.highLightAll;
-        this.dispatchEvent(new CustomEvent("highlight-all-changed", { detail: { highLightAll: this.highLightAll } }));
+        devtoolsState.highlightAll.set(!devtoolsState.highlightAll.get());
     }
 
     render() {
@@ -34,7 +32,7 @@ export class Toolbar extends LitElement {
             </div>
             <div class="flex">
                 <button class="flex gap-2 items-center cursor-pointer" @click=${this.toggleHighlightAll}>
-                    ${this.highLightAll
+                    ${devtoolsState.highlightAll.get()
                         ? html` ${LucideIcon(FileCode, { size: 16 })} Highlight All Elements `
                         : html` ${LucideIcon(Braces, { size: 16 })} Highlight Only Custom Elements `}
                 </button>

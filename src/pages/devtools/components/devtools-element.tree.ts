@@ -1,19 +1,21 @@
 import { WaCollapseEvent, WaExpandEvent, WaLazyLoadEvent } from "@awesome.me/webawesome";
 import WaTreeItem from "@awesome.me/webawesome/dist/components/tree-item/tree-item.js";
+import { Signal, SignalWatcher } from "@lit-labs/signals";
 import { stylizeNodeText } from "@src/lib/code/stylize-node-text";
 import { withTailwind } from "@src/lib/css/tailwind";
 import { LucideIcon } from "@src/lib/icons/lucide";
 import { TreeElement } from "@src/pages/content/lib/element";
-import { css, html, LitElement, TemplateResult } from "lit";
+import { css, html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ChevronRight } from "lucide";
+import { devtoolsState } from "../state/devtools-context";
 
 const expansionMap = new WeakSet<TreeElement>();
 
 @customElement("devtools-element-tree")
 @withTailwind
-export class DevtoolsElementTree extends LitElement {
+export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     className = "h-full overflow-auto";
 
     @property({ type: Object })
@@ -21,6 +23,12 @@ export class DevtoolsElementTree extends LitElement {
 
     @property({ type: Boolean, reflect: true, attribute: "highlight-all" })
     highLightAll = false;
+
+    protected firstUpdated(_changedProperties: PropertyValues): void {
+        devtoolsState.onChange(devtoolsState.highlightAll, () => {
+            this.highLightAll = devtoolsState.highlightAll.get();
+        });
+    }
 
     onExpand(ev: WaExpandEvent, element: TreeElement) {
         console.log({ ev, element });
