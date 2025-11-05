@@ -52,8 +52,15 @@ export class WCDTPanel extends LitElement {
         this.highLightAll = ev.detail.highLightAll;
     }
 
+    onPanelChanged(ev: CustomEvent) {
+        this.activePanel = ev.detail.panel;
+    }
+
     render() {
-        return html` <wcdt-panel-menu .activePanel=${this.activePanel}></wcdt-panel-menu>
+        return html` <wcdt-panel-menu
+                .activePanel=${this.activePanel}
+                @panel-changed=${this.onPanelChanged}
+            ></wcdt-panel-menu>
 
             <div class="flex flex-col w-full max-w-[92%]">
                 <tool-bar

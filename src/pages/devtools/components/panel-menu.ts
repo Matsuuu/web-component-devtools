@@ -45,6 +45,7 @@ export class PanelMenu extends LitElement {
 
     setActivePanel(panel: string) {
         this.activePanel = panel;
+        this.dispatchEvent(new CustomEvent("panel-changed", { detail: { panel: this.activePanel } }));
     }
 
     selectedButtonStyles = "[&[selected]]:bg-orange-400 [&[selected]]:text-white";
