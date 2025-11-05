@@ -1,4 +1,4 @@
-import { initMessage, isInitMessage } from "../messages/init";
+import { InitMessage, isInitMessage } from "../messages/init";
 import { LAYER } from "../messages/layers";
 
 export function initConnections() {
@@ -9,11 +9,9 @@ export function initConnections() {
         const data = message.data;
         if (isInitMessage(data)) {
             window.panel.setConnectedTab(data.tabId);
-            console.log("Settings window panel things ", window.panel);
         }
     });
 
     const tabId = chrome.devtools.inspectedWindow.tabId;
-    console.log("Posting init message. My tab id is : ", tabId);
-    port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.CONTENT, data: initMessage(tabId) });
+    port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.CONTENT, data: new InitMessage(tabId) });
 }

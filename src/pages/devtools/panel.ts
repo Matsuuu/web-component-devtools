@@ -40,7 +40,7 @@ export class WCDTPanel extends LitElement {
     render() {
         return html` <wcdt-panel-menu .activePanel=${this.activePanel}></wcdt-panel-menu>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col w-full">
                 <connection-info ?connected=${this.connected} .tabId=${this.tabId}></connection-info>
             </div>
 

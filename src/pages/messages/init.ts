@@ -1,13 +1,9 @@
-export interface InitMessage {
-    type: "INIT";
-    tabId: number;
-}
+import { MessageBase } from "./message-base";
 
-export function initMessage(tabId: number): InitMessage {
-    return {
-        type: "INIT",
-        tabId,
-    };
+export class InitMessage extends MessageBase {
+    constructor(public tabId: number) {
+        super("INIT");
+    }
 }
 
 export function isInitMessage(message: any): message is InitMessage {
