@@ -8,6 +8,7 @@ import { withTailwind } from "@src/lib/css/tailwind";
 import { TABS } from "./lib/devtool-tabs";
 import { TreeElement } from "../content/lib/element";
 import { SignalWatcher } from "@lit-labs/signals";
+import { devtoolsState } from "./state/devtools-context";
 
 @customElement("wcdt-panel")
 @withTailwind
@@ -23,16 +24,13 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
     @property({})
     tabId: number | undefined = undefined;
 
-    @property({ type: Object })
-    tree?: TreeElement;
-
     setConnectedTab(tabId: number) {
         this.connected = true;
         this.tabId = tabId;
     }
 
     setElementTree(tree: TreeElement) {
-        this.tree = tree;
+        devtoolsState.elementTree.set(tree);
     }
 
     protected firstUpdated(): void {
@@ -67,12 +65,7 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
     renderPanelContent() {
         switch (this.activePanel) {
             case TABS.ELEMENTS:
-                return html`
-                    <devtools-element-tree
-                        ?highlight-all=${this.highLightAll}
-                        .tree=${this.tree}
-                    ></devtools-element-tree>
-                `;
+                return html` <devtools-element-tree></devtools-element-tree> `;
             default:
                 return html`<div class="w-full h-full flex items-center justify-center">
                     <p>Panel content not set</p>

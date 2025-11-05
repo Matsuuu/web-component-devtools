@@ -18,26 +18,27 @@ const expansionMap = new WeakSet<TreeElement>();
 export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     className = "h-full overflow-auto";
 
-    @property({ type: Object })
-    tree?: TreeElement;
-
     @property({ type: Boolean, reflect: true, attribute: "highlight-all" })
     highLightAll = false;
 
     protected firstUpdated(_changedProperties: PropertyValues): void {
         devtoolsState.onChange(devtoolsState.highlightAll, () => {
+            // We do this the janky way do get it to reflect to the property,
+            // and therefore the attribute.
             this.highLightAll = devtoolsState.highlightAll.get();
         });
     }
 
     onExpand(ev: WaExpandEvent, element: TreeElement) {
-        console.log({ ev, element });
         expansionMap.add(element);
     }
 
     onCollapse(ev: WaCollapseEvent, element: TreeElement) {
-        console.log({ ev, element });
         expansionMap.delete(element);
+    }
+
+    get tree() {
+        return devtoolsState.elementTree.get();
     }
 
     render() {
@@ -72,13 +73,14 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     }
 
     static styles = css`
-        :host {
-        }
-
         wa-tree-item::part(label) {
             font-size: 0.75rem;
             white-space: nowrap;
             overflow: hidden;
+        }
+
+        wa-tree-item:has(> span:hover)::part(item) {
+            background: var(--wa-color-neutral-fill-quiet);
         }
 
         wa-tree-item::part(expand-button) {
