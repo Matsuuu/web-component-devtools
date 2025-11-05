@@ -4,7 +4,9 @@ let spotlightRemoveTimeout: NodeJS.Timeout;
 
 export function getSpotlightElement() {
     if (currentElement) {
-        cancelSpotlightRemoveRequest();
+        setTimeout(() => {
+            cancelSpotlightRemoveRequest();
+        }, 50);
         return currentElement;
     }
     return createSpotlightElement();
@@ -26,9 +28,11 @@ export function removeSpotlightElement() {
 }
 
 export function requestSpotlightRemove() {
+    cancelSpotlightRemoveRequest();
     spotlightRemoveTimeout = setTimeout(() => {
         removeSpotlightElement();
-    }, 1000);
+    }, 2000);
+    console.log("Remove timeout created");
 }
 
 export function cancelSpotlightRemoveRequest() {

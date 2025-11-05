@@ -4,7 +4,7 @@
     display: flex;
     z-index: 9999;
 
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
 
     width: var(--width);
     height: var(--height);

@@ -48,7 +48,7 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
         if (!baseLayer || baseLayer?.length <= 0) {
             return "";
         }
-        return html` <wa-tree> ${baseLayer.map(elem => this.renderItem(elem))} </wa-tree> `;
+        return html` <wa-tree> ${baseLayer.map(elem => this.renderItem(elem, 0))} </wa-tree> `;
     }
 
     async addHoverListener(element: Element | undefined, treeElement: TreeElement) {
@@ -72,18 +72,22 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
         });
     }
 
-    renderItem(element: TreeElement): TemplateResult {
+    renderItem(element: TreeElement, level: number): TemplateResult {
+        const itemIsOpen = expansionMap.has(element) || level < 4;
+
         return html`
             <wa-tree-item
                 ${ref(el => this.addHoverListener(el, element))}
-                ?lazy=${!expansionMap.has(element) && element.children.length > 0}
-                ?expanded=${expansionMap.has(element)}
+                ?lazy=${!itemIsOpen && element.children.length > 0}
+                ?expanded=${itemIsOpen}
                 @wa-lazy-load=${(ev: WaLazyLoadEvent) => this.loadTreeBranch(ev, element)}
                 @wa-expand=${(ev: WaExpandEvent) => this.onExpand(ev, element)}
                 @wa-collapse=${(ev: WaCollapseEvent) => this.onCollapse(ev, element)}
             >
                 ${unsafeHTML(stylizeNodeText(element.nodeText, element.isCustomElement))}
-                ${element.lazy ? "" : element.children.map(childElem => this.renderItem(childElem))}
+                ${element.lazy && !itemIsOpen
+                    ? ""
+                    : element.children.map(childElem => this.renderItem(childElem, level + 1))}
                 ${LucideIcon(ChevronRight, { size: 16, slot: "expand-icon" })}
                 ${LucideIcon(ChevronRight, { size: 16, slot: "collapse-icon" })}
             </wa-tree-item>
