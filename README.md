@@ -1,5 +1,8 @@
 # Web Component DevTools
 
+> [!IMPORTANT]
+> The Web Component Devtools project is undergoing a full rewrite. Read more at https://github.com/Matsuuu/web-component-devtools/issues/74 or follow the development in the branch [rework](https://github.com/Matsuuu/web-component-devtools/tree/rework)
+
 Web Component DevTools is aimed at all developers working with Web Components. 
 The tooling provided creates a new Chrome Devtools panel, which allows a quick look at the custom elements on the current page, and enables modification of attributes and properties of said components.
 
