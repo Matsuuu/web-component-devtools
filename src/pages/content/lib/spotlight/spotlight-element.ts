@@ -31,7 +31,7 @@ export function requestSpotlightRemove() {
     cancelSpotlightRemoveRequest();
     spotlightRemoveTimeout = setTimeout(() => {
         removeSpotlightElement();
-    }, 2000);
+    }, 200);
     console.log("Remove timeout created");
 }
 

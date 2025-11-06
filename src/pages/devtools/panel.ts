@@ -22,11 +22,19 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
     connected = false;
 
     @property({})
+    disconnectionMessage?: string;
+
+    @property({})
     tabId: number | undefined = undefined;
 
     setConnectedTab(tabId: number) {
         this.connected = true;
         this.tabId = tabId;
+    }
+
+    disconnect(disconnectionMessage: string) {
+        this.connected = false;
+        this.disconnectionMessage = disconnectionMessage;
     }
 
     setElementTree(tree: TreeElement) {
@@ -63,6 +71,14 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
     }
 
     renderPanelContent() {
+        if (!this.connected && this.disconnectionMessage) {
+            return html`
+                <div class="w-full h-full flex flex-col items-center justify-center">
+                    <p>${this.disconnectionMessage}</p>
+                </div>
+            `;
+        }
+
         switch (this.activePanel) {
             case TABS.ELEMENTS:
                 return html` <devtools-element-tree></devtools-element-tree> `;

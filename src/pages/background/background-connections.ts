@@ -1,3 +1,4 @@
+import { ConnectionToContentFailedMessage } from "../messages/connection-to-content-failed-message";
 import { isInitMessage } from "../messages/init-message";
 import { LAYER } from "../messages/layers";
 
@@ -21,7 +22,15 @@ export function initConnections() {
                 }
 
                 if (message.to === LAYER.CONTENT) {
-                    chrome.tabs.sendMessage(tabId, message);
+                    console.log("Trying to send to content");
+                    chrome.tabs.sendMessage(tabId, message).catch(err => {
+                        console.warn("Failed at sending a message from background to content", err);
+                        devToolsPorts[tabId].postMessage({
+                            from: LAYER.BACKGROUND,
+                            to: LAYER.DEVTOOLS,
+                            data: new ConnectionToContentFailedMessage(tabId),
+                        });
+                    });
                 }
             });
         }

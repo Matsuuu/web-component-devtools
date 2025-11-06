@@ -2,12 +2,15 @@ import { isHoverLeaveMessage } from "../messages/hover-leave-message";
 import { isHoverMessage } from "../messages/hover-message";
 import { InitMessage, isInitMessage } from "../messages/init-message";
 import { LAYER } from "../messages/layers";
+import { RequestInitMessage } from "../messages/request-init-message";
 import { updateTree } from "./lib/events/update-tree";
 import { getSpotlightElementDimensions } from "./lib/spotlight/dimensions";
 import { getSpotlightElement, moveSpotlight, requestSpotlightRemove } from "./lib/spotlight/spotlight-element";
 import { contentTreeState } from "./lib/tree-walker";
 
 export function initConnection() {
+    let initialized = false;
+
     chrome.runtime.onMessage.addListener((message, sender) => {
         const data = message.data;
 
@@ -19,6 +22,7 @@ export function initConnection() {
             // For now, let's just pile em here
 
             if (isInitMessage(data)) {
+                initialized = true;
                 console.log("Init received from Devtools, responding.");
                 chrome.runtime.sendMessage({
                     from: LAYER.CONTENT,
@@ -51,4 +55,14 @@ export function initConnection() {
             }
         }
     });
+
+    setTimeout(() => {
+        if (!initialized) {
+            chrome.runtime.sendMessage({
+                from: LAYER.CONTENT,
+                to: LAYER.DEVTOOLS,
+                data: new RequestInitMessage(),
+            });
+        }
+    }, 1000);
 }
