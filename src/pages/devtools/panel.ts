@@ -3,7 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import "./components/panel-menu";
 import "./components/debug-panel";
 import "./components/toolbar";
-import "./components/devtools-element.tree";
+import "./components/devtools-element-tree";
 import { withTailwind } from "@src/lib/css/tailwind";
 import { TABS } from "./lib/devtool-tabs";
 import { TreeElement } from "../content/lib/element";
