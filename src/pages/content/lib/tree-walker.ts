@@ -1,7 +1,12 @@
 import { TreeElement } from "./element";
 
-export const contentTreeState = {
-    tree: null as TreeElement | null,
+type TreeState = {
+    tree?: TreeElement;
+    treeElementWeakMap: WeakMap<Element, TreeElement>;
+    treeElementByIdMap: Map<string, TreeElement>;
+};
+
+export const contentTreeState: TreeState = {
     treeElementWeakMap: new WeakMap<Element, TreeElement>(),
     treeElementByIdMap: new Map<string, TreeElement>(),
 };
@@ -38,46 +43,41 @@ export function getDOMTree(): TreeElement {
 function parseDOMTree(target: HTMLElement | ShadowRoot = document.body) {
     const walker = document.createTreeWalker(target, NodeFilter.SHOW_ELEMENT, null);
 
-    try {
-        while (walker.nextNode()) {
-            const node = walker.currentNode;
-            
-            if (node instanceof Element) {
-                try {
-                    const treeElement = new TreeElement(node);
+    while (walker.nextNode()) {
+        const node = walker.currentNode;
+        
+        if (node instanceof Element) {
+            try {
+                const treeElement = new TreeElement(node);
 
-                    contentTreeState.treeElementWeakMap.set(node, treeElement);
-                    contentTreeState.treeElementByIdMap.set(treeElement.id, treeElement);
+                contentTreeState.treeElementWeakMap.set(node, treeElement);
+                contentTreeState.treeElementByIdMap.set(treeElement.id, treeElement);
 
-                    if (node.shadowRoot) {
-                        parseDOMTree(node.shadowRoot);
+                if (node.shadowRoot) {
+                    parseDOMTree(node.shadowRoot);
+                }
+
+                // Handle normal case, where we have a normal parent
+                const parentElem = node.parentElement;
+                if (parentElem) {
+                    const parent = contentTreeState.treeElementWeakMap.get(node.parentElement);
+                    if (parent) {
+                        parent.addChild(treeElement);
                     }
-
-                    // Handle normal case, where we have a normal parent
-                    const parentElem = node.parentElement;
-                    if (parentElem) {
-                        const parent = contentTreeState.treeElementWeakMap.get(node.parentElement);
+                } else {
+            // Handle special cases, e.g. boreing into a Shadow Root
+                    if (node.parentNode && nodeIsShadowRoot(node.parentNode)) {
+                        const parentHost = node.parentNode.host;
+                        const parent = contentTreeState.treeElementWeakMap.get(parentHost);
                         if (parent) {
                             parent.addChild(treeElement);
                         }
-                    } else {
-                // Handle special cases, e.g. boreing into a Shadow Root
-                        if (node.parentNode && nodeIsShadowRoot(node.parentNode)) {
-                            const parentHost = node.parentNode.host;
-                            const parent = contentTreeState.treeElementWeakMap.get(parentHost);
-                            if (parent) {
-                                parent.addChild(treeElement);
-                            }
-                        }
                     }
-                } catch (error) {
-                    console.error("parseDOMTree: Error processing node:", node, error);
                 }
+            } catch (error) {
+                console.error("parseDOMTree: Error processing node:", node, error);
             }
         }
-    } catch (error) {
-        console.error("parseDOMTree: Fatal error:", error);
-        throw error;
     }
 }
 

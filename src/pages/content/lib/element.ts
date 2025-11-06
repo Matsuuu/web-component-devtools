@@ -16,32 +16,29 @@ export class TreeElement {
     }
 
     private checkIsCustomElement(element: Element): boolean {
-        try {
-            const tagName = element.nodeName.toLowerCase();
-            if (!tagName.includes("-")) {
-                return false;
-            }
-            
-            // Try customElements.get() first if customElements registry is available
-            if (typeof customElements !== 'undefined' && customElements !== null) {
-                try {
-                    const customElementDef = customElements.get(tagName);
-                    if (customElementDef !== undefined) {
-                        return true;
-                    }
-                } catch (e) {
-                    // customElements.get() can throw for invalid tag names
-                }
-            }
-            
-            // Fallback to constructor check
+        const tagName = element.nodeName.toLowerCase();
+        if (!tagName.includes("-")) {
+            return false;
+        }
+        
+        // Try customElements.get() first if customElements registry is available
+        if (typeof customElements !== 'undefined' && customElements !== null) {
             try {
-                return element.constructor !== HTMLElement && element.constructor !== Element;
+                const customElementDef = customElements.get(tagName);
+                if (customElementDef !== undefined) {
+                    return true;
+                }
             } catch (e) {
-                return false;
+                // TODO: Implement skip list, related issue: https://github.com/Matsuuu/web-component-devtools/issues/73
+                // Example element: <svg:font-face>
+                // customElements.get() can throw for invalid tag names
             }
-        } catch (error) {
-            console.error("checkIsCustomElement error for element:", element, error);
+        }
+        
+        // Fallback to constructor check
+        try {
+            return element.constructor !== HTMLElement && element.constructor !== Element;
+        } catch (e) {
             return false;
         }
     }
@@ -61,16 +58,6 @@ export class TreeElement {
 
     public addChild(treeElement: TreeElement) {
         this.children.push(treeElement);
-    }
-
-    toJSON() {
-        return {
-            id: this.id,
-            children: this.children,
-            isCustomElement: this.isCustomElement,
-            nodeText: this.nodeText,
-            lazy: this.lazy,
-        };
     }
 }
 

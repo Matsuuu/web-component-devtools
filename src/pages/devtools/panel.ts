@@ -9,6 +9,7 @@ import { TABS } from "./lib/devtool-tabs";
 import { TreeElement } from "../content/lib/element";
 import { SignalWatcher } from "@lit-labs/signals";
 import { devtoolsState } from "./state/devtools-context";
+import { notifyPanelReady } from "./devtools-connections";
 
 @customElement("wcdt-panel")
 @withTailwind
@@ -51,9 +52,7 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
 
         this.activePanel = sessionStorage.getItem("active-panel") || TABS.ELEMENTS;
 
-        import("./devtools-connections").then(({ notifyPanelReady }) => {
-            notifyPanelReady();
-        });
+        notifyPanelReady();
     }
 
     onPanelChanged(ev: CustomEvent) {

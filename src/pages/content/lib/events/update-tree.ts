@@ -7,7 +7,7 @@ export function updateTree() {
     const tree = getDOMTree();
     contentTreeState.tree = tree;
 
-    const serializedTree = JSON.parse(JSON.stringify(tree));
+    const serializedTree = tree;
 
     const message = {
         from: LAYER.CONTENT,

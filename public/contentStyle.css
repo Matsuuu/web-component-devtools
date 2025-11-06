@@ -1,10 +1,10 @@
 #wc-devtools-spotlight-element {
-    border: 2px solid hsla(68, 100%, 50%, 1);
+    border: 2px solid #ddff00;
     position: absolute;
     display: flex;
     z-index: 9999;
 
-    background: hsla(68, 100%, 50%, 0.5);
+    background: #ddff0080;
     pointer-events: none;
     border-radius: 4px;
 
