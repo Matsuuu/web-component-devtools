@@ -58,9 +58,10 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     }
 
     render() {
-        const baseLayer = this.tree?.children;
-        if (!baseLayer || baseLayer?.length <= 0) {
-            return "";
+        const tree = this.tree;
+        
+        if (!tree) {
+            return html`<div class="p-4 text-center">Waiting for page data...</div>`;
         }
         return html`
             <wa-tree @wa-selection-change=${this.onSelectionChange}>

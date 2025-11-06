@@ -8,6 +8,7 @@ const outDir = resolve(__dirname, 'dist_firefox');
 export default mergeConfig(
   baseConfig,
   defineConfig({
+    base: './',
     plugins: [
       crx({
         manifest: {

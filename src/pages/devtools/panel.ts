@@ -37,7 +37,7 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
         this.disconnectionMessage = disconnectionMessage;
     }
 
-    setElementTree(tree: TreeElement) {
+    setElementTree(tree: TreeElement | null) {
         devtoolsState.elementTree.set(tree);
     }
 
@@ -50,6 +50,10 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
         });
 
         this.activePanel = sessionStorage.getItem("active-panel") || TABS.ELEMENTS;
+
+        import("./devtools-connections").then(({ notifyPanelReady }) => {
+            notifyPanelReady();
+        });
     }
 
     onPanelChanged(ev: CustomEvent) {

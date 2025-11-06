@@ -1,9 +1,10 @@
 import { Signal } from "@lit-labs/signals";
 import { TreeElement } from "@src/pages/content/lib/element";
+import browser from "webextension-polyfill";
 
 export class DevtoolsState {
-    public messagePort!: chrome.runtime.Port;
-    public elementTree = new Signal.State<TreeElement>(new TreeElement(document.body));
+    public messagePort!: browser.Runtime.Port;
+    public elementTree = new Signal.State<TreeElement | null>(null);
     public highlightAll = new Signal.State(false);
     public selectedItem = new Signal.State<TreeElement | undefined>(undefined);
 
