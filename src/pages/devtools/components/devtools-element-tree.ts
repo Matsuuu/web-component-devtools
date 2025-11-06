@@ -1,4 +1,4 @@
-import { WaCollapseEvent, WaExpandEvent, WaLazyLoadEvent } from "@awesome.me/webawesome";
+import { WaCollapseEvent, WaExpandEvent, WaLazyLoadEvent, WaSelectionChangeEvent } from "@awesome.me/webawesome";
 import WaTreeItem from "@awesome.me/webawesome/dist/components/tree-item/tree-item.js";
 import { SignalWatcher } from "@lit-labs/signals";
 import { stylizeNodeText } from "@src/lib/code/stylize-node-text";
@@ -12,6 +12,7 @@ import { ChevronRight } from "lucide";
 import { devtoolsState } from "../state/devtools-context";
 import { ref } from "lit/directives/ref.js";
 import { createDevtoolsHoverEvent, createDevtoolsHoverLeaveEvent } from "../events/devtools-hover-event";
+import { createDevtoolsSelectEvent } from "../events/devtools-select-event";
 
 const expansionMap = new WeakSet<TreeElement>();
 
@@ -19,6 +20,8 @@ const expansionMap = new WeakSet<TreeElement>();
 @withTailwind
 export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     className = "h-full overflow-auto";
+
+    treeItemToElementMap = new WeakMap<WaTreeItem, TreeElement>();
 
     @property({ type: Boolean, reflect: true, attribute: "highlight-all" })
     highLightAll = false;
@@ -43,22 +46,41 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
         return devtoolsState.elementTree.get();
     }
 
+    onSelectionChange(event: WaSelectionChangeEvent) {
+        const selectedTreeItem = event.detail.selection[0];
+        if (selectedTreeItem) {
+            const treeElement = this.treeItemToElementMap.get(selectedTreeItem);
+            if (treeElement) {
+                devtoolsState.selectedItem.set(treeElement);
+                createDevtoolsSelectEvent(treeElement);
+            }
+        }
+    }
+
     render() {
         const baseLayer = this.tree?.children;
         if (!baseLayer || baseLayer?.length <= 0) {
             return "";
         }
-        return html` <wa-tree> ${baseLayer.map(elem => this.renderItem(elem, 0))} </wa-tree> `;
+        return html`
+            <wa-tree @wa-selection-change=${this.onSelectionChange}>
+                ${baseLayer.map(elem => this.renderItem(elem, 0))}
+            </wa-tree>
+        `;
     }
 
-    async addHoverListener(element: Element | undefined, treeElement: TreeElement) {
+    async onTreeElementMounted(element: Element | undefined, treeElement: TreeElement) {
         if (!element) {
             return;
         }
         if (!(element instanceof WaTreeItem)) {
             return;
         }
+
         await element.updateComplete;
+
+        this.treeItemToElementMap.set(element, treeElement);
+
         const itemRow = element.shadowRoot?.querySelector("[part='item']");
 
         itemRow?.addEventListener("mouseenter", () => {
@@ -77,7 +99,7 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
 
         return html`
             <wa-tree-item
-                ${ref(el => this.addHoverListener(el, element))}
+                ${ref(el => this.onTreeElementMounted(el, element))}
                 ?lazy=${!itemIsOpen && element.children.length > 0}
                 ?expanded=${itemIsOpen}
                 @wa-lazy-load=${(ev: WaLazyLoadEvent) => this.loadTreeBranch(ev, element)}

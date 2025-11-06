@@ -1,8 +1,10 @@
+import { WaTreeItem } from "@awesome.me/webawesome/dist/react";
 import { isHoverLeaveMessage } from "../messages/hover-leave-message";
 import { isHoverMessage } from "../messages/hover-message";
 import { InitMessage, isInitMessage } from "../messages/init-message";
 import { LAYER } from "../messages/layers";
 import { RequestInitMessage } from "../messages/request-init-message";
+import { isSelectMessage } from "../messages/select-message";
 import { updateTree } from "./lib/events/update-tree";
 import { getSpotlightElementDimensions } from "./lib/spotlight/dimensions";
 import { getSpotlightElement, moveSpotlight, requestSpotlightRemove } from "./lib/spotlight/spotlight-element";
@@ -52,6 +54,11 @@ export function initConnection() {
                 requestSpotlightRemove();
 
                 return;
+            }
+
+            if (isSelectMessage(data)) {
+                console.log("Element selected: ", data.element);
+                console.warn("Element selection not yet implemented");
             }
         }
     });

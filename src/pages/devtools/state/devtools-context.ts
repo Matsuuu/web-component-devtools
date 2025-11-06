@@ -5,6 +5,7 @@ export class DevtoolsState {
     public messagePort!: chrome.runtime.Port;
     public elementTree = new Signal.State<TreeElement>(new TreeElement(document.body));
     public highlightAll = new Signal.State(false);
+    public selectedItem = new Signal.State<TreeElement | undefined>(undefined);
 
     public onChange(stateObject: Signal.State<any>, callback: Function) {
         const watcher = new Signal.subtle.Watcher(async () => {
