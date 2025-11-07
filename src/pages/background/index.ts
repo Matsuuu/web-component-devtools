@@ -1,4 +1,4 @@
-import { initConnections } from "./background-connections";
+import { initConnections } from "./messaging/background-connections";
 
 console.log("background script loaded !");
 

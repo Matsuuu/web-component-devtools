@@ -6,6 +6,7 @@ export class TreeElement {
     children: TreeElement[] = [];
     isCustomElement: boolean = false;
     nodeText: string = "[NODE_PARSE_FAILED]";
+    nodeName: string = "<>";
 
     lazy = true;
 
@@ -14,6 +15,7 @@ export class TreeElement {
         this.element = element;
         this.isCustomElement = this.checkIsCustomElement(element);
         this.nodeText = this.createNodeText();
+        this.nodeName = element.nodeName.toLowerCase();
 
         Object.defineProperty(this, "element", {
             enumerable: false,

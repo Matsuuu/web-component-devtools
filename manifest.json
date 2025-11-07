@@ -14,7 +14,8 @@
     "icons": {
         "128": "public/dev-icon-128.png"
     },
-    "permissions": ["activeTab"],
+    "permissions": ["activeTab", "scripting"],
+    "host_permissions": ["<all_urls>"],
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*", "<all_urls>"],

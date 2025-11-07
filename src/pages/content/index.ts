@@ -5,4 +5,3 @@ export function initContentScript() {
 }
 
 initContentScript();
-

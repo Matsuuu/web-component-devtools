@@ -5,6 +5,7 @@ import { handleContentMessageFromDevtools } from "./content-from-devtools-connec
 
 export const contentConnectionsState = {
     initialized: false,
+    tabId: undefined as number | undefined,
 };
 
 export function initConnection() {

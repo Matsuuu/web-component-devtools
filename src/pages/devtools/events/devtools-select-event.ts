@@ -6,7 +6,7 @@ import { SelectMessage } from "@src/pages/messages/select-message";
 export function createDevtoolsSelectEvent(element: TreeElement) {
     devtoolsState.messagePort.postMessage({
         from: LAYER.DEVTOOLS,
-        to: LAYER.CONTENT,
+        to: LAYER.BACKGROUND,
         data: new SelectMessage(element),
     });
 }

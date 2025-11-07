@@ -2,7 +2,6 @@ import { isHoverLeaveMessage } from "@src/pages/messages/hover-leave-message";
 import { isHoverMessage } from "@src/pages/messages/hover-message";
 import { InitMessage, isInitMessage } from "@src/pages/messages/init-message";
 import { LAYER } from "@src/pages/messages/layers";
-import { isSelectMessage } from "@src/pages/messages/select-message";
 import { updateTree } from "../lib/events/update-tree";
 import { getSpotlightElementDimensions } from "../lib/spotlight/dimensions";
 import { moveSpotlight, requestSpotlightRemove } from "../lib/spotlight/spotlight-element";
@@ -21,6 +20,8 @@ export function handleContentMessageFromDevtools(message: any) {
 
     if (isInitMessage(data)) {
         contentConnectionsState.initialized = true;
+        contentConnectionsState.tabId = data.tabId;
+
         console.log("Init received from Devtools, responding.");
         browser.runtime.sendMessage({
             from: LAYER.CONTENT,
@@ -49,13 +50,5 @@ export function handleContentMessageFromDevtools(message: any) {
         requestSpotlightRemove();
 
         return;
-    }
-
-    if (isSelectMessage(data)) {
-        console.log("Element selected: ", data.element);
-        console.warn("Element selection not yet implemented");
-
-        console.log(customElements);
-        console.log(unsafeWindow);
     }
 }

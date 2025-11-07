@@ -35,5 +35,8 @@ export default defineConfig({
     publicDir: resolve(__dirname, "public"),
     build: {
         minify: false,
+        rollupOptions: {
+            external: ["/ts.bundle.js"],
+        },
     },
 });
