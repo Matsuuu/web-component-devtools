@@ -4,6 +4,7 @@ import type typescript from "typescript";
 export interface ScriptEntry {
     src?: string;
     content?: string;
+    parent: string;
     sourceFile?: typescript.SourceFile;
 }
 
@@ -103,6 +104,9 @@ async function fetchScriptTagContent(script: ScriptEntry, origin: string) {
             return;
         }
 
+        console.log("Fetching for script ", script);
+        console.log("Fetching ", url.toString());
+
         try {
             const res = await fetch(url);
             const scriptContent = await res.text();
@@ -119,12 +123,21 @@ function scriptEntryToUrl(scriptEntry: ScriptEntry, origin: string): URL | null 
         return null;
     }
 
+    const src = scriptEntry.src;
     // URL's are finnicky, so let's just kinda bruteforce it
     try {
-        return new URL(scriptEntry.src);
+        return new URL(src);
     } catch (ex) {
         try {
-            return new URL(scriptEntry.src, origin);
+            // If the path is relative, we get the path from the parent,
+            // and then we append it to the same dir the parent was in.
+            if (src.startsWith("./")) {
+                const parentUrl = new URL(scriptEntry.parent);
+                const suffix = parentUrl.pathname.substring(0, parentUrl.pathname.lastIndexOf("/"));
+                return new URL(suffix + src.substring(1), origin);
+            }
+
+            return new URL(src, origin);
         } catch (exx) {
             // Ignored
         }

@@ -1,5 +1,5 @@
 import browser from "webextension-polyfill";
-import { ScriptEntry } from "../messaging/client-javascript-parser";
+import { ScriptEntry } from "../parsing/client-javascript-parser";
 
 export async function queryCustomElementClassCodeFromWindow(customElementName: string, tabId: number) {
     const scriptResult = await browser.scripting.executeScript({
@@ -24,11 +24,13 @@ export async function queryAllScriptsFromWindow(tabId: number): Promise<ScriptQu
         target: { tabId },
         args: [],
         func: () => {
+            const origin = window.location.origin;
             return {
-                origin: window.location.origin,
+                origin,
                 scripts: [...document.querySelectorAll("script")] //
                     .map(script => ({
                         src: script.src,
+                        parent: origin,
                         content: script.innerHTML,
                     })),
             };
