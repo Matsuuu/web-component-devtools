@@ -7,8 +7,6 @@ export async function queryCustomElementDataFromUserWindow(customElementName: st
         return;
     }
 
-    console.log(browser);
-    console.log(browser.scripting);
     await browser.scripting.executeScript({
         target: { tabId: contentConnectionsState.tabId },
         func: () => {

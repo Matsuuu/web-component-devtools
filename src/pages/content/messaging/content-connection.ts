@@ -2,6 +2,7 @@ import { LAYER } from "@src/pages/messages/layers";
 import { RequestInitMessage } from "@src/pages/messages/request-init-message";
 import browser from "webextension-polyfill";
 import { handleContentMessageFromDevtools } from "./content-from-devtools-connection";
+import { handleContentMessageFromBackground } from "./content-from-background-connection";
 
 export const contentConnectionsState = {
     initialized: false,
@@ -11,7 +12,11 @@ export const contentConnectionsState = {
 export function initConnection() {
     browser.runtime.onMessage.addListener((message: any, sender: any) => {
         if (message.from === LAYER.DEVTOOLS) {
-            handleContentMessageFromDevtools(message);
+            return handleContentMessageFromDevtools(message);
+        }
+
+        if (message.from === LAYER.BACKGROUND) {
+            return handleContentMessageFromBackground(message);
         }
     });
 

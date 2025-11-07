@@ -14,8 +14,7 @@ import { contentConnectionsState } from "./content-connection";
 // Maybe even create an engine where we could have an map with key being the checker, value being the callback function?
 // -- Too complex for no upside?
 
-export function handleContentMessageFromDevtools(message: any) {
-    console.log("Message from devtools: ", message);
+export function handleContentMessageFromDevtools(message: any): Promise<any> {
     const data = message.data;
 
     if (isInitMessage(data)) {
@@ -30,25 +29,28 @@ export function handleContentMessageFromDevtools(message: any) {
         });
 
         updateTree();
-        return;
+
+        return Promise.resolve();
     }
 
     if (isHoverMessage(data)) {
         const hoveredElement = contentTreeState.treeElementByIdMap.get(data.element.id);
         if (!hoveredElement) {
-            return;
+            return Promise.resolve();
         }
 
         const dimensions = getSpotlightElementDimensions(hoveredElement);
 
         moveSpotlight(dimensions);
 
-        return;
+        return Promise.resolve();
     }
 
     if (isHoverLeaveMessage(data)) {
         requestSpotlightRemove();
 
-        return;
+        return Promise.resolve();
     }
+
+    return Promise.resolve();
 }

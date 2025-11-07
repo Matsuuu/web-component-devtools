@@ -1,7 +1,7 @@
-import { PropertyDeclaration, PropertyDeclarations } from "lit";
-import { AnalyzedElement, Properties } from "../parsing/analyzed-element";
+import { PropertyDeclaration } from "lit";
+import { StaticAnalyzedElement, Properties } from "../parsing/analyzed-element";
 
-export function analyzeDomElement(elementName: string) {
+export function analyzeDomElement(elementName: string): StaticAnalyzedElement {
     // Pack all of these function with this function since we're going to inject this all
     function isLitElement(classData: CustomElementConstructor): classData is LitLikeElement {
         return isLitInstalled() && classData.hasOwnProperty("elementProperties");
@@ -11,7 +11,7 @@ export function analyzeDomElement(elementName: string) {
         return window["litElementVersions"] && window["litElementVersions"].length > 0;
     }
 
-    function analyzeLitElement(classData: LitLikeElement): AnalyzedElement {
+    function analyzeLitElement(classData: LitLikeElement): StaticAnalyzedElement {
         const properties: Properties = {};
         for (const [key, val] of classData.elementProperties.entries()) {
             properties[key] = {
@@ -27,10 +27,11 @@ export function analyzeDomElement(elementName: string) {
         };
     }
 
-    function analyzeHTMLElement(classData: CustomElementConstructor | null) {
+    function analyzeHTMLElement(classData: CustomElementConstructor | null): StaticAnalyzedElement {
         return {
             name: classData?.name ?? elementName,
             elementName: elementName,
+            properties: {},
         };
     }
 
@@ -42,6 +43,8 @@ export function analyzeDomElement(elementName: string) {
     if (isLitElement(classData)) {
         return analyzeLitElement(classData);
     }
+
+    return analyzeHTMLElement(null);
 }
 
 interface LitLikeElement extends CustomElementConstructor {

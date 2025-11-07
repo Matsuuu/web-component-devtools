@@ -1,5 +1,19 @@
-export interface AnalyzedElement {
+export interface StaticAnalyzedElement {
+    name: string;
+    elementName: string;
     properties: Properties;
+}
+
+export interface DomAnalyzedElement extends StaticAnalyzedElement {
+    attributes: Attributes;
+}
+
+export type Attributes = Record<string, Attribute>;
+
+export interface Attribute {
+    name: string;
+    type: String | Boolean;
+    value?: string | boolean;
 }
 
 export type Properties = Record<string, Property>;
