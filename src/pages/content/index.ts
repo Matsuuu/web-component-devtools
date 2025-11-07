@@ -1,7 +1,8 @@
-import { initConnection } from "./content-connection";
+import { initConnection } from "./messaging/content-connection";
 
 export function initContentScript() {
     initConnection();
 }
 
 initContentScript();
+
