@@ -76,7 +76,7 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
     renderPanelContent() {
         if (!this.connected && this.disconnectionMessage) {
             return html`
-                <div class="w-full h-full flex flex-col items-center justify-center">
+                <div class="w-full h-full flex flex-col items-center justify-center p-4">
                     <p>${this.disconnectionMessage}</p>
                 </div>
             `;

@@ -1,4 +1,5 @@
 import { TreeElement } from "./element";
+import { SPOTLIGHT_ELEM_ID } from "./spotlight/spotlight-element";
 
 type TreeState = {
     tree?: TreeElement;
@@ -18,7 +19,7 @@ export const contentTreeState: TreeState = {
  * */
 export function getDOMTree(): TreeElement {
     const target = document.body;
-    
+
     let tree: TreeElement;
     try {
         tree = new TreeElement(target);
@@ -45,8 +46,11 @@ function parseDOMTree(target: HTMLElement | ShadowRoot = document.body) {
 
     while (walker.nextNode()) {
         const node = walker.currentNode;
-        
+
         if (node instanceof Element) {
+            if (node.id === SPOTLIGHT_ELEM_ID) {
+                continue;
+            }
             try {
                 const treeElement = new TreeElement(node);
 
@@ -65,7 +69,7 @@ function parseDOMTree(target: HTMLElement | ShadowRoot = document.body) {
                         parent.addChild(treeElement);
                     }
                 } else {
-            // Handle special cases, e.g. boreing into a Shadow Root
+                    // Handle special cases, e.g. boreing into a Shadow Root
                     if (node.parentNode && nodeIsShadowRoot(node.parentNode)) {
                         const parentHost = node.parentNode.host;
                         const parent = contentTreeState.treeElementWeakMap.get(parentHost);

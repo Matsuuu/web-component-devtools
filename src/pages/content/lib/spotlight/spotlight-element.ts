@@ -1,4 +1,4 @@
-const ELEM_ID = "wc-devtools-spotlight-element";
+export const SPOTLIGHT_ELEM_ID = "wc-devtools-spotlight-element";
 let currentElement: HTMLDivElement | undefined = undefined;
 let spotlightRemoveTimeout: NodeJS.Timeout;
 
@@ -21,7 +21,7 @@ export function getSpotlightElement() {
 
 export function createSpotlightElement() {
     const spot = document.createElement("div");
-    spot.id = ELEM_ID;
+    spot.id = SPOTLIGHT_ELEM_ID;
     currentElement = spot;
 
     document.body.appendChild(spot);
@@ -29,7 +29,7 @@ export function createSpotlightElement() {
 }
 
 export function removeSpotlightElement() {
-    const elem = document.querySelector("#" + ELEM_ID);
+    const elem = document.querySelector("#" + SPOTLIGHT_ELEM_ID);
     elem?.remove();
     currentElement = undefined;
 }
