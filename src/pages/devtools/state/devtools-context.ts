@@ -4,7 +4,7 @@ import browser from "webextension-polyfill";
 
 export class DevtoolsState {
     public messagePort!: browser.Runtime.Port;
-    public elementTree = new Signal.State<TreeElement | null>(null);
+    public elementTree = new Signal.State<TreeElement | undefined>(undefined);
     public highlightAll = new Signal.State(false);
     public selectedItem = new Signal.State<TreeElement | undefined>(undefined);
 

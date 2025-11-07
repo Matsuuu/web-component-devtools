@@ -38,7 +38,7 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
         this.disconnectionMessage = disconnectionMessage;
     }
 
-    setElementTree(tree: TreeElement | null) {
+    setElementTree(tree: TreeElement | undefined) {
         devtoolsState.elementTree.set(tree);
     }
 

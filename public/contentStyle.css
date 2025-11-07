@@ -1,10 +1,10 @@
 #wc-devtools-spotlight-element {
-    border: 2px solid #ddff00;
+    border: 2px solid #ca3500;
     position: absolute;
     display: flex;
     z-index: 9999;
 
-    background: #ddff0080;
+    background: #ca350050;
     pointer-events: none;
     border-radius: 4px;
 
