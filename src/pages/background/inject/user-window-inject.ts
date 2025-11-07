@@ -14,19 +14,27 @@ export async function queryCustomElementClassCodeFromWindow(customElementName: s
     return scriptResult[0].result ?? scriptResult[0].error;
 }
 
-export async function queryAllScriptsFromWindow(tabId: number): Promise<ScriptEntry[]> {
+export interface ScriptQueryResult {
+    origin: string;
+    scripts: ScriptEntry[];
+}
+
+export async function queryAllScriptsFromWindow(tabId: number): Promise<ScriptQueryResult> {
     const scriptResult = await browser.scripting.executeScript({
         target: { tabId },
         args: [],
         func: () => {
-            return [...document.querySelectorAll("script")] //
-                .map(script => ({
-                    src: script.src,
-                    content: script.innerHTML,
-                }));
+            return {
+                origin: window.location.origin,
+                scripts: [...document.querySelectorAll("script")] //
+                    .map(script => ({
+                        src: script.src,
+                        content: script.innerHTML,
+                    })),
+            };
         },
         //world: "MAIN",
     });
 
-    return scriptResult[0].result as ScriptEntry[];
+    return scriptResult[0].result as ScriptQueryResult;
 }

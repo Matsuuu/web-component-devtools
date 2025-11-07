@@ -7,6 +7,6 @@ import ts from "/ts.bundle.js";
  *
  * Everytime the Devtools needs to use the TS instance, it should be through this function
  * */
-export async function getTS(): Promise<typeof import("typescript")> {
+export function getTS(): typeof import("typescript") {
     return ts;
 }
