@@ -1,4 +1,4 @@
-type ElementId = string;
+export type ElementId = string;
 
 export class TreeElement {
     public id: ElementId;
@@ -14,19 +14,22 @@ export class TreeElement {
         this.element = element;
         this.isCustomElement = this.checkIsCustomElement(element);
         this.nodeText = this.createNodeText();
-        
-        Object.defineProperty(this, 'element', {
+
+        Object.defineProperty(this, "element", {
             enumerable: false,
             writable: true,
-            configurable: true
+            configurable: true,
         });
     }
 
     private checkIsCustomElement(element: Element): boolean {
         const tagName = element.nodeName.toLowerCase();
         const isAttr = element.getAttribute?.("is");
+        if (!isAttr && !tagName.includes("-")) {
+            return false;
+        }
+
         // :defined matches all defined elements; restrict to CE semantics
-        if (!(isAttr || tagName.includes("-"))) return false;
         try {
             return element.matches(":defined");
         } catch {
@@ -35,7 +38,6 @@ export class TreeElement {
     }
 
     createNodeText() {
-        debugger;
         const nodeName = this.element.nodeName.toLowerCase();
         const attributesString = [...this.element.attributes]
             .map(attribute => {
@@ -57,12 +59,10 @@ export class TreeElement {
 // Ref: https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
 function generateUuidV4Like() {
     let dt = new Date().getTime();
-    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
-      c,
-    ) {
-      const r = (dt + Math.random() * 16) % 16 | 0;
-      dt = Math.floor(dt / 16);
-      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (dt + Math.random() * 16) % 16 | 0;
+        dt = Math.floor(dt / 16);
+        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
     });
     return uuid;
-  }
+}

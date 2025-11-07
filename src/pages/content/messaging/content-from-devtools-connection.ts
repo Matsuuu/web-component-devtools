@@ -54,5 +54,8 @@ export function handleContentMessageFromDevtools(message: any) {
     if (isSelectMessage(data)) {
         console.log("Element selected: ", data.element);
         console.warn("Element selection not yet implemented");
+
+        console.log(customElements);
+        console.log(unsafeWindow);
     }
 }
