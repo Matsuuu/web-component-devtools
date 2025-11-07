@@ -9,9 +9,18 @@ export interface ScriptEntry {
 }
 
 const ts = getTS();
+const fetchCache = new Map<string, Promise<Response>>();
+const fetchResultCache = new Map<string, string>();
 
 export async function parseClientJavascriptCode(scripts: ScriptEntry[], origin: string): Promise<ScriptEntry[]> {
-    const fetchers = scripts.map(script => fetchScriptTagContent(script, origin));
+    fetchCache.clear();
+    fetchResultCache.clear();
+
+    for (const script of scripts) {
+        updateScriptSrcToFullPathWhereApplicable(script, origin);
+    }
+
+    const fetchers = scripts.map(script => fetchScriptTagContent(script));
     await Promise.all(fetchers);
 
     const allScripts = [...scripts];
@@ -45,7 +54,12 @@ async function parseJavascriptFileAndAddFoundScriptEntries(
         src: stripQuotes(imp),
         parent: parentScript,
     }));
-    const fetchers = newScripts.map(script => fetchScriptTagContent(script, origin));
+
+    for (const script of newScripts) {
+        updateScriptSrcToFullPathWhereApplicable(script, origin);
+    }
+
+    const fetchers = newScripts.map(script => fetchScriptTagContent(script));
     await Promise.all(fetchers);
 
     // Push instead of spread since we want to mutate the array, not rewrite it
@@ -56,6 +70,13 @@ async function parseJavascriptFileAndAddFoundScriptEntries(
         parseJavascriptFileAndAddFoundScriptEntries(script, origin, script.src, entries),
     );
     await Promise.all(newScriptParsers);
+}
+
+function updateScriptSrcToFullPathWhereApplicable(script: ScriptEntry, origin: string) {
+    const url = scriptEntryToUrl(script, origin);
+    if (url) {
+        script.src = url.toString();
+    }
 }
 
 function stripQuotes(text: string) {
@@ -95,24 +116,40 @@ function isCallExpression(statement: typescript.Node): statement is typescript.C
     return statement.kind === ts.SyntaxKind.CallExpression;
 }
 
-async function fetchScriptTagContent(script: ScriptEntry, origin: string) {
+async function fetchScriptTagContent(script: ScriptEntry) {
     if ((!script.content || script.content.length <= 0) && script.src) {
-        const url = scriptEntryToUrl(script, origin);
-
-        if (!url) {
-            console.warn("Failed to form URL for ", script.src);
-            return;
-        }
-
-        console.log("Fetching for script ", script);
-        console.log("Fetching ", url.toString());
-
         try {
-            const res = await fetch(url);
-            const scriptContent = await res.text();
-            script.content = scriptContent;
+            const src = script.src;
+            let fetchPromise: Promise<Response>;
+            if (fetchCache.has(src)) {
+                fetchPromise = fetchCache.get(src)!;
+            } else {
+                fetchPromise = fetch(src);
+                fetchCache.set(src, fetchPromise);
+            }
+
+            const res = await fetchPromise;
+            const contentType = res.headers.get("Content-Type");
+
+            let scriptContent: string;
+            if (fetchResultCache.has(src)) {
+                scriptContent = fetchResultCache.get(src)!;
+            } else {
+                try {
+                    scriptContent = await res.text();
+                    fetchResultCache.set(src, scriptContent);
+                } catch (ex) {
+                    scriptContent = fetchResultCache.get(src)!;
+                }
+            }
+
+            if (contentType?.startsWith("application/javascript")) {
+                script.content = scriptContent;
+            } else {
+                console.warn(`Could not parse ${src}: Content Type not application/javascript. Was: ${contentType}.`);
+            }
         } catch (ex) {
-            console.warn("Failed to fetch ", script.src);
+            console.warn("Failed to fetch " + script.src, ex);
             // Ignored for now
         }
     }
@@ -131,10 +168,8 @@ function scriptEntryToUrl(scriptEntry: ScriptEntry, origin: string): URL | null 
         try {
             // If the path is relative, we get the path from the parent,
             // and then we append it to the same dir the parent was in.
-            if (src.startsWith("./")) {
-                const parentUrl = new URL(scriptEntry.parent);
-                const suffix = parentUrl.pathname.substring(0, parentUrl.pathname.lastIndexOf("/"));
-                return new URL(suffix + src.substring(1), origin);
+            if (src.startsWith("./") || src.startsWith("../") || src.startsWith("/")) {
+                return new URL(src, scriptEntry.parent);
             }
 
             return new URL(src, origin);
