@@ -10,6 +10,11 @@ import { contentTreeState } from "../lib/tree-walker";
 import browser from "webextension-polyfill";
 import { contentConnectionsState } from "./content-connection";
 
+// TODO: Maybe put each of these code paths into their own functions too?
+//
+// Maybe even create an engine where we could have an map with key being the checker, value being the callback function?
+// -- Too complex for no upside?
+
 export function handleContentMessageFromDevtools(message: any) {
     console.log("Message from devtools: ", message);
     const data = message.data;

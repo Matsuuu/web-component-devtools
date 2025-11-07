@@ -14,6 +14,8 @@ import { ref } from "lit/directives/ref.js";
 import { createDevtoolsHoverEvent, createDevtoolsHoverLeaveEvent } from "../events/devtools-hover-event";
 import { createDevtoolsSelectEvent } from "../events/devtools-select-event";
 
+const INITIAL_DEPTH = 5;
+
 const expansionMap = new WeakSet<TreeElement>();
 
 @customElement("devtools-element-tree")
@@ -59,15 +61,11 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
 
     render() {
         const tree = this.tree;
-        
+
         if (!tree) {
             return html`<div class="p-4 text-center">Waiting for page data...</div>`;
         }
-        return html`
-            <wa-tree @wa-selection-change=${this.onSelectionChange}>
-                ${this.renderItem(tree, 0)}
-            </wa-tree>
-        `;
+        return html` <wa-tree @wa-selection-change=${this.onSelectionChange}> ${this.renderItem(tree, 0)} </wa-tree> `;
     }
 
     async onTreeElementMounted(element: Element | undefined, treeElement: TreeElement) {
@@ -96,7 +94,7 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     }
 
     renderItem(element: TreeElement, level: number): TemplateResult {
-        const itemIsOpen = expansionMap.has(element) || level < 4;
+        const itemIsOpen = expansionMap.has(element) || level < INITIAL_DEPTH;
 
         return html`
             <wa-tree-item
