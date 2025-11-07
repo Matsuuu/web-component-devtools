@@ -22,7 +22,8 @@
     "react/react-in-jsx-scope": "off"
   },
   "globals": {
-    "chrome": "readonly"
+    "chrome": "readonly",
+    "browser": "readonly"
   },
   "ignorePatterns": ["watch.js", "dist/**"]
 }

@@ -1,10 +1,14 @@
-import { type UUID } from "crypto";
 import { TreeElement } from "./element";
 
-export const contentTreeState = {
-    tree: undefined! as TreeElement,
+type TreeState = {
+    tree?: TreeElement;
+    treeElementWeakMap: WeakMap<Element, TreeElement>;
+    treeElementByIdMap: Map<string, TreeElement>;
+};
+
+export const contentTreeState: TreeState = {
     treeElementWeakMap: new WeakMap<Element, TreeElement>(),
-    treeElementByIdMap: new Map<UUID, TreeElement>(),
+    treeElementByIdMap: new Map<string, TreeElement>(),
 };
 
 /**
@@ -14,11 +18,24 @@ export const contentTreeState = {
  * */
 export function getDOMTree(): TreeElement {
     const target = document.body;
-    const tree = new TreeElement(target);
+    
+    let tree: TreeElement;
+    try {
+        tree = new TreeElement(target);
+    } catch (error) {
+        console.error("getDOMTree: Error creating TreeElement for body:", error);
+        throw error;
+    }
 
     contentTreeState.treeElementWeakMap.set(document.body, tree);
+    contentTreeState.treeElementByIdMap.set(tree.id, tree);
 
-    parseDOMTree(target);
+    try {
+        parseDOMTree(target);
+    } catch (error) {
+        console.error("getDOMTree: Error in parseDOMTree:", error);
+        throw error;
+    }
 
     return tree;
 }
@@ -28,32 +45,37 @@ function parseDOMTree(target: HTMLElement | ShadowRoot = document.body) {
 
     while (walker.nextNode()) {
         const node = walker.currentNode;
+        
         if (node instanceof Element) {
-            const treeElement = new TreeElement(node);
+            try {
+                const treeElement = new TreeElement(node);
 
-            contentTreeState.treeElementWeakMap.set(node, treeElement);
-            contentTreeState.treeElementByIdMap.set(treeElement.id, treeElement);
+                contentTreeState.treeElementWeakMap.set(node, treeElement);
+                contentTreeState.treeElementByIdMap.set(treeElement.id, treeElement);
 
-            if (node.shadowRoot) {
-                parseDOMTree(node.shadowRoot);
-            }
-
-            // Handle normal case, where we have a normal parent
-            const parentElem = node.parentElement;
-            if (parentElem) {
-                const parent = contentTreeState.treeElementWeakMap.get(node.parentElement);
-                if (parent) {
-                    parent.addChild(treeElement);
+                if (node.shadowRoot) {
+                    parseDOMTree(node.shadowRoot);
                 }
-            } else {
-                // Handle special cases, e.g. boreing into a Shadow Root
-                if (node.parentNode && nodeIsShadowRoot(node.parentNode)) {
-                    const parentHost = node.parentNode.host;
-                    const parent = contentTreeState.treeElementWeakMap.get(parentHost);
+
+                // Handle normal case, where we have a normal parent
+                const parentElem = node.parentElement;
+                if (parentElem) {
+                    const parent = contentTreeState.treeElementWeakMap.get(node.parentElement);
                     if (parent) {
                         parent.addChild(treeElement);
                     }
+                } else {
+            // Handle special cases, e.g. boreing into a Shadow Root
+                    if (node.parentNode && nodeIsShadowRoot(node.parentNode)) {
+                        const parentHost = node.parentNode.host;
+                        const parent = contentTreeState.treeElementWeakMap.get(parentHost);
+                        if (parent) {
+                            parent.addChild(treeElement);
+                        }
+                    }
                 }
+            } catch (error) {
+                console.error("parseDOMTree: Error processing node:", node, error);
             }
         }
     }

@@ -1,4 +1,3 @@
-import { WaTreeItem } from "@awesome.me/webawesome/dist/react";
 import { isHoverLeaveMessage } from "../messages/hover-leave-message";
 import { isHoverMessage } from "../messages/hover-message";
 import { InitMessage, isInitMessage } from "../messages/init-message";
@@ -7,26 +6,24 @@ import { RequestInitMessage } from "../messages/request-init-message";
 import { isSelectMessage } from "../messages/select-message";
 import { updateTree } from "./lib/events/update-tree";
 import { getSpotlightElementDimensions } from "./lib/spotlight/dimensions";
-import { getSpotlightElement, moveSpotlight, requestSpotlightRemove } from "./lib/spotlight/spotlight-element";
+import { moveSpotlight, requestSpotlightRemove } from "./lib/spotlight/spotlight-element";
 import { contentTreeState } from "./lib/tree-walker";
+import browser from "webextension-polyfill";
 
 export function initConnection() {
     let initialized = false;
 
-    chrome.runtime.onMessage.addListener((message, sender) => {
+    browser.runtime.onMessage.addListener((message: any, sender: any) => {
         const data = message.data;
 
         if (message.from === LAYER.DEVTOOLS) {
             console.log("Message from devtools: ", message);
 
-            // TODO: At some point we might want to move these somewhere else.
-            //
-            // For now, let's just pile em here
 
             if (isInitMessage(data)) {
                 initialized = true;
                 console.log("Init received from Devtools, responding.");
-                chrome.runtime.sendMessage({
+                browser.runtime.sendMessage({
                     from: LAYER.CONTENT,
                     to: LAYER.DEVTOOLS,
                     data: new InitMessage(data.tabId),
@@ -65,7 +62,7 @@ export function initConnection() {
 
     setTimeout(() => {
         if (!initialized) {
-            chrome.runtime.sendMessage({
+            browser.runtime.sendMessage({
                 from: LAYER.CONTENT,
                 to: LAYER.DEVTOOLS,
                 data: new RequestInitMessage(),

@@ -1,29 +1,36 @@
 import { ConnectionToContentFailedMessage } from "../messages/connection-to-content-failed-message";
 import { isInitMessage } from "../messages/init-message";
 import { LAYER } from "../messages/layers";
+import browser from "webextension-polyfill";
 
-const devToolsPorts: Record<number, chrome.runtime.Port> = {};
+const devToolsPorts: Record<number, browser.Runtime.Port> = {};
+let isInitialized = false;
 
 export function initConnections() {
-    chrome.runtime.onConnect.addListener(port => {
+    if (isInitialized) {
+        return;
+    }
+    isInitialized = true;
+
+    browser.runtime.onConnect.addListener(port => {
         if (port.name === LAYER.DEVTOOLS) {
-            let tabId = 9999;
+            let tabId: number | null = null;
 
             port.onDisconnect.addListener(() => {
-                delete devToolsPorts[tabId];
+                if (tabId !== null) {
+                    delete devToolsPorts[tabId];
+                }
             });
 
-            port.onMessage.addListener(message => {
-                console.log("Got message ", message);
+            port.onMessage.addListener((message: any) => {
                 const data = message.data;
                 if (isInitMessage(data)) {
                     tabId = data.tabId!;
                     devToolsPorts[tabId] = port;
                 }
 
-                if (message.to === LAYER.CONTENT) {
-                    console.log("Trying to send to content");
-                    chrome.tabs.sendMessage(tabId, message).catch(err => {
+                if (message.to === LAYER.CONTENT && tabId !== null) {
+                    browser.tabs.sendMessage(tabId, message).catch(err => {
                         console.warn("Failed at sending a message from background to content", err);
                         devToolsPorts[tabId].postMessage({
                             from: LAYER.BACKGROUND,
@@ -36,12 +43,13 @@ export function initConnections() {
         }
     });
 
-    chrome.runtime.onMessage.addListener((message, sender) => {
+    browser.runtime.onMessage.addListener((message: any, sender: any) => {
         if (message.from === LAYER.CONTENT && message.to === LAYER.DEVTOOLS && sender.tab) {
-            console.log("Message from content: ", message);
             const port = devToolsPorts[sender.tab.id!];
             if (port) {
                 port.postMessage(message);
+            } else {
+                console.error("Background: No DevTools port found for tab", sender.tab.id);
             }
         }
     });

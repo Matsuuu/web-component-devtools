@@ -39,7 +39,6 @@ export function requestSpotlightRemove() {
     spotlightRemoveTimeout = setTimeout(() => {
         removeSpotlightElement();
     }, 200);
-    console.log("Remove timeout created");
 }
 
 export function cancelSpotlightRemoveRequest() {
@@ -49,8 +48,8 @@ export function cancelSpotlightRemoveRequest() {
 export function moveSpotlight(rect: DOMRect) {
     const spot = getSpotlightElement();
 
-    const width = Math.min(rect.x + rect.width, window.innerWidth - rect.x);
-    const height = Math.min(rect.y + rect.height, window.innerHeight - rect.y);
+    const width = Math.min(rect.width, window.innerWidth - rect.x);
+    const height = Math.min(rect.height, window.innerHeight - rect.y);
 
     spot.style.setProperty("--width", width + "px");
     spot.style.setProperty("--height", height + "px");

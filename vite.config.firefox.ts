@@ -8,6 +8,7 @@ const outDir = resolve(__dirname, 'dist_firefox');
 export default mergeConfig(
   baseConfig,
   defineConfig({
+    base: './',
     plugins: [
       crx({
         manifest: {
@@ -24,7 +25,12 @@ export default mergeConfig(
     ],
     build: {
       ...baseBuildOptions,
-      outDir
+      outDir,
+      rollupOptions: {
+        input: {
+          devtoolsPanel: resolve(__dirname, 'src/pages/devtools/panel.html')
+        }
+      }
     },
     publicDir: resolve(__dirname, 'public'),
   })

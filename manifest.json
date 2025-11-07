@@ -8,11 +8,11 @@
     "action": {
         "default_popup": "src/pages/popup/index.html",
         "default_icon": {
-            "32": "icon-32.png"
+            "32": "public/dev-icon-32.png"
         }
     },
     "icons": {
-        "128": "icon-128.png"
+        "128": "public/dev-icon-128.png"
     },
     "permissions": ["activeTab"],
     "content_scripts": [
