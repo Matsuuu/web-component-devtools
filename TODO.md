@@ -7,4 +7,4 @@
 - [ ] Observe events from devtools
 - [ ] Recognize between Lit etc. elements
 - [ ] Inspect element via Context Menu
-
+- [ ] If acquiring data from browser alone is too tricky, we could make a Vite plugin?  

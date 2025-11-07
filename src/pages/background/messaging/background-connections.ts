@@ -4,8 +4,6 @@ import { LAYER } from "@src/pages/messages/layers";
 import browser from "webextension-polyfill";
 import { handleDevtoolsToBackgroundMessage } from "./background-from-devtools-connection";
 import { queryAllScriptsFromWindow } from "../inject/user-window-inject";
-import { parseClientJavascriptCode } from "../parsing/client-javascript-parser";
-import { analyzeScriptEntries } from "../parsing/script-entry-analyzer";
 
 const devToolsPorts: Record<number, browser.Runtime.Port> = {};
 let isInitialized = false;
@@ -66,8 +64,6 @@ export function initConnections() {
 
             if (isInitMessage(message.data)) {
                 const result = await queryAllScriptsFromWindow(sender.tab.id);
-                const parsedScripts = await parseClientJavascriptCode(result.scripts, result.origin);
-                analyzeScriptEntries(parsedScripts);
             }
         }
     });

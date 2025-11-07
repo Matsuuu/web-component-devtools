@@ -20,9 +20,7 @@
         "dev:firefox": "nodemon --config nodemon.firefox.json",
         "start:firefox": "web-ext run --source-dir ./dist_firefox/",
         "start:chrome": "web-ext run --source-dir ./dist_chrome/ --target=chromium",
-        "start:chrome:home": "npm run start:chrome -- --url https://demo.home-assistant.io/#/lovelace/home",
-        "bundle:ts": "npx esbuild node_modules/typescript/lib/typescript.js --bundle --format=esm --outfile=public/ts.bundle.js",
-        "bundle:cem": "npx esbuild node_modules/typescript/lib/typescript.js --bundle --format=esm --outfile=public/ts.bundle.js"
+        "start:chrome:home": "npm run start:chrome -- --url https://demo.home-assistant.io/#/lovelace/home"
     },
     "type": "module",
     "dependencies": {
