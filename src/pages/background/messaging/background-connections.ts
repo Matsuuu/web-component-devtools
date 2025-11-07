@@ -63,7 +63,8 @@ export function initConnections() {
             }
 
             if (isInitMessage(message.data)) {
-                const result = await queryAllScriptsFromWindow(sender.tab.id);
+                // TODO: Find CEM and parse it for us to use
+                // TODO: Is this the best place? Maybe do it after opening the devtools idk?
             }
         }
     });

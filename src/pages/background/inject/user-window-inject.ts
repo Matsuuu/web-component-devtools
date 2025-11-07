@@ -1,13 +1,11 @@
 import browser from "webextension-polyfill";
-import { ScriptEntry } from "../parsing/client-javascript-parser";
+import { analyzeDomElement } from "./custom-element-dom-analyzer";
 
-export async function queryCustomElementClassCodeFromWindow(customElementName: string, tabId: number) {
+export async function queryElementDataFromWindow(elementName: string, tabId: number) {
     const scriptResult = await browser.scripting.executeScript({
         target: { tabId },
-        args: [customElementName],
-        func: (elementName: string) => {
-            return window.customElements.get(elementName)?.toString();
-        },
+        args: [elementName],
+        func: analyzeDomElement,
         world: "MAIN",
     });
 
@@ -16,9 +14,9 @@ export async function queryCustomElementClassCodeFromWindow(customElementName: s
 
 export interface ScriptQueryResult {
     origin: string;
-    scripts: ScriptEntry[];
 }
 
+// We might not need this if we end up not parsing CEM's ourselves.
 export async function queryAllScriptsFromWindow(tabId: number): Promise<ScriptQueryResult> {
     const scriptResult = await browser.scripting.executeScript({
         target: { tabId },
