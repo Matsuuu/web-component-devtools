@@ -1138,6 +1138,11 @@
   resolved "https://registry.npmjs.org/@webcomponents/custom-elements/-/custom-elements-1.6.0.tgz"
   integrity sha512-CqTpxOlUCPWRNUPZDxT5v2NnHXA4oox612iUGnmTUGQFhZ1Gkj8kirtl/2wcF6MqX7+PqqicZzOCBKKfIn0dww==
 
+"@webcomponents/webcomponentsjs@^2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.8.0.tgz#ab21f027594fa827c1889e8b646da7be27c7908a"
+  integrity sha512-loGD63sacRzOzSJgQnB9ZAhaQGkN7wl2Zuw7tsphI5Isa0irijrRo6EnJii/GgjGefIFO8AIO7UivzRhFaEk9w==
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/abbrev/-/abbrev-1.1.1.tgz"

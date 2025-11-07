@@ -35,6 +35,7 @@ function handleMessage(message: any) {
     }
     if (isRequestInitMessage(data)) {
         const tabId = browser.devtools.inspectedWindow.tabId;
+        const port = browser.runtime.connect({ name: LAYER.DEVTOOLS });
         port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.CONTENT, data: new InitMessage(tabId) });
     }
 }

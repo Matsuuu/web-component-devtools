@@ -65,7 +65,7 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
         }
         return html`
             <wa-tree @wa-selection-change=${this.onSelectionChange}>
-                ${baseLayer.map(elem => this.renderItem(elem, 0))}
+                ${this.renderItem(tree, 0)}
             </wa-tree>
         `;
     }

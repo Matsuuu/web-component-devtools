@@ -25,7 +25,12 @@ export default mergeConfig(
     ],
     build: {
       ...baseBuildOptions,
-      outDir
+      outDir,
+      rollupOptions: {
+        input: {
+          devtoolsPanel: resolve(__dirname, 'src/pages/devtools/panel.html')
+        }
+      }
     },
     publicDir: resolve(__dirname, 'public'),
   })

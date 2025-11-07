@@ -7,12 +7,10 @@ export function updateTree() {
     const tree = getDOMTree();
     contentTreeState.tree = tree;
 
-    const serializedTree = tree;
-
     const message = {
         from: LAYER.CONTENT,
         to: LAYER.DEVTOOLS,
-        data: new ElementTreeMessage(serializedTree),
+        data: new ElementTreeMessage(tree),
     };
 
     browser.runtime.sendMessage(message).catch(

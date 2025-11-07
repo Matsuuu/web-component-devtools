@@ -2,48 +2,40 @@ type ElementId = string;
 
 export class TreeElement {
     public id: ElementId;
+    public element: Element;
     children: TreeElement[] = [];
     isCustomElement: boolean = false;
     nodeText: string = "[NODE_PARSE_FAILED]";
 
-    // This variable is used for lazy loading content in the three view
     lazy = true;
 
-    constructor(public element: Element) {
+    constructor(element: Element) {
         this.id = generateUuidV4Like();
+        this.element = element;
         this.isCustomElement = this.checkIsCustomElement(element);
         this.nodeText = this.createNodeText();
+        
+        Object.defineProperty(this, 'element', {
+            enumerable: false,
+            writable: true,
+            configurable: true
+        });
     }
 
     private checkIsCustomElement(element: Element): boolean {
         const tagName = element.nodeName.toLowerCase();
-        if (!tagName.includes("-")) {
-            return false;
-        }
-        
-        // Try customElements.get() first if customElements registry is available
-        if (typeof customElements !== 'undefined' && customElements !== null) {
-            try {
-                const customElementDef = customElements.get(tagName);
-                if (customElementDef !== undefined) {
-                    return true;
-                }
-            } catch (e) {
-                // TODO: Implement skip list, related issue: https://github.com/Matsuuu/web-component-devtools/issues/73
-                // Example element: <svg:font-face>
-                // customElements.get() can throw for invalid tag names
-            }
-        }
-        
-        // Fallback to constructor check
+        const isAttr = element.getAttribute?.("is");
+        // :defined matches all defined elements; restrict to CE semantics
+        if (!(isAttr || tagName.includes("-"))) return false;
         try {
-            return element.constructor !== HTMLElement && element.constructor !== Element;
-        } catch (e) {
+            return element.matches(":defined");
+        } catch {
             return false;
         }
     }
 
     createNodeText() {
+        debugger;
         const nodeName = this.element.nodeName.toLowerCase();
         const attributesString = [...this.element.attributes]
             .map(attribute => {
