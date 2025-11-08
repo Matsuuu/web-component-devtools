@@ -7,6 +7,7 @@ import { isConnectionToContentFailedMessage } from "../messages/connection-to-co
 import { isRequestInitMessage } from "../messages/request-init-message";
 import browser from "webextension-polyfill";
 import { HeartbeatMessage, isHeartbeatMessage } from "../messages/heartbeat-message";
+import { LaunchInPageMessage } from "../messages/launch-inpage-message";
 
 let isInitialized = false;
 let messageQueue: any[] = [];
@@ -27,12 +28,20 @@ function handleMessage(message: any) {
 
     if (isInitMessage(data)) {
         window.panel.setConnectedTab(data.tabId);
+        devtoolsState.messagePort.postMessage({
+            from: LAYER.DEVTOOLS,
+            to: LAYER.BACKGROUND,
+            data: new LaunchInPageMessage(data.tabId),
+        });
+        return;
     }
     if (isElementTreeMessage(data)) {
         window.panel.setElementTree(data.tree);
+        return;
     }
     if (isConnectionToContentFailedMessage(data)) {
         window.panel.disconnect("Could not connect to the content page. Please refresh the page and try again.");
+        return;
     }
     if (isRequestInitMessage(data)) {
         const tabId = browser.devtools.inspectedWindow.tabId;
@@ -41,10 +50,12 @@ function handleMessage(message: any) {
             to: LAYER.CONTENT,
             data: new InitMessage(tabId, "InitRequested"),
         });
+        return;
     }
 
     if (isHeartbeatMessage(data)) {
         console.log("Heartbeat from background");
+        return;
     }
 }
 

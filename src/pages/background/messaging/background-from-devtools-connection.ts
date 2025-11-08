@@ -1,5 +1,5 @@
 import { HeartbeatMessage, isHeartbeatMessage } from "@src/pages/messages/heartbeat-message";
-import { isInitMessage } from "@src/pages/messages/init-message";
+import { isLaunchInPageMessage } from "@src/pages/messages/launch-inpage-message";
 import { LAYER } from "@src/pages/messages/layers";
 import browser from "webextension-polyfill";
 
@@ -11,7 +11,7 @@ export async function handleDevtoolsToBackgroundMessage(
 ) {
     const data = message.data;
 
-    if (isInitMessage(data)) {
+    if (isLaunchInPageMessage(data)) {
         injectCodeToUserContext(data.tabId);
         // WHen devtools is opened, we want to inject the initialization to DOM
     }
