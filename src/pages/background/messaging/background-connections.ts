@@ -28,6 +28,8 @@ export function initConnections() {
                 if (isInitMessage(data)) {
                     tabId = data.tabId!;
                     devToolsPorts[tabId] = port;
+                    // WHen devtools is opened, we want to inject the initialization to DOM
+                    injectCodeToUserContext(data.tabId);
                 }
 
                 if (message.to === LAYER.CONTENT && tabId != null) {
@@ -64,7 +66,6 @@ export function initConnections() {
             const data = message.data;
 
             if (isInitMessage(data)) {
-                injectCodeToUserContext(data.tabId);
                 // TODO: Find CEM and parse it for us to use
                 // TODO: Is this the best place? Maybe do it after opening the devtools idk?
             }

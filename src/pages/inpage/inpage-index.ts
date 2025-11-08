@@ -1,7 +1,7 @@
 import { InitMessage, isInitMessage } from "../messages/init-message";
 import { CONTEXT, LAYER } from "../messages/layers";
 
-function doSomething() {
+function initInPage() {
     window.addEventListener("message", event => {
         const message = event.data;
         if (event.source !== window) return; // only accept same-page messages
@@ -21,5 +21,5 @@ function doSomething() {
 }
 
 (() => {
-    doSomething();
+    initInPage();
 })();
