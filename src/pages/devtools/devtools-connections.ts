@@ -6,6 +6,7 @@ import { devtoolsState } from "./state/devtools-context";
 import { isConnectionToContentFailedMessage } from "../messages/connection-to-content-failed-message";
 import { isRequestInitMessage } from "../messages/request-init-message";
 import browser from "webextension-polyfill";
+import { HeartbeatMessage, isHeartbeatMessage } from "../messages/heartbeat-message";
 
 let isInitialized = false;
 let messageQueue: any[] = [];
@@ -25,7 +26,6 @@ function handleMessage(message: any) {
     }
 
     if (isInitMessage(data)) {
-        console.log("Init message ", message);
         window.panel.setConnectedTab(data.tabId);
     }
     if (isElementTreeMessage(data)) {
@@ -36,8 +36,15 @@ function handleMessage(message: any) {
     }
     if (isRequestInitMessage(data)) {
         const tabId = browser.devtools.inspectedWindow.tabId;
-        const port = browser.runtime.connect({ name: LAYER.DEVTOOLS });
-        port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.CONTENT, data: new InitMessage(tabId) });
+        devtoolsState.messagePort.postMessage({
+            from: LAYER.DEVTOOLS,
+            to: LAYER.CONTENT,
+            data: new InitMessage(tabId, "InitRequested"),
+        });
+    }
+
+    if (isHeartbeatMessage(data)) {
+        console.log("Heartbeat from background");
     }
 }
 
@@ -67,7 +74,18 @@ export function initConnections() {
     });
 
     const tabId = browser.devtools.inspectedWindow.tabId;
-    port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.CONTENT, data: new InitMessage(tabId) });
+    port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.CONTENT, data: new InitMessage(tabId, "InitConnections") });
+    port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.BACKGROUND, data: new InitMessage(tabId, "InitConnections") });
 
     devtoolsState.messagePort = port;
+}
+
+/**
+ * This is mostly for debugging background-devtools connection
+ * */
+function startHeartbeat(port: browser.Runtime.Port) {
+    setInterval(() => {
+        const tabId = browser.devtools.inspectedWindow.tabId;
+        port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.BACKGROUND, data: new HeartbeatMessage(tabId) });
+    }, 2000);
 }

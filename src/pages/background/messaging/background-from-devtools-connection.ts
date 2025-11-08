@@ -1,28 +1,36 @@
-import { isSelectMessage } from "@src/pages/messages/select-message";
-import { queryElementDataFromWindow, queryElementDomData } from "../inject/user-window-inject";
+import { HeartbeatMessage, isHeartbeatMessage } from "@src/pages/messages/heartbeat-message";
+import { isInitMessage } from "@src/pages/messages/init-message";
+import { LAYER } from "@src/pages/messages/layers";
+import browser from "webextension-polyfill";
 
-export async function handleDevtoolsToBackgroundMessage(message: any, tabId: number) {
+export async function handleDevtoolsToBackgroundMessage(
+    message: any,
+    port: browser.Runtime.Port,
+    devToolsPorts: Record<number, browser.Runtime.Port>,
+    tabId: number,
+) {
     const data = message.data;
 
-    if (isSelectMessage(data)) {
-        const staticAnalyzedElement = await queryElementDataFromWindow(data.element.nodeName, tabId);
-        console.log("staticAnalyzedElement", staticAnalyzedElement);
-
-        // TODO: At this point we are shooting a message to the Content-level, which means that
-        // we are going to acquire some values for props and attributes.
-        //
-        // When we have analyzer in place, the analyzation should be done before this step so that
-        // we know all of the properties and attributes we want to get values for.
-        const domAnalyzedElement = await queryElementDomData(data.element, tabId);
-
-        console.log("domAnalyzedElement", domAnalyzedElement);
-
-        // TODO: Get CEM info
-
-        // TODO: We need to next communicate with content script to ask for the
-        // actual properties and attributes of the class.
-        //
-        // TODO: We also want to access things like _attributeToPropertyMap and such
-        // from things like LitElement
+    if (isInitMessage(data)) {
+        injectCodeToUserContext(data.tabId);
+        // WHen devtools is opened, we want to inject the initialization to DOM
     }
+
+    if (isHeartbeatMessage(data)) {
+        console.log("Heartbeat from ", data.tabId);
+
+        devToolsPorts[tabId].postMessage({
+            from: LAYER.BACKGROUND,
+            to: LAYER.DEVTOOLS,
+            data: new HeartbeatMessage(tabId),
+        });
+    }
+}
+
+async function injectCodeToUserContext(tabId: number) {
+    await browser.scripting.executeScript({
+        target: { tabId: tabId },
+        files: ["inpage.js"],
+        world: "MAIN",
+    });
 }

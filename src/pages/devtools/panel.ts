@@ -40,6 +40,7 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
 
     setElementTree(tree: TreeElement | undefined) {
         devtoolsState.elementTree.set(tree);
+        devtoolsState.previousTreeUpdate.set(new Date());
     }
 
     protected firstUpdated(): void {

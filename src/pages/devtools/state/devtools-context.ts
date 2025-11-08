@@ -7,6 +7,7 @@ export class DevtoolsState {
     public elementTree = new Signal.State<TreeElement | undefined>(undefined);
     public highlightAll = new Signal.State(false);
     public selectedItem = new Signal.State<TreeElement | undefined>(undefined);
+    public previousTreeUpdate = new Signal.State<Date | undefined>(undefined);
 
     public onChange(stateObject: Signal.State<any>, callback: Function) {
         const watcher = new Signal.subtle.Watcher(async () => {

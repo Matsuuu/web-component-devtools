@@ -6,7 +6,6 @@ import { handleDevtoolsToBackgroundMessage } from "./background-from-devtools-co
 
 const devToolsPorts: Record<number, browser.Runtime.Port> = {};
 let isInitialized = false;
-let inpageInitialized = false;
 
 export function initConnections() {
     if (isInitialized) {
@@ -24,64 +23,54 @@ export function initConnections() {
                 }
             });
 
+            // When Devtools messages background
             port.onMessage.addListener((message: any) => {
+                if ((message.to === LAYER.CONTENT || message.to === LAYER.INPAGE) && tabId != null) {
+                    bridgeMessageToContentAndInpage(tabId, message);
+                }
+
                 const data = message.data;
-                if (isInitMessage(data)) {
+
+                // Initial setup as soon as we get the tab id
+                if (message.to === LAYER.BACKGROUND && !tabId && isInitMessage(data)) {
                     tabId = data.tabId!;
-                    devToolsPorts[tabId] = port;
-                    // WHen devtools is opened, we want to inject the initialization to DOM
-                    injectCodeToUserContext(data.tabId);
-                }
-
-                if (message.to === LAYER.CONTENT && tabId != null) {
-                    browser.tabs.sendMessage(tabId, message).catch(err => {
-                        console.warn("Failed at sending a message from background to content", err);
-                        if (tabId !== null) {
-                            devToolsPorts[tabId].postMessage({
-                                from: LAYER.BACKGROUND,
-                                to: LAYER.DEVTOOLS,
-                                data: new ConnectionToContentFailedMessage(tabId),
-                            });
-                        }
-                    });
-                }
-
-                if (message.to === LAYER.BACKGROUND) {
-                    if (message.from === LAYER.DEVTOOLS && tabId) {
-                        handleDevtoolsToBackgroundMessage(message, tabId);
+                    if (tabId && !devToolsPorts[tabId]) {
+                        devToolsPorts[tabId] = port;
                     }
+                }
+
+                if (message.to === LAYER.BACKGROUND && tabId) {
+                    handleDevtoolsToBackgroundMessage(message, port, devToolsPorts, tabId);
                 }
             });
         }
     });
 
+    // When Content or Inpage messages background
     browser.runtime.onMessage.addListener(async (message: any, sender: any) => {
+        console.log("Background got message: ", message);
         if (message.to === LAYER.DEVTOOLS && sender.tab) {
             const port = devToolsPorts[sender.tab.id!];
             if (port) {
+                console.log("Sending it to ", port);
                 port.postMessage(message);
             } else {
                 console.error("Background: No DevTools port found for tab", sender.tab.id);
-            }
-
-            const data = message.data;
-
-            if (isInitMessage(data)) {
-                // TODO: Find CEM and parse it for us to use
-                // TODO: Is this the best place? Maybe do it after opening the devtools idk?
             }
         }
     });
 }
 
-async function injectCodeToUserContext(tabId: number) {
-    if (inpageInitialized) {
-        return;
-    }
-    inpageInitialized = true;
-    await browser.scripting.executeScript({
-        target: { tabId: tabId },
-        files: ["inpage.js"],
-        world: "MAIN",
+function bridgeMessageToContentAndInpage(tabId: number, message: any) {
+    console.log("Bridgeing message to ", { tabId, message });
+    browser.tabs.sendMessage(tabId, message).catch(err => {
+        console.warn("Failed at sending a message from background to content", err);
+        if (tabId !== null) {
+            devToolsPorts[tabId].postMessage({
+                from: LAYER.BACKGROUND,
+                to: LAYER.DEVTOOLS,
+                data: new ConnectionToContentFailedMessage(tabId),
+            });
+        }
     });
 }

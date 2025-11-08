@@ -1,12 +1,14 @@
+import { SignalWatcher } from "@lit-labs/signals";
 import { withTailwind } from "@src/lib/css/tailwind";
 import { LucideIcon } from "@src/lib/icons/lucide";
 import { html, LitElement, PropertyValues } from "lit";
 import { customElement } from "lit/decorators.js";
 import { RefreshCw } from "lucide";
+import { devtoolsState } from "../state/devtools-context";
 
 @customElement("debug-panel")
 @withTailwind
-export class DebugPanel extends LitElement {
+export class DebugPanel extends SignalWatcher(LitElement) {
     autoRefreshTimeout: NodeJS.Timeout | null = null;
 
     get autoRefresh() {
@@ -45,6 +47,9 @@ export class DebugPanel extends LitElement {
     render() {
         return html`
             <div class="flex gap-4 items-center fixed bottom-2 right-6 p-2 bg-white">
+                <p class="text-xs text-gray-500">
+                    Tree last updated ${devtoolsState.previousTreeUpdate.get()?.toLocaleTimeString() ?? "Not updated"}
+                </p>
                 <p class="text-xs text-gray-500">Refreshed at ${new Date().toLocaleTimeString()}</p>
                 <label class="flex gap-2 items-center">
                     Auto-refresh

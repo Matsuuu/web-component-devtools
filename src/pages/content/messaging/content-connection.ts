@@ -4,6 +4,7 @@ import browser from "webextension-polyfill";
 import { handleContentMessageFromDevtools } from "./content-from-devtools-connection";
 import { handleContentMessageFromBackground } from "./content-from-background-connection";
 import { handleContentMessageFromInPage } from "./content-from-inpage-connection";
+import { InitMessage } from "@src/pages/messages/init-message";
 
 export const contentConnectionsState = {
     initialized: false,
@@ -12,6 +13,14 @@ export const contentConnectionsState = {
 
 export function initConnection() {
     browser.runtime.onMessage.addListener((message: any, sender: any) => {
+        if (message.to === LAYER.INPAGE) {
+            window.postMessage({
+                source: CONTEXT,
+                ...message,
+            });
+            return;
+        }
+
         if (message.from === LAYER.DEVTOOLS) {
             return handleContentMessageFromDevtools(message);
         }
@@ -37,13 +46,14 @@ export function initConnection() {
         }
     });
 
-    setTimeout(() => {
-        if (!contentConnectionsState.initialized) {
+    if (!contentConnectionsState.initialized) {
+        setTimeout(() => {
+            console.log("Sending init request");
             browser.runtime.sendMessage({
                 from: LAYER.CONTENT,
                 to: LAYER.DEVTOOLS,
                 data: new RequestInitMessage(),
             });
-        }
-    }, 1000);
+        }, 1000);
+    }
 }

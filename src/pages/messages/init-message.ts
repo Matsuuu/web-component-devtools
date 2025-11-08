@@ -3,7 +3,10 @@ import { MessageBase } from "./message-base";
 const MESSAGE_ID = "INIT";
 
 export class InitMessage extends MessageBase {
-    constructor(public tabId: number) {
+    constructor(
+        public tabId: number,
+        public context?: string,
+    ) {
         super(MESSAGE_ID);
     }
 }
