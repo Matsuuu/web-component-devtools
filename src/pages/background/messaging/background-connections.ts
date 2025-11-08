@@ -6,6 +6,7 @@ import { handleDevtoolsToBackgroundMessage } from "./background-from-devtools-co
 
 const devToolsPorts: Record<number, browser.Runtime.Port> = {};
 let isInitialized = false;
+let inpageInitialized = false;
 
 export function initConnections() {
     if (isInitialized) {
@@ -55,7 +56,7 @@ export function initConnections() {
     });
 
     browser.runtime.onMessage.addListener(async (message: any, sender: any) => {
-        if (message.from === LAYER.CONTENT && message.to === LAYER.DEVTOOLS && sender.tab) {
+        if (message.to === LAYER.DEVTOOLS && sender.tab) {
             const port = devToolsPorts[sender.tab.id!];
             if (port) {
                 port.postMessage(message);
@@ -74,6 +75,10 @@ export function initConnections() {
 }
 
 async function injectCodeToUserContext(tabId: number) {
+    if (inpageInitialized) {
+        return;
+    }
+    inpageInitialized = true;
     await browser.scripting.executeScript({
         target: { tabId: tabId },
         files: ["inpage.js"],

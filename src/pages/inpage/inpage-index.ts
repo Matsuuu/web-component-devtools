@@ -16,6 +16,13 @@ function initInPage() {
                 to: LAYER.CONTENT,
                 data: new InitMessage(data.tabId),
             });
+
+            window.postMessage({
+                source: CONTEXT,
+                from: LAYER.INPAGE,
+                to: LAYER.DEVTOOLS,
+                data: new InitMessage(data.tabId),
+            });
         }
     });
 }

@@ -18,13 +18,14 @@ function processQueuedMessages() {
 
 function handleMessage(message: any) {
     const data = message.data;
-    
+
     if (!isPanelReady) {
         messageQueue.push(message);
         return;
     }
 
     if (isInitMessage(data)) {
+        console.log("Init message ", message);
         window.panel.setConnectedTab(data.tabId);
     }
     if (isElementTreeMessage(data)) {

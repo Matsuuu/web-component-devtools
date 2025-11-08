@@ -22,14 +22,18 @@ export function initConnection() {
     });
 
     window.addEventListener("message", event => {
-        if (event.source !== window) return;
-        if (event.data?.source !== CONTEXT) return;
-        if (event.data.to === LAYER.INPAGE) return;
-
         const message = event.data;
 
+        if (event.source !== window) return;
+        if (message?.source !== CONTEXT) return;
+        if (message.to === LAYER.INPAGE) return;
+
         if (message.from === LAYER.INPAGE) {
-            return handleContentMessageFromInPage(message);
+            if (message.to === LAYER.CONTENT) {
+                return handleContentMessageFromInPage(message);
+            } else {
+                browser.runtime.sendMessage(message);
+            }
         }
     });
 
