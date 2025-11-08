@@ -27,12 +27,20 @@ function handleMessage(message: any) {
     }
 
     if (isInitMessage(data)) {
-        window.panel.setConnectedTab(data.tabId);
-        devtoolsState.messagePort.postMessage({
-            from: LAYER.DEVTOOLS,
-            to: LAYER.BACKGROUND,
-            data: new LaunchInPageMessage(data.tabId),
-        });
+        if (message.from === LAYER.CONTENT) {
+            window.panel.setConnectedTab(data.tabId);
+            devtoolsState.messagePort.postMessage({
+                from: LAYER.DEVTOOLS,
+                to: LAYER.BACKGROUND,
+                data: new LaunchInPageMessage(data.tabId),
+            });
+        } else {
+            devtoolsState.messagePort.postMessage({
+                from: LAYER.DEVTOOLS,
+                to: LAYER.CONTENT,
+                data: new InitMessage(data.tabId),
+            });
+        }
         return;
     }
     if (isElementTreeMessage(data)) {
@@ -85,7 +93,6 @@ export function initConnections() {
     });
 
     const tabId = browser.devtools.inspectedWindow.tabId;
-    port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.CONTENT, data: new InitMessage(tabId, "InitConnections") });
     port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.BACKGROUND, data: new InitMessage(tabId, "InitConnections") });
 
     devtoolsState.messagePort = port;

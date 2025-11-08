@@ -25,10 +25,6 @@ export function initConnections() {
 
             // When Devtools messages background
             port.onMessage.addListener((message: any) => {
-                if ((message.to === LAYER.CONTENT || message.to === LAYER.INPAGE) && tabId != null) {
-                    bridgeMessageToContentAndInpage(tabId, message);
-                }
-
                 const data = message.data;
 
                 // Initial setup as soon as we get the tab id
@@ -37,6 +33,10 @@ export function initConnections() {
                     if (tabId && !devToolsPorts[tabId]) {
                         devToolsPorts[tabId] = port;
                     }
+                }
+
+                if ((message.to === LAYER.CONTENT || message.to === LAYER.INPAGE) && tabId != null) {
+                    bridgeMessageToContentAndInpage(tabId, message);
                 }
 
                 if (message.to === LAYER.BACKGROUND && tabId) {
@@ -55,7 +55,7 @@ export function initConnections() {
                 console.log("Sending it to ", port);
                 port.postMessage(message);
             } else {
-                console.error("Background: No DevTools port found for tab", sender.tab.id);
+                console.warn("Background: No DevTools port found for tab", sender.tab.id);
             }
         }
     });

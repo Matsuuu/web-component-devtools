@@ -1,4 +1,5 @@
 import { HeartbeatMessage, isHeartbeatMessage } from "@src/pages/messages/heartbeat-message";
+import { InitMessage, isInitMessage } from "@src/pages/messages/init-message";
 import { isLaunchInPageMessage } from "@src/pages/messages/launch-inpage-message";
 import { LAYER } from "@src/pages/messages/layers";
 import browser from "webextension-polyfill";
@@ -10,6 +11,15 @@ export async function handleDevtoolsToBackgroundMessage(
     tabId: number,
 ) {
     const data = message.data;
+
+    if (isInitMessage(data)) {
+        // Send Init ACK to dev so they can start connecting to content etc.
+        devToolsPorts[tabId].postMessage({
+            from: LAYER.BACKGROUND,
+            to: LAYER.DEVTOOLS,
+            data: new InitMessage(tabId),
+        });
+    }
 
     if (isLaunchInPageMessage(data)) {
         injectCodeToUserContext(data.tabId);
