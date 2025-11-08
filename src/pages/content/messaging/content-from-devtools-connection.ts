@@ -1,7 +1,7 @@
 import { isHoverLeaveMessage } from "@src/pages/messages/hover-leave-message";
 import { isHoverMessage } from "@src/pages/messages/hover-message";
 import { InitMessage, isInitMessage } from "@src/pages/messages/init-message";
-import { LAYER } from "@src/pages/messages/layers";
+import { CONTEXT, LAYER } from "@src/pages/messages/layers";
 import { updateTree } from "../lib/events/update-tree";
 import { getSpotlightElementDimensions } from "../lib/spotlight/dimensions";
 import { moveSpotlight, requestSpotlightRemove } from "../lib/spotlight/spotlight-element";
@@ -21,10 +21,16 @@ export function handleContentMessageFromDevtools(message: any): Promise<any> {
         contentConnectionsState.initialized = true;
         contentConnectionsState.tabId = data.tabId;
 
-        console.log("Init received from Devtools, responding.");
         browser.runtime.sendMessage({
             from: LAYER.CONTENT,
             to: LAYER.DEVTOOLS,
+            data: new InitMessage(data.tabId),
+        });
+
+        window.postMessage({
+            source: CONTEXT,
+            from: LAYER.CONTENT,
+            to: LAYER.INPAGE,
             data: new InitMessage(data.tabId),
         });
 

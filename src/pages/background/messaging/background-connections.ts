@@ -3,7 +3,6 @@ import { isInitMessage } from "@src/pages/messages/init-message";
 import { LAYER } from "@src/pages/messages/layers";
 import browser from "webextension-polyfill";
 import { handleDevtoolsToBackgroundMessage } from "./background-from-devtools-connection";
-import { queryAllScriptsFromWindow } from "../inject/user-window-inject";
 
 const devToolsPorts: Record<number, browser.Runtime.Port> = {};
 let isInitialized = false;
@@ -62,10 +61,21 @@ export function initConnections() {
                 console.error("Background: No DevTools port found for tab", sender.tab.id);
             }
 
-            if (isInitMessage(message.data)) {
+            const data = message.data;
+
+            if (isInitMessage(data)) {
+                injectCodeToUserContext(data.tabId);
                 // TODO: Find CEM and parse it for us to use
                 // TODO: Is this the best place? Maybe do it after opening the devtools idk?
             }
         }
+    });
+}
+
+async function injectCodeToUserContext(tabId: number) {
+    await browser.scripting.executeScript({
+        target: { tabId: tabId },
+        files: ["inpage.js"],
+        world: "MAIN",
     });
 }

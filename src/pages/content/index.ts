@@ -8,9 +8,6 @@ export function initContentScript() {
     document.body.appendChild(div);
 
     div.setAttribute("data-wcdt-selected", "");
-    div.mySecretVariable = document.body;
-
-    console.log(div.mySecretVariable);
 }
 
 initContentScript();

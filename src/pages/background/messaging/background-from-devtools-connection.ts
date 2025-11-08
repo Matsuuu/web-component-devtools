@@ -1,7 +1,5 @@
 import { isSelectMessage } from "@src/pages/messages/select-message";
 import { queryElementDataFromWindow, queryElementDomData } from "../inject/user-window-inject";
-import browser from "webextension-polyfill";
-import { LAYER } from "@src/pages/messages/layers";
 
 export async function handleDevtoolsToBackgroundMessage(message: any, tabId: number) {
     const data = message.data;
