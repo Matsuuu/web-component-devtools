@@ -1,3 +1,8 @@
+import { getSpotlightElementDimensions } from "../content/lib/spotlight/dimensions";
+import { moveSpotlight, requestSpotlightRemove } from "../content/lib/spotlight/spotlight-element";
+import { contentTreeState } from "../content/lib/tree-walker";
+import { isHoverLeaveMessage } from "../messages/hover-leave-message";
+import { isHoverMessage } from "../messages/hover-message";
 import { isInitMessage } from "../messages/init-message";
 import { LAYER, CONTEXT } from "../messages/layers";
 import { MessageBase } from "../messages/message-base";
@@ -7,7 +12,6 @@ import { updateTree } from "./events/update-tree";
 export function initInpageConnections() {
     window.addEventListener("message", event => {
         const message = event.data;
-        console.log({ message, event });
         if (event.source !== window) return; // only accept same-page messages
         if (message?.to !== LAYER.INPAGE) return;
 
@@ -20,6 +24,25 @@ export function initInpageConnections() {
 
         if (isSelectMessage(data)) {
             console.log("Asking for select");
+            return;
+        }
+
+        if (isHoverMessage(data)) {
+            const hoveredElement = contentTreeState.treeElementByIdMap.get(data.element.id);
+            if (!hoveredElement) {
+                return;
+            }
+
+            const dimensions = getSpotlightElementDimensions(hoveredElement);
+
+            moveSpotlight(dimensions);
+
+            return;
+        }
+
+        if (isHoverLeaveMessage(data)) {
+            requestSpotlightRemove();
+
             return;
         }
     });

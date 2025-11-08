@@ -7,7 +7,7 @@ import { HoverLeaveMessage } from "@src/pages/messages/hover-leave-message";
 export function createDevtoolsHoverEvent(element: TreeElement) {
     devtoolsState.messagePort.postMessage({
         from: LAYER.DEVTOOLS,
-        to: LAYER.CONTENT,
+        to: LAYER.INPAGE,
         data: new HoverMessage(element),
     });
 }
@@ -15,7 +15,7 @@ export function createDevtoolsHoverEvent(element: TreeElement) {
 export function createDevtoolsHoverLeaveEvent(element: TreeElement) {
     devtoolsState.messagePort.postMessage({
         from: LAYER.DEVTOOLS,
-        to: LAYER.CONTENT,
+        to: LAYER.INPAGE,
         data: new HoverLeaveMessage(element),
     });
 }

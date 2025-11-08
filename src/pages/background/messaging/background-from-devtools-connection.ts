@@ -22,8 +22,14 @@ export async function handleDevtoolsToBackgroundMessage(
     }
 
     if (isLaunchInPageMessage(data)) {
+        // TODO:  can we somehow prevent multiple injections?
         injectCodeToUserContext(data.tabId);
-        // WHen devtools is opened, we want to inject the initialization to DOM
+
+        browser.tabs
+            .sendMessage(tabId, { from: LAYER.BACKGROUND, to: LAYER.INPAGE, data: new InitMessage(data.tabId) })
+            .catch(err => {
+                console.warn("Failed at sending a message from background to content", err);
+            });
     }
 
     if (isHeartbeatMessage(data)) {

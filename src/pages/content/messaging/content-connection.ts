@@ -4,7 +4,6 @@ import browser from "webextension-polyfill";
 import { handleContentMessageFromDevtools } from "./content-from-devtools-connection";
 import { handleContentMessageFromBackground } from "./content-from-background-connection";
 import { handleContentMessageFromInPage } from "./content-from-inpage-connection";
-import { InitMessage } from "@src/pages/messages/init-message";
 
 export const contentConnectionsState = {
     initialized: false,
@@ -48,7 +47,6 @@ export function initConnection() {
 
     if (!contentConnectionsState.initialized) {
         setTimeout(() => {
-            console.log("Sending init request");
             browser.runtime.sendMessage({
                 from: LAYER.CONTENT,
                 to: LAYER.DEVTOOLS,

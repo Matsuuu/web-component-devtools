@@ -48,11 +48,9 @@ export function initConnections() {
 
     // When Content or Inpage messages background
     browser.runtime.onMessage.addListener(async (message: any, sender: any) => {
-        console.log("Background got message: ", message);
         if (message.to === LAYER.DEVTOOLS && sender.tab) {
             const port = devToolsPorts[sender.tab.id!];
             if (port) {
-                console.log("Sending it to ", port);
                 port.postMessage(message);
             } else {
                 console.warn("Background: No DevTools port found for tab", sender.tab.id);
@@ -62,7 +60,6 @@ export function initConnections() {
 }
 
 function bridgeMessageToContentAndInpage(tabId: number, message: any) {
-    console.log("Bridgeing message to ", { tabId, message });
     browser.tabs.sendMessage(tabId, message).catch(err => {
         console.warn("Failed at sending a message from background to content", err);
         if (tabId !== null) {

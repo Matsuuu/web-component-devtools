@@ -20,8 +20,6 @@ export function handleContentMessageFromDevtools(message: any): Promise<any> {
         contentConnectionsState.initialized = true;
         contentConnectionsState.tabId = data.tabId;
 
-        console.log("Initialized via devtools");
-
         browser.runtime.sendMessage({
             from: LAYER.CONTENT,
             to: LAYER.BACKGROUND,
@@ -33,32 +31,6 @@ export function handleContentMessageFromDevtools(message: any): Promise<any> {
             to: LAYER.DEVTOOLS,
             data: new InitMessage(data.tabId),
         });
-
-        // window.postMessage({
-        //     source: CONTEXT,
-        //     from: LAYER.CONTENT,
-        //     to: LAYER.INPAGE,
-        //     data: new InitMessage(data.tabId),
-        // });
-
-        return Promise.resolve();
-    }
-
-    if (isHoverMessage(data)) {
-        const hoveredElement = contentTreeState.treeElementByIdMap.get(data.element.id);
-        if (!hoveredElement) {
-            return Promise.resolve();
-        }
-
-        const dimensions = getSpotlightElementDimensions(hoveredElement);
-
-        moveSpotlight(dimensions);
-
-        return Promise.resolve();
-    }
-
-    if (isHoverLeaveMessage(data)) {
-        requestSpotlightRemove();
 
         return Promise.resolve();
     }
