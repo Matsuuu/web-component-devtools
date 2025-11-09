@@ -10,6 +10,12 @@ function initInPage() {
     updateTree();
 }
 
+// This is the inpage script root, which will initialize everything we need to
+// have to run code inside of the actual Web Component Dev Tools' inspected page.
+//
+// This file and everything imported in it will we loaded in as it's own bundle
+// as an IIFE module, and will execute the code as it's injected onto the user's
+// web page.
 (() => {
     initInPage();
 })();

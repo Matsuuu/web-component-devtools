@@ -23,7 +23,7 @@ export function initInpageConnections() {
         }
 
         if (isSelectMessage(data)) {
-            console.log("Asking for select");
+            console.log("[NOT IMPLEMENTED]: Asking for select");
             return;
         }
 
