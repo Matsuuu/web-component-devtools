@@ -1,10 +1,9 @@
-import { TreeElement } from "../content/lib/element";
 import { MessageBase } from "./message-base";
 
 const MESSAGE_ID = "HOVER_LEAVE_ELEMENT";
 
 export class HoverLeaveMessage extends MessageBase {
-    constructor(public element: TreeElement) {
+    constructor() {
         super(MESSAGE_ID);
     }
 }

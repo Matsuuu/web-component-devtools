@@ -85,7 +85,15 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
 
         switch (this.activePanel) {
             case TABS.ELEMENTS:
-                return html` <devtools-element-tree></devtools-element-tree> `;
+                return html`
+                    ${devtoolsState.selectedItem.get()
+                        ? html`
+                              <wa-split-panel orientation="vertical" class="h-full">
+                                  <devtools-element-tree slot="start"></devtools-element-tree>
+                              </wa-split-panel>
+                          `
+                        : html` <devtools-element-tree slot="start"></devtools-element-tree> `}
+                `;
             default:
                 return html`<div class="w-full h-full flex items-center justify-center">
                     <p>Panel content not set</p>
