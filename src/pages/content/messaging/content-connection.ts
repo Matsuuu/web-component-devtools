@@ -10,7 +10,7 @@ export const contentConnectionsState = {
     tabId: undefined as number | undefined,
 };
 
-export function initConnection() {
+function setDevtoolsMessageListeners() {
     browser.runtime.onMessage.addListener((message: any, sender: any) => {
         if (message.to === LAYER.INPAGE) {
             window.postMessage({
@@ -28,7 +28,9 @@ export function initConnection() {
             return handleContentMessageFromBackground(message);
         }
     });
+}
 
+function setInPageMessageListeners() {
     window.addEventListener("message", event => {
         const message = event.data;
 
@@ -44,7 +46,9 @@ export function initConnection() {
             }
         }
     });
+}
 
+function requestInitIfNeeded() {
     if (!contentConnectionsState.initialized) {
         setTimeout(() => {
             browser.runtime.sendMessage({
@@ -54,4 +58,10 @@ export function initConnection() {
             });
         }, 1000);
     }
+}
+
+export function initConnection() {
+    setDevtoolsMessageListeners();
+    setInPageMessageListeners();
+    requestInitIfNeeded();
 }
