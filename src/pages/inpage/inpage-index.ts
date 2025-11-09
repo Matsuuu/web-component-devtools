@@ -1,3 +1,4 @@
+import { log, LogLevel } from "../../lib/logger/log";
 import { updateTree } from "./events/update-tree";
 import { initInpageConnections } from "./inpage-connections";
 
@@ -5,6 +6,7 @@ function initInPage() {
     if (window.____WC_DEVTOOLS_INPAGE_INITIALIZED) {
         return;
     }
+    log(LogLevel.DEBUG, "Inpage Init");
     window.____WC_DEVTOOLS_INPAGE_INITIALIZED = true;
     initInpageConnections();
     updateTree();

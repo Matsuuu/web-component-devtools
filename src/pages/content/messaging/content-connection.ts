@@ -4,6 +4,7 @@ import browser from "webextension-polyfill";
 import { handleContentMessageFromDevtools } from "./content-from-devtools-connection";
 import { handleContentMessageFromBackground } from "./content-from-background-connection";
 import { handleContentMessageFromInPage } from "./content-from-inpage-connection";
+import { log, LogLevel } from "@src/lib/logger/log";
 
 export const contentConnectionsState = {
     initialized: false,
@@ -12,6 +13,7 @@ export const contentConnectionsState = {
 
 function setDevtoolsMessageListeners() {
     browser.runtime.onMessage.addListener((message: any, sender: any) => {
+        log(LogLevel.DEBUG, "Message in Content: ", message);
         if (message.to === LAYER.INPAGE) {
             window.postMessage({
                 source: CONTEXT,

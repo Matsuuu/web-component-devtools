@@ -128,10 +128,6 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
             overflow: hidden;
         }
 
-        /*wa-tree-item:has(> span:hover)::part(item) {
-            background: var(--wa-color-neutral-fill-quiet);
-        }*/
-
         wa-tree-item::part(expand-button) {
             width: 1em;
             height: 1em;
@@ -143,20 +139,20 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
 
         :host([highlight-all]) .tag,
         .custom-element {
-            color: var(--primary-element-color);
+            color: var(--color-primary-element);
         }
 
         .tag:not(.custom-element) {
-            color: var(--not-highlighted-element-color);
+            color: var(--color-not-highlighted-element);
         }
 
         .attr-key {
-            color: var(--secondary-element-color);
+            color: var(--color-secondary-element);
             padding-left: 1ch;
         }
 
         .attr-value {
-            color: var(--element-value-color);
+            color: var(--color-element-value);
         }
     `;
 }

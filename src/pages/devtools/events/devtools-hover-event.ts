@@ -13,9 +13,11 @@ export function createDevtoolsHoverEvent(element: TreeElement) {
 }
 
 export function createDevtoolsHoverLeaveEvent() {
-    devtoolsState.messagePort.postMessage({
-        from: LAYER.DEVTOOLS,
-        to: LAYER.INPAGE,
-        data: new HoverLeaveMessage(),
-    });
+    try {
+        devtoolsState.messagePort.postMessage({
+            from: LAYER.DEVTOOLS,
+            to: LAYER.INPAGE,
+            data: new HoverLeaveMessage(),
+        });
+    } catch (ex) {}
 }

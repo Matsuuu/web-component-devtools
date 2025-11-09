@@ -8,6 +8,7 @@ import { isRequestInitMessage } from "../messages/request-init-message";
 import browser from "webextension-polyfill";
 import { HeartbeatMessage, isHeartbeatMessage } from "../messages/heartbeat-message";
 import { LaunchInPageMessage } from "../messages/launch-inpage-message";
+import { log, LogLevel } from "@src/lib/logger/log";
 
 let isInitialized = false;
 let messageQueue: any[] = [];
@@ -20,6 +21,7 @@ function processQueuedMessages() {
 
 function handleMessage(message: any) {
     const data = message.data;
+    log(LogLevel.DEBUG, "Message in Devtools: ", message);
 
     if (!isPanelReady) {
         messageQueue.push(message);
