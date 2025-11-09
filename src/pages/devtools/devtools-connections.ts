@@ -27,20 +27,7 @@ function handleMessage(message: any) {
     }
 
     if (isInitMessage(data)) {
-        if (message.from === LAYER.CONTENT) {
-            window.panel.setConnectedTab(data.tabId);
-            devtoolsState.messagePort.postMessage({
-                from: LAYER.DEVTOOLS,
-                to: LAYER.BACKGROUND,
-                data: new LaunchInPageMessage(data.tabId),
-            });
-        } else {
-            devtoolsState.messagePort.postMessage({
-                from: LAYER.DEVTOOLS,
-                to: LAYER.CONTENT,
-                data: new InitMessage(data.tabId),
-            });
-        }
+        initializeConnections(message, data);
         return;
     }
     if (isElementTreeMessage(data)) {
@@ -52,6 +39,10 @@ function handleMessage(message: any) {
         return;
     }
     if (isRequestInitMessage(data)) {
+        // As the content script initializes, if it didn't receive an INIT
+        // request within a specified time frame, we send an Init Request
+        // to the Devtools layer. This will just send an Init to our content script,
+        // starting up the whole Init cycle
         const tabId = browser.devtools.inspectedWindow.tabId;
         devtoolsState.messagePort.postMessage({
             from: LAYER.DEVTOOLS,
@@ -81,21 +72,40 @@ export function initConnections() {
     const port = browser.runtime.connect({ name: LAYER.DEVTOOLS });
 
     port.onMessage.addListener(handleMessage);
-    port.onDisconnect.addListener(async () => {
-        console.log("Disconnected");
-        window.panel.disconnect("Lost connection to the site. Reconnecting in 3...");
-        await wait(1000);
-        window.panel.disconnect("Lost connection to the site. Reconnecting in 2...");
-        await wait(1000);
-        window.panel.disconnect("Lost connection to the site. Reconnecting in 1...");
-        await wait(1000);
-        window.location.reload();
-    });
+    port.onDisconnect.addListener(onDisconnect);
 
     const tabId = browser.devtools.inspectedWindow.tabId;
     port.postMessage({ from: LAYER.DEVTOOLS, to: LAYER.BACKGROUND, data: new InitMessage(tabId, "InitConnections") });
 
     devtoolsState.messagePort = port;
+}
+
+function initializeConnections(message: any, data: InitMessage) {
+    if (message.from === LAYER.CONTENT) {
+        window.panel.setConnectedTab(data.tabId);
+        devtoolsState.messagePort.postMessage({
+            from: LAYER.DEVTOOLS,
+            to: LAYER.BACKGROUND,
+            data: new LaunchInPageMessage(data.tabId),
+        });
+    } else {
+        devtoolsState.messagePort.postMessage({
+            from: LAYER.DEVTOOLS,
+            to: LAYER.CONTENT,
+            data: new InitMessage(data.tabId),
+        });
+    }
+}
+
+async function onDisconnect() {
+    console.log("Disconnected");
+    window.panel.disconnect("Lost connection to the site. Reconnecting in 3...");
+    await wait(1000);
+    window.panel.disconnect("Lost connection to the site. Reconnecting in 2...");
+    await wait(1000);
+    window.panel.disconnect("Lost connection to the site. Reconnecting in 1...");
+    await wait(1000);
+    window.location.reload();
 }
 
 /**
