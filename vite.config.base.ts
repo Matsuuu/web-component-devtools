@@ -56,6 +56,7 @@ export function bundleInPageScriptPlugin(outDir: string) {
     return {
         name: "bundle-inpage-as-single-file",
         async closeBundle() {
+            // Build the InPage IIFE
             await build({
                 configFile: false,
                 build: {

@@ -23,9 +23,6 @@ export async function handleDevtoolsToBackgroundMessage(
     }
 
     if (isLaunchInPageMessage(data)) {
-        // TODO:  can we somehow prevent multiple injections?
-        injectCodeToUserContext(data.tabId);
-
         browser.tabs
             .sendMessage(tabId, { from: LAYER.BACKGROUND, to: LAYER.INPAGE, data: new InitMessage(data.tabId) })
             .catch(err => {
@@ -50,12 +47,4 @@ export async function handleDevtoolsToBackgroundMessage(
             data: new PingMessage(),
         });
     }
-}
-
-async function injectCodeToUserContext(tabId: number) {
-    await browser.scripting.executeScript({
-        target: { tabId: tabId },
-        files: ["inpage.js"],
-        world: "MAIN",
-    });
 }

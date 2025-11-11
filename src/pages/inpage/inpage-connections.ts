@@ -7,8 +7,10 @@ import { isInitMessage } from "../messages/init-message";
 import { LAYER, CONTEXT } from "../messages/layers";
 import { MessageBase } from "../messages/message-base";
 import { isPingMessage, PingMessage } from "../messages/ping-message";
+import { isSelectInspectMessage } from "../messages/select-inspect-message";
 import { isSelectMessage } from "../messages/select-message";
 import { updateTree } from "./events/update-tree";
+import { inpageState } from "./inpage-state";
 
 export function initInpageConnections() {
     window.addEventListener("message", event => {
@@ -25,6 +27,18 @@ export function initInpageConnections() {
 
         if (isSelectMessage(data)) {
             console.log("[NOT IMPLEMENTED]: Asking for select");
+            return;
+        }
+
+        if (isSelectInspectMessage(data)) {
+            const inspectedElement = inpageState.previousContextMenuTarget;
+            if (!inspectedElement) {
+                return;
+            }
+            const treeElement = contentTreeState.treeElementWeakMap.get(inspectedElement);
+            console.log("[NOT IMPLEMENTED]: Asking for select inspect");
+            console.log("[NOT IMPLEMENTED (cont)]: Should inspect element ", inpageState.previousContextMenuTarget);
+            console.log("[NOT IMPLEMENTED (cont)]: TreeElement: ", treeElement);
             return;
         }
 

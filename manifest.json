@@ -14,7 +14,7 @@
     "icons": {
         "128": "public/dev-icon-128.png"
     },
-    "permissions": ["activeTab", "scripting"],
+    "permissions": ["activeTab", "scripting", "contextMenus"],
     "host_permissions": ["<all_urls>"],
     "content_scripts": [
         {

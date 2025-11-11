@@ -1,4 +1,5 @@
 import { log, LogLevel } from "../../lib/logger/log";
+import { trackContextMenuClicks } from "./dom-events/contextmenu-click";
 import { updateTree } from "./events/update-tree";
 import { initInpageConnections } from "./inpage-connections";
 
@@ -8,6 +9,7 @@ function initInPage() {
     }
     log(LogLevel.DEBUG, "Inpage Init");
     window.____WC_DEVTOOLS_INPAGE_INITIALIZED = true;
+    trackContextMenuClicks();
     initInpageConnections();
     updateTree();
 }

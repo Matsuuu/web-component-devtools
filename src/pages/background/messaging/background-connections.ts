@@ -3,6 +3,7 @@ import { isInitMessage } from "@src/pages/messages/init-message";
 import { LAYER } from "@src/pages/messages/layers";
 import browser from "webextension-polyfill";
 import { handleDevtoolsToBackgroundMessage } from "./background-from-devtools-connection";
+import { initContextMenu } from "@src/pages/contextmenu/context-menu";
 
 const devToolsPorts: Record<number, browser.Runtime.Port> = {};
 let isInitialized = false;
@@ -14,7 +15,6 @@ export function initConnections() {
     isInitialized = true;
 
     browser.runtime.onConnect.addListener(port => {
-        console.log("[Background]: Connection");
         if (port.name === LAYER.DEVTOOLS) {
             let tabId: number | null = null;
 
@@ -33,6 +33,7 @@ export function initConnections() {
                     tabId = data.tabId!;
                     if (tabId && !devToolsPorts[tabId]) {
                         devToolsPorts[tabId] = port;
+                        initContextMenu();
                     }
                 }
 

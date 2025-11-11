@@ -74,7 +74,6 @@ export function initConnections() {
     }
     isInitialized = true;
 
-    console.log("[Devools]: connecting");
     const port = browser.runtime.connect({ name: LAYER.DEVTOOLS });
 
     port.onMessage.addListener(handleMessage);
