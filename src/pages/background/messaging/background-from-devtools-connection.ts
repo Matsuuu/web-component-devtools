@@ -2,6 +2,7 @@ import { HeartbeatMessage, isHeartbeatMessage } from "@src/pages/messages/heartb
 import { InitMessage, isInitMessage } from "@src/pages/messages/init-message";
 import { isLaunchInPageMessage } from "@src/pages/messages/launch-inpage-message";
 import { LAYER } from "@src/pages/messages/layers";
+import { isPingMessage, PingMessage } from "@src/pages/messages/ping-message";
 import browser from "webextension-polyfill";
 
 export async function handleDevtoolsToBackgroundMessage(
@@ -39,6 +40,14 @@ export async function handleDevtoolsToBackgroundMessage(
             from: LAYER.BACKGROUND,
             to: LAYER.DEVTOOLS,
             data: new HeartbeatMessage(tabId),
+        });
+    }
+
+    if (isPingMessage(data)) {
+        devToolsPorts[tabId].postMessage({
+            from: LAYER.BACKGROUND,
+            to: LAYER.DEVTOOLS,
+            data: new PingMessage(),
         });
     }
 }

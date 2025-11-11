@@ -5,6 +5,7 @@ import { handleContentMessageFromDevtools } from "./content-from-devtools-connec
 import { handleContentMessageFromBackground } from "./content-from-background-connection";
 import { handleContentMessageFromInPage } from "./content-from-inpage-connection";
 import { log, LogLevel } from "@src/lib/logger/log";
+import { isPingMessage } from "@src/pages/messages/ping-message";
 
 export const contentConnectionsState = {
     initialized: false,
@@ -13,7 +14,9 @@ export const contentConnectionsState = {
 
 function setDevtoolsMessageListeners() {
     browser.runtime.onMessage.addListener((message: any, sender: any) => {
-        log(LogLevel.DEBUG, "Message in Content: ", message);
+        if (!isPingMessage(message.data)) {
+            log(LogLevel.DEBUG, "Message in Content: ", message);
+        }
         if (message.to === LAYER.INPAGE) {
             window.postMessage({
                 source: CONTEXT,

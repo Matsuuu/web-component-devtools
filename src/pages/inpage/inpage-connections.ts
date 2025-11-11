@@ -6,6 +6,7 @@ import { isHoverMessage } from "../messages/hover-message";
 import { isInitMessage } from "../messages/init-message";
 import { LAYER, CONTEXT } from "../messages/layers";
 import { MessageBase } from "../messages/message-base";
+import { isPingMessage, PingMessage } from "../messages/ping-message";
 import { isSelectMessage } from "../messages/select-message";
 import { updateTree } from "./events/update-tree";
 
@@ -44,6 +45,13 @@ export function initInpageConnections() {
             requestSpotlightRemove();
 
             return;
+        }
+
+        if (isPingMessage(data)) {
+            sendMessageFromInPage({
+                to: LAYER.DEVTOOLS,
+                data: new PingMessage(),
+            });
         }
     });
 }

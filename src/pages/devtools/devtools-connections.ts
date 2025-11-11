@@ -9,6 +9,7 @@ import browser from "webextension-polyfill";
 import { HeartbeatMessage, isHeartbeatMessage } from "../messages/heartbeat-message";
 import { LaunchInPageMessage } from "../messages/launch-inpage-message";
 import { log, LogLevel } from "@src/lib/logger/log";
+import { isPingMessage } from "../messages/ping-message";
 
 let isInitialized = false;
 let messageQueue: any[] = [];
@@ -21,7 +22,9 @@ function processQueuedMessages() {
 
 function handleMessage(message: any) {
     const data = message.data;
-    log(LogLevel.DEBUG, "Message in Devtools: ", message);
+    if (!isPingMessage(message.data)) {
+        log(LogLevel.DEBUG, "Message in Devtools: ", message);
+    }
 
     if (!isPanelReady) {
         messageQueue.push(message);
