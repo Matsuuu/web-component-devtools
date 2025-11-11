@@ -87,14 +87,14 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
         switch (this.activePanel) {
             case TABS.ELEMENTS:
                 return html`
-                    ${devtoolsState.selectedItem.get()
-                        ? html`
-                              <wa-split-panel orientation="vertical" class="h-full">
-                                  <devtools-element-tree slot="start"></devtools-element-tree>
-                                  <devtools-element-inspector slot="end"></devtools-element-inspector>
-                              </wa-split-panel>
-                          `
-                        : html` <devtools-element-tree slot="start"></devtools-element-tree> `}
+                    <wa-split-panel
+                        position="${devtoolsState.selectedItem.get() ? 50 : 100}"
+                        orientation="vertical"
+                        class="h-full"
+                    >
+                        <devtools-element-tree slot="start"></devtools-element-tree>
+                        <devtools-element-inspector slot="end"></devtools-element-inspector>
+                    </wa-split-panel>
                 `;
             default:
                 return html`<div class="w-full h-full flex items-center justify-center">

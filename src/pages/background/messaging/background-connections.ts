@@ -14,6 +14,7 @@ export function initConnections() {
     isInitialized = true;
 
     browser.runtime.onConnect.addListener(port => {
+        console.log("[Background]: Connection");
         if (port.name === LAYER.DEVTOOLS) {
             let tabId: number | null = null;
 
