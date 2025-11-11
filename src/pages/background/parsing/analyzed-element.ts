@@ -2,11 +2,10 @@ export interface StaticAnalyzedElement {
     name: string;
     elementName: string;
     properties: Properties;
-}
-
-export interface DomAnalyzedElement extends StaticAnalyzedElement {
     attributes: Attributes;
 }
+
+export interface DomAnalyzedElement extends StaticAnalyzedElement {}
 
 export type Attributes = Record<string, Attribute>;
 
