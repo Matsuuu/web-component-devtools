@@ -2,6 +2,8 @@
 
 
 - [x] Highlight hovered element in DOM.
+- [ ] Context menu action to select on element on the DOM
+- [ ] Inspector hover thing where the Tree element is highlighted when hovering on the DOM node
 - [ ] Allow selecting an element in devtools and parsing basic data out of it 
 - [ ] Set up CEM evaluation from local or generated manifest
 - [ ] Allow updating attributes and properties through devtools
