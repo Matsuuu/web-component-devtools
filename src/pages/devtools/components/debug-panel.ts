@@ -16,8 +16,6 @@ interface Connection {
 @customElement("debug-panel")
 @withTailwind
 export class DebugPanel extends SignalWatcher(LitElement) {
-    autoRefreshTimeout: NodeJS.Timeout | null = null;
-
     @state()
     connections: Connection[] = [
         { name: LAYER.DEVTOOLS, connected: true },
@@ -29,14 +27,10 @@ export class DebugPanel extends SignalWatcher(LitElement) {
     @state()
     connectionsUpdateTimestamp = new Date();
 
-    get autoRefresh() {
-        return sessionStorage.getItem("auto-refresh") !== null;
-    }
-
     updateConnectionsStatus() {
         // TODO: I wonder if this connection status thing should actually be put into the state
         // object and utilized by the actual tool
-        this.connections.forEach(con => {
+        this.connections.map(con => {
             con.connected = con.name === LAYER.DEVTOOLS;
         });
 
@@ -82,35 +76,9 @@ export class DebugPanel extends SignalWatcher(LitElement) {
     }
 
     protected firstUpdated(_changedProperties: PropertyValues): void {
-        if (this.autoRefresh) {
-            this.setAutoRefreshTimeout();
-        }
         setTimeout(() => {
             this.updateConnectionsStatus();
         }, 1000);
-    }
-
-    setAutoRefreshTimeout() {
-        this.autoRefreshTimeout = setTimeout(() => {
-            window.location.reload();
-        }, 3000);
-    }
-
-    clearAutoRefreshTimeout() {
-        if (this.autoRefreshTimeout) {
-            clearTimeout(this.autoRefreshTimeout);
-        }
-    }
-
-    toggleAutoRefresh(ev: InputEvent) {
-        const checked = (ev.target as HTMLInputElement).checked;
-        if (checked) {
-            sessionStorage.setItem("auto-refresh", "true");
-            this.setAutoRefreshTimeout();
-        } else {
-            sessionStorage.removeItem("auto-refresh");
-            this.clearAutoRefreshTimeout();
-        }
     }
 
     render() {
@@ -142,10 +110,6 @@ export class DebugPanel extends SignalWatcher(LitElement) {
                     <p class="flex gap-2 items-center text-xs text-gray-500">
                         ${LucideIcon(RefreshCw, { size: 12 })} ${new Date().toLocaleTimeString()}
                     </p>
-                    <label class="flex gap-2 items-center">
-                        Auto-refresh
-                        <input type="checkbox" @input=${this.toggleAutoRefresh} ?checked=${this.autoRefresh} />
-                    </label>
                     <button @click=${() => window.location.reload()} class="cursor-pointer">
                         ${LucideIcon(RefreshCw)}
                     </button>

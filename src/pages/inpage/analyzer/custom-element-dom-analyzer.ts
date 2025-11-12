@@ -1,22 +1,13 @@
+import { StaticAnalyzedElement, Properties, Attributes } from "@src/lib/analyzer/analyzed-element";
+import { TreeElement } from "@src/pages/content/lib/element";
 import { PropertyDeclaration } from "lit";
-import { StaticAnalyzedElement, Properties, Attributes } from "../parsing/analyzed-element";
 
-// TODO: This is currently injected in a jank way. Now that we have the inpage script, we can just throw this in there.
-//
 // TODO: After the static analysis, run a tour through the props and attributes on the actual DOM node and
 // fetch the values. While we're there, we can also try and look around if we can determine is an attribute
 // is of type string or boolean. Or do we have to do that? Can we just make it a textbox with a checkbox which toggles it?
 
-export function analyzeDomElement(elementName: string): StaticAnalyzedElement {
+export function analyzeSelectedElement(element: TreeElement): StaticAnalyzedElement {
     // Pack all of these function with this function since we're going to inject this all
-    function isLitElement(classData: CustomElementConstructor): classData is LitLikeElement {
-        return isLitInstalled() && classData.hasOwnProperty("elementProperties");
-    }
-
-    function isLitInstalled() {
-        return window["litElementVersions"] && window["litElementVersions"].length > 0;
-    }
-
     function analyzeLitElement(classData: LitLikeElement): StaticAnalyzedElement {
         const properties: Properties = {};
         for (const [key, val] of classData.elementProperties.entries()) {
@@ -40,6 +31,7 @@ export function analyzeDomElement(elementName: string): StaticAnalyzedElement {
 
         return {
             ...analyzeHTMLElement(classData),
+            // TODO: ElementName should be from class
             properties,
             attributes,
         };
@@ -47,14 +39,14 @@ export function analyzeDomElement(elementName: string): StaticAnalyzedElement {
 
     function analyzeHTMLElement(classData: CustomElementConstructor | null): StaticAnalyzedElement {
         return {
-            name: classData?.name ?? elementName,
-            elementName: elementName,
+            name: classData?.name ?? element.nodeName,
+            elementName: element.nodeName,
             properties: {},
             attributes: {},
         };
     }
 
-    const classData = window.customElements.get(elementName);
+    const classData = window.customElements.get(element.nodeName);
     if (!classData) {
         return analyzeHTMLElement(null);
     }
@@ -64,6 +56,14 @@ export function analyzeDomElement(elementName: string): StaticAnalyzedElement {
     }
 
     return analyzeHTMLElement(null);
+}
+
+function isLitElement(classData: CustomElementConstructor): classData is LitLikeElement {
+    return isLitInstalled() && classData.hasOwnProperty("elementProperties");
+}
+
+function isLitInstalled() {
+    return window["litElementVersions"] && window["litElementVersions"].length > 0;
 }
 
 interface CustomElement extends CustomElementConstructor {

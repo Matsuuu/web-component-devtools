@@ -9,6 +9,7 @@ import { MessageBase } from "../messages/message-base";
 import { isPingMessage, PingMessage } from "../messages/ping-message";
 import { isSelectInspectMessage } from "../messages/select-inspect-message";
 import { isSelectMessage } from "../messages/select-message";
+import { analyzeSelectedElement } from "./analyzer/custom-element-dom-analyzer";
 import { updateTree } from "./events/update-tree";
 import { inpageState } from "./inpage-state";
 
@@ -27,6 +28,7 @@ export function initInpageConnections() {
 
         if (isSelectMessage(data)) {
             console.log("[NOT IMPLEMENTED]: Asking for select");
+            analyzeSelectedElement(data.element);
             return;
         }
 
