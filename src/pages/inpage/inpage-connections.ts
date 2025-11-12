@@ -1,3 +1,13 @@
+import {
+    Attributes,
+    DomAnalyzedElement,
+    Properties,
+    Property,
+    PropertyType,
+    SerializedProperties,
+    SerializedProperty,
+    StaticAnalyzedElement,
+} from "@src/lib/analyzer/analyzed-element";
 import { getSpotlightElementDimensions } from "../content/lib/spotlight/dimensions";
 import { moveSpotlight, requestSpotlightRemove } from "../content/lib/spotlight/spotlight-element";
 import { contentTreeState } from "../content/lib/tree-walker";
@@ -12,6 +22,10 @@ import { isSelectMessage } from "../messages/select-message";
 import { analyzeSelectedElement } from "./analyzer/custom-element-dom-analyzer";
 import { updateTree } from "./events/update-tree";
 import { inpageState } from "./inpage-state";
+import { analyzeStaticAnalyzedElementAgainstDOM } from "./analyzer/dom-element-analyzer";
+import { TreeElement } from "../content/lib/element";
+import { SelectResultMessage } from "../messages/select-result-message";
+import { SerializedAnalyzedElement } from "./analyzer/serialized-analyzed-element";
 
 export function initInpageConnections() {
     window.addEventListener("message", event => {
@@ -28,7 +42,17 @@ export function initInpageConnections() {
 
         if (isSelectMessage(data)) {
             console.log("[NOT IMPLEMENTED]: Asking for select");
-            analyzeSelectedElement(data.element);
+            const treeElement = contentTreeState.treeElementByIdMap.get(data.element.id);
+            if (!treeElement) {
+                return;
+            }
+
+            const analyzedElement = analyzeTreeElement(treeElement);
+            console.log(analyzedElement);
+            sendMessageFromInPage({
+                to: LAYER.DEVTOOLS,
+                data: new SelectResultMessage(analyzedElement),
+            });
             return;
         }
 
@@ -38,9 +62,16 @@ export function initInpageConnections() {
                 return;
             }
             const treeElement = contentTreeState.treeElementWeakMap.get(inspectedElement);
-            console.log("[NOT IMPLEMENTED]: Asking for select inspect");
-            console.log("[NOT IMPLEMENTED (cont)]: Should inspect element ", inpageState.previousContextMenuTarget);
-            console.log("[NOT IMPLEMENTED (cont)]: TreeElement: ", treeElement);
+            if (!treeElement) {
+                return;
+            }
+
+            const analyzedElement = analyzeTreeElement(treeElement);
+            console.log(analyzedElement);
+            sendMessageFromInPage({
+                to: LAYER.DEVTOOLS,
+                data: new SelectResultMessage(analyzedElement, true),
+            });
             return;
         }
 
@@ -70,6 +101,12 @@ export function initInpageConnections() {
             });
         }
     });
+}
+
+function analyzeTreeElement(treeElement: TreeElement): SerializedAnalyzedElement {
+    const staticAnalyzedElement = analyzeSelectedElement(treeElement);
+    const domAnalyzedElement = analyzeStaticAnalyzedElementAgainstDOM(staticAnalyzedElement, treeElement);
+    return new SerializedAnalyzedElement(domAnalyzedElement);
 }
 
 export interface MessageFromInPageBase<T extends MessageBase> {

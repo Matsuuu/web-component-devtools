@@ -6,6 +6,8 @@ import { handleContentMessageFromBackground } from "./content-from-background-co
 import { handleContentMessageFromInPage } from "./content-from-inpage-connection";
 import { log, LogLevel } from "@src/lib/logger/log";
 import { isPingMessage } from "@src/pages/messages/ping-message";
+import { isHoverMessage } from "@src/pages/messages/hover-message";
+import { isHoverLeaveMessage } from "@src/pages/messages/hover-leave-message";
 
 export const contentConnectionsState = {
     initialized: false,
@@ -14,7 +16,7 @@ export const contentConnectionsState = {
 
 function setDevtoolsMessageListeners() {
     browser.runtime.onMessage.addListener((message: any, sender: any) => {
-        if (!isPingMessage(message.data)) {
+        if (!isPingMessage(message.data) && !isHoverMessage(message.data) && !isHoverLeaveMessage(message.data)) {
             log(LogLevel.DEBUG, "Message in Content: ", message);
         }
         if (message.to === LAYER.INPAGE) {

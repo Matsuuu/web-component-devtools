@@ -1,5 +1,5 @@
-import { StaticAnalyzedElement, Properties, Attributes } from "@src/lib/analyzer/analyzed-element";
-import { TreeElement } from "@src/pages/content/lib/element";
+import { StaticAnalyzedElement, Properties, Attributes, PropertyTypes } from "../../../lib/analyzer/analyzed-element";
+import { TreeElement } from "../../..//pages/content/lib/element";
 import { PropertyDeclaration } from "lit";
 
 // TODO: After the static analysis, run a tour through the props and attributes on the actual DOM node and
@@ -13,7 +13,7 @@ export function analyzeSelectedElement(element: TreeElement): StaticAnalyzedElem
         for (const [key, val] of classData.elementProperties.entries()) {
             properties[key] = {
                 name: key,
-                type: val.type ?? undefined,
+                type: PropertyTypes.NOT_DEFINED,
                 value: undefined,
             };
         }
@@ -23,7 +23,7 @@ export function analyzeSelectedElement(element: TreeElement): StaticAnalyzedElem
             for (const attributeName of classData.observedAttributes) {
                 properties[attributeName] = {
                     name: attributeName,
-                    type: String, // TODO: Can also be boolean, we need to figure out, but it's after we get the value
+                    type: PropertyTypes.String, // TODO: Can also be boolean, we need to figure out, but it's after we get the value
                     value: undefined,
                 };
             }
