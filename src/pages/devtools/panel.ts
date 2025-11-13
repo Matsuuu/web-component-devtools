@@ -11,6 +11,7 @@ import { TreeElement } from "../content/lib/element";
 import { SignalWatcher } from "@lit-labs/signals";
 import { devtoolsState } from "./state/devtools-context";
 import { notifyPanelReady } from "./devtools-connections";
+import { SelectResultMessage } from "../messages/select-result-message";
 
 @customElement("wcdt-panel")
 @withTailwind
@@ -42,6 +43,10 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
     setElementTree(tree: TreeElement | undefined) {
         devtoolsState.elementTree.set(tree);
         devtoolsState.previousTreeUpdate.set(new Date());
+    }
+
+    selectElement(data: SelectResultMessage) {
+        devtoolsState.selectedItemDetails.set(data.element);
     }
 
     protected firstUpdated(): void {

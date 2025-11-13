@@ -28,6 +28,14 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
 
     className = "flex flex-col";
 
+    get selectedItemProperties() {
+        return devtoolsState.selectedItemDetails.get()?.properties ?? {};
+    }
+
+    get selectedItemAttributes() {
+        return devtoolsState.selectedItemDetails.get()?.attributes ?? {};
+    }
+
     renderTopBar() {
         return html`
             <div class="flex justify-between p-2">
@@ -46,9 +54,16 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
             <div class="flex-col p-4">
                 <div class="flex flex-col gap-2">
                     <h3 class="text-md font-semibold">Properties</h3>
+                    <ul>
+                        ${Object.entries(this.selectedItemProperties).map(([key, prop]) => html` <li>${key}</li> `)}
+                    </ul>
                 </div>
                 <div class="flex flex-col gap-2">
                     <h3 class="text-md font-semibold">Attributes</h3>
+
+                    <ul>
+                        ${Object.entries(this.selectedItemAttributes).map(([key, prop]) => html` <li>${key}</li> `)}
+                    </ul>
                 </div>
             </div>
         `;

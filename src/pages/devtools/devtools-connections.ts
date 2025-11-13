@@ -10,6 +10,7 @@ import { HeartbeatMessage, isHeartbeatMessage } from "../messages/heartbeat-mess
 import { LaunchInPageMessage } from "../messages/launch-inpage-message";
 import { log, LogLevel } from "@src/lib/logger/log";
 import { isPingMessage } from "../messages/ping-message";
+import { isSelectResultMessage } from "../messages/select-result-message";
 
 let isInitialized = false;
 let messageQueue: any[] = [];
@@ -60,6 +61,10 @@ function handleMessage(message: any) {
     if (isHeartbeatMessage(data)) {
         console.log("Heartbeat from background");
         return;
+    }
+
+    if (isSelectResultMessage(data)) {
+        window.panel.selectElement(data);
     }
 }
 
