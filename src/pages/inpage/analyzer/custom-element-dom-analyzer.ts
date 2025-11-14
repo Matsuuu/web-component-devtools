@@ -21,7 +21,7 @@ export function analyzeSelectedElement(element: TreeElement): StaticAnalyzedElem
         const attributes: Attributes = {};
         if (classData.observedAttributes) {
             for (const attributeName of classData.observedAttributes) {
-                properties[attributeName] = {
+                attributes[attributeName] = {
                     name: attributeName,
                     type: PropertyTypes.String, // TODO: Can also be boolean, we need to figure out, but it's after we get the value
                     value: undefined,

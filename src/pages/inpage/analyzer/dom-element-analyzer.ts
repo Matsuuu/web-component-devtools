@@ -23,6 +23,16 @@ export function analyzeStaticAnalyzedElementAgainstDOM(
         attribute.value = treeElement.element.getAttribute(key);
     }
 
+    for (const attribute of [...treeElement.element.attributes]) {
+        if (!domAnalyzedElement.attributes[attribute.name]) {
+            domAnalyzedElement.attributes[attribute.name] = {
+                name: attribute.name,
+                type: PropertyTypes.String,
+                value: treeElement.element.getAttribute(attribute.name),
+            };
+        }
+    }
+
     return domAnalyzedElement;
 }
 
