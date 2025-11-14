@@ -4,7 +4,7 @@ import "./components/panel-menu";
 import "./components/debug-panel";
 import "./components/toolbar";
 import "./components/devtools-element-tree";
-import "./components/devtools-element-inspector";
+import "./components/inspector/devtools-element-inspector";
 import { withTailwind } from "@src/lib/css/tailwind";
 import { TABS } from "./lib/devtool-tabs";
 import { TreeElement } from "../content/lib/element";
@@ -72,7 +72,7 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
                 @panel-changed=${this.onPanelChanged}
             ></wcdt-panel-menu>
 
-            <div class="flex flex-col w-full max-w-[92%]">
+            <div class="flex flex-col w-full max-w-[92%] max-h-[100vh] overflow-clip">
                 <tool-bar ?connected=${this.connected} .tabId=${this.tabId}></tool-bar>
                 ${this.renderPanelContent()}
             </div>
@@ -95,7 +95,7 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
                     <wa-split-panel
                         position="${devtoolsState.selectedItem.get() ? 50 : 100}"
                         orientation="vertical"
-                        class="h-full"
+                        class="h-full w-full"
                     >
                         <devtools-element-tree slot="start"></devtools-element-tree>
                         <devtools-element-inspector slot="end"></devtools-element-inspector>

@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js";
 import { devtoolsState } from "../../state/devtools-context";
 import { LucideIcon } from "@src/lib/icons/lucide";
 import { X } from "lucide";
+import "./attribute-input";
 
 @customElement("devtools-element-inspector")
 @withTailwind
@@ -26,7 +27,7 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
         devtoolsState.selectedItem.set(undefined);
     }
 
-    className = "flex flex-col";
+    className = "flex flex-col overflow-auto";
 
     get selectedItemProperties() {
         return devtoolsState.selectedItemDetails.get()?.properties ?? {};
@@ -51,7 +52,7 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
             </div>
             <wa-divider style="--width: 2px;" class="h-[2px] bg-gray-300"></wa-divider>
 
-            <div class="flex-col p-4">
+            <div class="flex-col p-4 pb-16">
                 <div class="flex flex-col gap-2">
                     <h3 class="text-md font-semibold">Properties</h3>
                     <ul>
@@ -62,7 +63,13 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
                     <h3 class="text-md font-semibold">Attributes</h3>
 
                     <ul>
-                        ${Object.entries(this.selectedItemAttributes).map(([key, prop]) => html` <li>${key}</li> `)}
+                        ${Object.entries(this.selectedItemAttributes).map(
+                            ([key, prop]) => html`
+                                <li>
+                                    <attribute-input name="${key}" .attribute="${prop}"></attribute-input>
+                                </li>
+                            `,
+                        )}
                     </ul>
                 </div>
             </div>
