@@ -53,19 +53,19 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
             <wa-divider style="--width: 2px;" class="h-[2px] bg-gray-300"></wa-divider>
 
             <div class="flex-col p-4 pb-16">
-                <div class="flex flex-col gap-2">
+                <div class="flex flex-col gap-2" id="attributes">
                     <h3 class="text-md font-semibold">Properties</h3>
                     <ul>
                         ${Object.entries(this.selectedItemProperties).map(([key, prop]) => html` <li>${key}</li> `)}
                     </ul>
                 </div>
-                <div class="flex flex-col gap-2">
+                <div class="flex flex-col gap-2" id="attributes">
                     <h3 class="text-md font-semibold">Attributes</h3>
 
                     <ul>
                         ${Object.entries(this.selectedItemAttributes).map(
                             ([key, prop]) => html`
-                                <li>
+                                <li class="mb-1">
                                     <attribute-input name="${key}" .attribute="${prop}"></attribute-input>
                                 </li>
                             `,
@@ -80,6 +80,10 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
         wa-button[size="small"] {
             --wa-form-control-height: 1.5rem;
             --wa-form-control-padding-inline: 0.5rem;
+        }
+
+        #attributes:hover attribute-input {
+            --checkbox-visibility: visible;
         }
     `;
 }

@@ -17,6 +17,8 @@ export class AttributeInput extends LitElement {
 
     _leaveListener = this.leaveEditListener.bind(this);
 
+    className = "flex items-center hover:bg-gray-100 focus-within:bg-gray-100";
+
     enterEdit() {
         this.editing = true;
 
@@ -53,17 +55,37 @@ export class AttributeInput extends LitElement {
             return;
         }
 
-        return html`<label class="flex gap-2 cursor-auto">
-            <span class="text-orange-400">${this.name}:</span>
-            ${this.editing
-                ? html`
-                      <wa-input @keydown=${this.handleKeypress} size="small" value="${this.attribute.value}"></wa-input>
-                  `
-                : html`<span class="truncate" @click=${this.enterEdit}>${this.attribute.value}</span>`}
-        </label> `;
+        return html`
+            <wa-checkbox size="small" class="mr-2"></wa-checkbox>
+            <label class="flex cursor-auto items-center">
+                <span class="text-orange-400 mr-2">${this.name}:</span>
+                ${this.editing
+                    ? html`
+                          <wa-input
+                              @keydown=${this.handleKeypress}
+                              size="small"
+                              value="${this.attribute.value}"
+                          ></wa-input>
+                      `
+                    : html`<span class="truncate" @click=${this.enterEdit}>${this.attribute.value}</span>`}
+            </label>
+        `;
     }
 
     static styles = css`
+        :host {
+            --checkbox-visibility: hidden;
+        }
+
+        wa-checkbox {
+            visibility: var(--checkbox-visibility);
+            --wa-form-control-toggle-size: 1em;
+        }
+
+        wa-checkbox::part(control) {
+            margin: 0;
+        }
+
         wa-input::part(base) {
             height: 1.6em;
             padding: 0 1ch;
