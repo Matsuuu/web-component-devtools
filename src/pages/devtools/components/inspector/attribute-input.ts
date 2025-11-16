@@ -15,6 +15,9 @@ export class AttributeInput extends LitElement {
     @property({ type: Boolean, reflect: true })
     editing = false;
 
+    @property({ type: Boolean, reflect: true, attribute: "has-checkbox" })
+    hasCheckbox = false;
+
     _leaveListener = this.leaveEditListener.bind(this);
 
     className = "flex items-center hover:bg-gray-100 focus-within:bg-gray-100";
@@ -50,13 +53,23 @@ export class AttributeInput extends LitElement {
         console.warn("[attribute-input]: onValueChange not implemented");
     }
 
+    toggleAttributeOnOff() {
+        // TODO
+        console.warn("[attribute-input]: toggleAttributeOnOff not implemented");
+    }
+
     render() {
         if (!this.attribute) {
             return;
         }
 
         return html`
-            <wa-checkbox size="small" class="mr-2"></wa-checkbox>
+            <wa-checkbox
+                @click=${this.toggleAttributeOnOff}
+                ?checked=${this.attribute.on}
+                size="small"
+                class="mr-2"
+            ></wa-checkbox>
             <label class="flex cursor-auto items-center">
                 <span class="text-orange-400 mr-2">${this.name}:</span>
                 ${this.editing

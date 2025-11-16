@@ -12,6 +12,7 @@ export function analyzeStaticAnalyzedElementAgainstDOM(
 ): DomAnalyzedElement {
     const domAnalyzedElement: DomAnalyzedElement = { ...staticAnalyzedElement };
 
+    // Parse the value of all properties on the DOM element
     for (const [key, prop] of Object.entries(domAnalyzedElement.properties)) {
         prop.value = treeElement.element[key as keyof Element];
         if (!prop.type || prop.type === PropertyTypes.NOT_DEFINED) {
@@ -19,18 +20,25 @@ export function analyzeStaticAnalyzedElementAgainstDOM(
         }
     }
 
+    // Parse through the attributes we statically observed and set their values
     for (const [key, attribute] of Object.entries(domAnalyzedElement.attributes)) {
         attribute.value = treeElement.element.getAttribute(key);
     }
 
+    // Parse through the attributes present on the DOM element
     for (const attribute of [...treeElement.element.attributes]) {
+        // If we didn't find it in static analysis, add it now
         if (!domAnalyzedElement.attributes[attribute.name]) {
             domAnalyzedElement.attributes[attribute.name] = {
                 name: attribute.name,
                 type: PropertyTypes.String,
+                on: true,
                 value: treeElement.element.getAttribute(attribute.name),
             };
         }
+
+        // These attributes are "on", as in they are applied to the element
+        domAnalyzedElement.attributes[attribute.name].on = true;
     }
 
     return domAnalyzedElement;

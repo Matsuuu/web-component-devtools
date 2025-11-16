@@ -66,7 +66,7 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
                         ${Object.entries(this.selectedItemAttributes).map(
                             ([key, prop]) => html`
                                 <li class="mb-1">
-                                    <attribute-input name="${key}" .attribute="${prop}"></attribute-input>
+                                    <attribute-input has-checkbox name="${key}" .attribute="${prop}"></attribute-input>
                                 </li>
                             `,
                         )}

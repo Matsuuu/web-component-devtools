@@ -12,6 +12,10 @@ export type Attributes = Record<string, Attribute>;
 export interface Attribute {
     name: string;
     type: String | Boolean;
+    /**
+     * Whether or not the attribute is enabled / "turned on".
+     * */
+    on: boolean;
     value?: string | null;
 }
 
