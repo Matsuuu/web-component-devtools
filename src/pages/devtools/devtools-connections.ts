@@ -11,6 +11,7 @@ import { LaunchInPageMessage } from "../messages/launch-inpage-message";
 import { log, LogLevel } from "@src/lib/logger/log";
 import { isPingMessage } from "../messages/ping-message";
 import { isSelectResultMessage } from "../messages/select-result-message";
+import { isFreezePanelOn } from "./components/debug-panel";
 
 let isInitialized = false;
 let messageQueue: any[] = [];
@@ -74,7 +75,7 @@ export function notifyPanelReady() {
 }
 
 export function initConnections() {
-    if (isInitialized) {
+    if (isInitialized || isFreezePanelOn()) {
         return;
     }
     isInitialized = true;

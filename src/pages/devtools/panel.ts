@@ -52,11 +52,6 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
     protected firstUpdated(): void {
         window.panel = this;
 
-        // TODO: Better way for this
-        this.className.split(" ").forEach(sty => {
-            this.classList.add(sty);
-        });
-
         this.activePanel = sessionStorage.getItem("active-panel") || TABS.ELEMENTS;
 
         notifyPanelReady();

@@ -36,13 +36,6 @@ export class PanelMenu extends LitElement {
     @property({})
     activePanel = TABS.ELEMENTS;
 
-    protected firstUpdated(): void {
-        // TODO: Better way for this
-        this.className.split(" ").forEach(sty => {
-            this.classList.add(sty);
-        });
-    }
-
     setActivePanel(panel: string) {
         this.activePanel = panel;
         this.dispatchEvent(new CustomEvent("panel-changed", { detail: { panel: this.activePanel } }));

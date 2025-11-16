@@ -13,6 +13,10 @@ interface Connection {
     connected: boolean;
 }
 
+export function isFreezePanelOn() {
+    return new URL(window.location.href).searchParams.has("freeze-panel");
+}
+
 @customElement("debug-panel")
 @withTailwind
 export class DebugPanel extends SignalWatcher(LitElement) {
@@ -76,9 +80,22 @@ export class DebugPanel extends SignalWatcher(LitElement) {
     }
 
     protected firstUpdated(_changedProperties: PropertyValues): void {
-        setTimeout(() => {
-            this.updateConnectionsStatus();
-        }, 1000);
+        if (!isFreezePanelOn()) {
+            setTimeout(() => {
+                this.updateConnectionsStatus();
+            }, 1000);
+        }
+    }
+    onFreezeToggle(event: InputEvent) {
+        const on = (event.target as HTMLInputElement).checked;
+        const url = new URL(window.location.href);
+        if (on) {
+            devtoolsState.freezeState();
+            url.searchParams.set("freeze-panel", "true");
+        } else {
+            url.searchParams.delete("freeze-panel");
+        }
+        window.history.replaceState(null, "", url.toString());
     }
 
     render() {
@@ -99,6 +116,10 @@ export class DebugPanel extends SignalWatcher(LitElement) {
                 </div>
 
                 <div class="flex gap-4 items-center">
+                    <label>
+                        Freeze panel state
+                        <input ?checked=${isFreezePanelOn()} @input=${this.onFreezeToggle} type="checkbox" />
+                    </label>
                     <p class="flex gap-2 items-center text-xs text-gray-500">
                         ${LucideIcon(Cable, { size: 12 })}
                         ${this.connectionsUpdateTimestamp.toLocaleTimeString() ?? "Not updated"}
