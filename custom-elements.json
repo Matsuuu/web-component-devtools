@@ -1,0 +1,2906 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/analyzer/analyzed-element.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "PropertyTypes",
+          "type": {
+            "text": "{\n    String: \"String\",\n    Number: \"Number\",\n    Boolean: \"Boolean\",\n    Undefined: \"undefined\",\n    Object: \"Object\",\n    Function: \"Function\",\n    Array: \"Array\",\n    Symbol: \"Symbol\",\n    NOT_DEFINED: \"Not Defined\",\n}"
+          },
+          "default": "{ String: \"String\", Number: \"Number\", Boolean: \"Boolean\", Undefined: \"undefined\", Object: \"Object\", Function: \"Function\", Array: \"Array\", Symbol: \"Symbol\", NOT_DEFINED: \"Not Defined\", }"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PropertyTypes",
+          "declaration": {
+            "name": "PropertyTypes",
+            "module": "src/lib/analyzer/analyzed-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/code/stylize-node-text.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "stylizeNodeText",
+          "parameters": [
+            {
+              "name": "nodeText",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "isCustomElement",
+              "type": {
+                "text": "boolean"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "stylizeNodeText",
+          "declaration": {
+            "name": "stylizeNodeText",
+            "module": "src/lib/code/stylize-node-text.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/css/tailwind.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "withTailwind",
+          "parameters": [
+            {
+              "name": "constructor",
+              "type": {
+                "text": "LitElementConstructor"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "withTailwind",
+          "declaration": {
+            "name": "withTailwind",
+            "module": "src/lib/css/tailwind.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/icons/lucide.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MenuIcon"
+        },
+        {
+          "kind": "function",
+          "name": "LucideIcon",
+          "parameters": [
+            {
+              "name": "icon",
+              "type": {
+                "text": "IconNode"
+              }
+            },
+            {
+              "name": "options",
+              "default": "{ size: 24, slot: \"\" }",
+              "type": {
+                "text": "LucideIconOptions"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuIcon",
+          "declaration": {
+            "name": "MenuIcon",
+            "module": "src/lib/icons/lucide.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "LucideIcon",
+          "declaration": {
+            "name": "LucideIcon",
+            "module": "src/lib/icons/lucide.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/logger/log.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "LogLevel",
+          "type": {
+            "text": "object"
+          },
+          "default": "{ NONE: { name: \"NONE\", level: 0, }, INFO: { name: \"INFO\", level: 1, }, DEBUG: { name: \"DEBUG\", level: 2, }, }"
+        },
+        {
+          "kind": "function",
+          "name": "setLogLevel",
+          "parameters": [
+            {
+              "name": "logLevel",
+              "type": {
+                "text": "LogLevel"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "log",
+          "parameters": [
+            {
+              "name": "level",
+              "type": {
+                "text": "LogLevel"
+              }
+            },
+            {
+              "name": "message",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "object",
+              "optional": true,
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LogLevel",
+          "declaration": {
+            "name": "LogLevel",
+            "module": "src/lib/logger/log.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "setLogLevel",
+          "declaration": {
+            "name": "setLogLevel",
+            "module": "src/lib/logger/log.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "log",
+          "declaration": {
+            "name": "log",
+            "module": "src/lib/logger/log.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/utils/wait.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "wait",
+          "parameters": [
+            {
+              "name": "timeout",
+              "default": "1000",
+              "type": {
+                "text": "number"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "wait",
+          "declaration": {
+            "name": "wait",
+            "module": "src/lib/utils/wait.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/background/index.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/index.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "initContentScript"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "initContentScript",
+          "declaration": {
+            "name": "initContentScript",
+            "module": "src/pages/content/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/contextmenu/context-menu.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "initContextMenu"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "initContextMenu",
+          "declaration": {
+            "name": "initContextMenu",
+            "module": "src/pages/contextmenu/context-menu.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/devtools-connections.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "notifyPanelReady"
+        },
+        {
+          "kind": "function",
+          "name": "initConnections"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "notifyPanelReady",
+          "declaration": {
+            "name": "notifyPanelReady",
+            "module": "src/pages/devtools/devtools-connections.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "initConnections",
+          "declaration": {
+            "name": "initConnections",
+            "module": "src/pages/devtools/devtools-connections.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/index.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/panel-init.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/panel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "WCDTPanel",
+          "members": [
+            {
+              "kind": "field",
+              "name": "className",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"flex h-full w-full\""
+            },
+            {
+              "kind": "field",
+              "name": "activePanel",
+              "attribute": "activePanel"
+            },
+            {
+              "kind": "field",
+              "name": "connected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "connected",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disconnectionMessage",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "disconnectionMessage"
+            },
+            {
+              "kind": "field",
+              "name": "tabId",
+              "type": {
+                "text": "number | undefined"
+              },
+              "default": "undefined",
+              "attribute": "tabId"
+            },
+            {
+              "kind": "method",
+              "name": "setConnectedTab",
+              "parameters": [
+                {
+                  "name": "tabId",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "disconnect",
+              "parameters": [
+                {
+                  "name": "disconnectionMessage",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "setElementTree",
+              "parameters": [
+                {
+                  "name": "tree",
+                  "type": {
+                    "text": "TreeElement | undefined"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "selectElement",
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "text": "SelectResultMessage"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onPanelChanged",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderPanelContent"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "activePanel",
+              "fieldName": "activePanel"
+            },
+            {
+              "name": "connected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "connected"
+            },
+            {
+              "name": "disconnectionMessage",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "disconnectionMessage"
+            },
+            {
+              "name": "tabId",
+              "type": {
+                "text": "number | undefined"
+              },
+              "default": "undefined",
+              "fieldName": "tabId"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SignalWatcher",
+              "package": "@lit-labs/signals"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcdt-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "WCDTPanel",
+          "declaration": {
+            "name": "WCDTPanel",
+            "module": "src/pages/devtools/panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcdt-panel",
+          "declaration": {
+            "name": "WCDTPanel",
+            "module": "src/pages/devtools/panel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/web-awesome.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/window.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/inpage/inpage-connections.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "initInpageConnections"
+        },
+        {
+          "kind": "function",
+          "name": "sendMessageFromInPage",
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "MessageFromInPageBase<T>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "initInpageConnections",
+          "declaration": {
+            "name": "initInpageConnections",
+            "module": "src/pages/inpage/inpage-connections.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "sendMessageFromInPage",
+          "declaration": {
+            "name": "sendMessageFromInPage",
+            "module": "src/pages/inpage/inpage-connections.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/inpage/inpage-index.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/inpage/inpage-state.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "inpageState",
+          "type": {
+            "text": "object"
+          },
+          "default": "{ previousContextMenuTarget: undefined as Element | undefined, }"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "inpageState",
+          "declaration": {
+            "name": "inpageState",
+            "module": "src/pages/inpage/inpage-state.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/connection-to-content-failed-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConnectionToContentFailedMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isConnectionToContentFailedMessage",
+          "return": {
+            "type": {
+              "text": "message is ConnectionToContentFailedMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConnectionToContentFailedMessage",
+          "declaration": {
+            "name": "ConnectionToContentFailedMessage",
+            "module": "src/pages/messages/connection-to-content-failed-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isConnectionToContentFailedMessage",
+          "declaration": {
+            "name": "isConnectionToContentFailedMessage",
+            "module": "src/pages/messages/connection-to-content-failed-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/element-tree-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ElementTreeMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isElementTreeMessage",
+          "return": {
+            "type": {
+              "text": "message is ElementTreeMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ElementTreeMessage",
+          "declaration": {
+            "name": "ElementTreeMessage",
+            "module": "src/pages/messages/element-tree-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isElementTreeMessage",
+          "declaration": {
+            "name": "isElementTreeMessage",
+            "module": "src/pages/messages/element-tree-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/heartbeat-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "HeartbeatMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isHeartbeatMessage",
+          "return": {
+            "type": {
+              "text": "message is HeartbeatMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "HeartbeatMessage",
+          "declaration": {
+            "name": "HeartbeatMessage",
+            "module": "src/pages/messages/heartbeat-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isHeartbeatMessage",
+          "declaration": {
+            "name": "isHeartbeatMessage",
+            "module": "src/pages/messages/heartbeat-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/hover-leave-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "HoverLeaveMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isHoverLeaveMessage",
+          "return": {
+            "type": {
+              "text": "message is HoverLeaveMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "HoverLeaveMessage",
+          "declaration": {
+            "name": "HoverLeaveMessage",
+            "module": "src/pages/messages/hover-leave-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isHoverLeaveMessage",
+          "declaration": {
+            "name": "isHoverLeaveMessage",
+            "module": "src/pages/messages/hover-leave-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/hover-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "HoverMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isHoverMessage",
+          "return": {
+            "type": {
+              "text": "message is HoverMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "HoverMessage",
+          "declaration": {
+            "name": "HoverMessage",
+            "module": "src/pages/messages/hover-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isHoverMessage",
+          "declaration": {
+            "name": "isHoverMessage",
+            "module": "src/pages/messages/hover-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/init-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "InitMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isInitMessage",
+          "return": {
+            "type": {
+              "text": "message is InitMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InitMessage",
+          "declaration": {
+            "name": "InitMessage",
+            "module": "src/pages/messages/init-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isInitMessage",
+          "declaration": {
+            "name": "isInitMessage",
+            "module": "src/pages/messages/init-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/launch-inpage-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "LaunchInPageMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isLaunchInPageMessage",
+          "return": {
+            "type": {
+              "text": "message is LaunchInPageMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LaunchInPageMessage",
+          "declaration": {
+            "name": "LaunchInPageMessage",
+            "module": "src/pages/messages/launch-inpage-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isLaunchInPageMessage",
+          "declaration": {
+            "name": "isLaunchInPageMessage",
+            "module": "src/pages/messages/launch-inpage-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/layers.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "LAYER",
+          "type": {
+            "text": "object"
+          },
+          "default": "{ DEVTOOLS: \"DEVTOOLS\", CONTENT: \"CONTENT\", BACKGROUND: \"BACKGROUND\", INPAGE: \"INPAGE\", }"
+        },
+        {
+          "kind": "variable",
+          "name": "CONTEXT",
+          "type": {
+            "text": "string"
+          },
+          "default": "\"WEB_COMPONENT_DEVTOOLS_MESSAGE_CONTEXT\""
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LAYER",
+          "declaration": {
+            "name": "LAYER",
+            "module": "src/pages/messages/layers.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "CONTEXT",
+          "declaration": {
+            "name": "CONTEXT",
+            "module": "src/pages/messages/layers.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/message-base.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MessageBase"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MessageBase",
+          "declaration": {
+            "name": "MessageBase",
+            "module": "src/pages/messages/message-base.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/ping-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PingMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isPingMessage",
+          "return": {
+            "type": {
+              "text": "message is PingMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PingMessage",
+          "declaration": {
+            "name": "PingMessage",
+            "module": "src/pages/messages/ping-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isPingMessage",
+          "declaration": {
+            "name": "isPingMessage",
+            "module": "src/pages/messages/ping-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/request-init-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Normally initialization is done by opening the devtools and it calling for init to content.\n\nSometimes however, we have the devtools open and the content needs to start the init process.\n\nFor these cases, we will ease the pain of rewiring things by just requesting the devtools\nto start the init process.",
+          "name": "RequestInitMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isRequestInitMessage",
+          "return": {
+            "type": {
+              "text": "message is RequestInitMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RequestInitMessage",
+          "declaration": {
+            "name": "RequestInitMessage",
+            "module": "src/pages/messages/request-init-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isRequestInitMessage",
+          "declaration": {
+            "name": "isRequestInitMessage",
+            "module": "src/pages/messages/request-init-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/select-inspect-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SelectInspectMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isSelectInspectMessage",
+          "return": {
+            "type": {
+              "text": "message is SelectInspectMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SelectInspectMessage",
+          "declaration": {
+            "name": "SelectInspectMessage",
+            "module": "src/pages/messages/select-inspect-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isSelectInspectMessage",
+          "declaration": {
+            "name": "isSelectInspectMessage",
+            "module": "src/pages/messages/select-inspect-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/select-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SelectMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isSelectMessage",
+          "return": {
+            "type": {
+              "text": "message is SelectMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SelectMessage",
+          "declaration": {
+            "name": "SelectMessage",
+            "module": "src/pages/messages/select-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isSelectMessage",
+          "declaration": {
+            "name": "isSelectMessage",
+            "module": "src/pages/messages/select-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/messages/select-result-message.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SelectResultMessage",
+          "superclass": {
+            "name": "MessageBase",
+            "module": "/src/pages/messages/message-base"
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isSelectResultMessage",
+          "return": {
+            "type": {
+              "text": "message is SelectResultMessage"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SelectResultMessage",
+          "declaration": {
+            "name": "SelectResultMessage",
+            "module": "src/pages/messages/select-result-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isSelectResultMessage",
+          "declaration": {
+            "name": "isSelectResultMessage",
+            "module": "src/pages/messages/select-result-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/options/index.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/popup/index.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/background/inject/inject-inpage-scripts.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/background/inject/user-window-inject.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "queryAllScriptsFromWindow",
+          "return": {
+            "type": {
+              "text": "Promise<ScriptQueryResult>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "tabId",
+              "type": {
+                "text": "number"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "queryAllScriptsFromWindow",
+          "declaration": {
+            "name": "queryAllScriptsFromWindow",
+            "module": "src/pages/background/inject/user-window-inject.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/background/messaging/background-connections.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "initConnections"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "initConnections",
+          "declaration": {
+            "name": "initConnections",
+            "module": "src/pages/background/messaging/background-connections.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/background/messaging/background-from-devtools-connection.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "handleDevtoolsToBackgroundMessage",
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            },
+            {
+              "name": "port",
+              "type": {
+                "text": "browser.Runtime.Port"
+              }
+            },
+            {
+              "name": "devToolsPorts",
+              "type": {
+                "text": "Record<number, browser.Runtime.Port>"
+              }
+            },
+            {
+              "name": "tabId",
+              "type": {
+                "text": "number"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "handleDevtoolsToBackgroundMessage",
+          "declaration": {
+            "name": "handleDevtoolsToBackgroundMessage",
+            "module": "src/pages/background/messaging/background-from-devtools-connection.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/background/parsing/client-javascript-parser.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/background/ts/ts.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "getTS",
+          "return": {
+            "type": {
+              "text": "typeof import(\"typescript\")"
+            }
+          },
+          "description": "We pre-bundle the Typescript compiler so that we can easily use it in our project,\nwhile also keeping our build times low.\n\nEverytime the Devtools needs to use the TS instance, it should be through this function"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "getTS",
+          "declaration": {
+            "name": "getTS",
+            "module": "src/pages/background/ts/ts.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/lib/element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TreeElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "id",
+              "type": {
+                "text": "ElementId"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "Element"
+              },
+              "privacy": "public",
+              "default": "element"
+            },
+            {
+              "kind": "field",
+              "name": "children",
+              "type": {
+                "text": "TreeElement[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "isCustomElement",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "nodeText",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"[NODE_PARSE_FAILED]\""
+            },
+            {
+              "kind": "field",
+              "name": "nodeName",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"<>\""
+            },
+            {
+              "kind": "field",
+              "name": "lazy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "kind": "method",
+              "name": "checkIsCustomElement",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "Element"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "createNodeText"
+            },
+            {
+              "kind": "method",
+              "name": "addChild",
+              "privacy": "public",
+              "parameters": [
+                {
+                  "name": "treeElement",
+                  "type": {
+                    "text": "TreeElement"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TreeElement",
+          "declaration": {
+            "name": "TreeElement",
+            "module": "src/pages/content/lib/element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/lib/tree-walker.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "contentTreeState",
+          "type": {
+            "text": "TreeState"
+          },
+          "default": "{ treeElementWeakMap: new WeakMap<Element, TreeElement>(), treeElementByIdMap: new Map<string, TreeElement>(), }"
+        },
+        {
+          "kind": "function",
+          "name": "getDOMTree",
+          "return": {
+            "type": {
+              "text": "TreeElement"
+            }
+          },
+          "description": "Runs through the whole DOM tree using the TreeWalker and\nreturns a single TreeElement which represents the top\nElement, here being the Document Body."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "contentTreeState",
+          "declaration": {
+            "name": "contentTreeState",
+            "module": "src/pages/content/lib/tree-walker.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "getDOMTree",
+          "declaration": {
+            "name": "getDOMTree",
+            "module": "src/pages/content/lib/tree-walker.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/messaging/content-connection.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "contentConnectionsState",
+          "type": {
+            "text": "object"
+          },
+          "default": "{ initialized: false, tabId: undefined as number | undefined, }"
+        },
+        {
+          "kind": "function",
+          "name": "initConnection"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "contentConnectionsState",
+          "declaration": {
+            "name": "contentConnectionsState",
+            "module": "src/pages/content/messaging/content-connection.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "initConnection",
+          "declaration": {
+            "name": "initConnection",
+            "module": "src/pages/content/messaging/content-connection.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/messaging/content-from-background-connection.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "handleContentMessageFromBackground",
+          "return": {
+            "type": {
+              "text": "Promise<any>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "handleContentMessageFromBackground",
+          "declaration": {
+            "name": "handleContentMessageFromBackground",
+            "module": "src/pages/content/messaging/content-from-background-connection.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/messaging/content-from-devtools-connection.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "handleContentMessageFromDevtools",
+          "return": {
+            "type": {
+              "text": "Promise<any>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "handleContentMessageFromDevtools",
+          "declaration": {
+            "name": "handleContentMessageFromDevtools",
+            "module": "src/pages/content/messaging/content-from-devtools-connection.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/messaging/content-from-inpage-connection.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "handleContentMessageFromInPage",
+          "return": {
+            "type": {
+              "text": "Promise<any>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "text": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "handleContentMessageFromInPage",
+          "declaration": {
+            "name": "handleContentMessageFromInPage",
+            "module": "src/pages/content/messaging/content-from-inpage-connection.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/components/debug-panel.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "isFreezePanelOn"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DebugPanel",
+          "members": [
+            {
+              "kind": "field",
+              "name": "connections",
+              "type": {
+                "text": "Connection[]"
+              },
+              "default": "[ { name: LAYER.DEVTOOLS, connected: true }, { name: LAYER.BACKGROUND, connected: false }, { name: LAYER.CONTENT, connected: false }, { name: LAYER.INPAGE, connected: false }, ]"
+            },
+            {
+              "kind": "field",
+              "name": "connectionsUpdateTimestamp",
+              "default": "new Date()"
+            },
+            {
+              "kind": "method",
+              "name": "updateConnectionsStatus"
+            },
+            {
+              "kind": "method",
+              "name": "onFreezeToggle",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "InputEvent"
+                  }
+                }
+              ]
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SignalWatcher",
+              "package": "@lit-labs/signals"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "debug-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "isFreezePanelOn",
+          "declaration": {
+            "name": "isFreezePanelOn",
+            "module": "src/pages/devtools/components/debug-panel.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "DebugPanel",
+          "declaration": {
+            "name": "DebugPanel",
+            "module": "src/pages/devtools/components/debug-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "debug-panel",
+          "declaration": {
+            "name": "DebugPanel",
+            "module": "src/pages/devtools/components/debug-panel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/components/devtools-element-tree.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DevtoolsElementTree",
+          "members": [
+            {
+              "kind": "field",
+              "name": "className",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"h-full overflow-auto\""
+            },
+            {
+              "kind": "field",
+              "name": "treeItemToElementMap",
+              "default": "new WeakMap<WaTreeItem, TreeElement>()"
+            },
+            {
+              "kind": "field",
+              "name": "highLightAll",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "highlight-all",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "onExpand",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "WaExpandEvent"
+                  }
+                },
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "TreeElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onCollapse",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "WaCollapseEvent"
+                  }
+                },
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "TreeElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "tree",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "onSelectionChange",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "WaSelectionChangeEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onTreeElementMounted",
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "Element | undefined"
+                  }
+                },
+                {
+                  "name": "treeElement",
+                  "type": {
+                    "text": "TreeElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderItem",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "TreeElement"
+                  }
+                },
+                {
+                  "name": "level",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "loadTreeBranch",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "WaLazyLoadEvent"
+                  }
+                },
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "TreeElement"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "highlight-all",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "highLightAll"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SignalWatcher",
+              "package": "@lit-labs/signals"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "devtools-element-tree",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DevtoolsElementTree",
+          "declaration": {
+            "name": "DevtoolsElementTree",
+            "module": "src/pages/devtools/components/devtools-element-tree.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "devtools-element-tree",
+          "declaration": {
+            "name": "DevtoolsElementTree",
+            "module": "src/pages/devtools/components/devtools-element-tree.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/components/panel-menu.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PanelMenu",
+          "members": [
+            {
+              "kind": "field",
+              "name": "className",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"flex flex-col border-gray-300 border-r-2 border-solid w-min h-full\""
+            },
+            {
+              "kind": "field",
+              "name": "activePanel",
+              "attribute": "activePanel"
+            },
+            {
+              "kind": "method",
+              "name": "setActivePanel",
+              "parameters": [
+                {
+                  "name": "panel",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "selectedButtonStyles",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"[&[selected]]:bg-orange-400 [&[selected]]:text-white\""
+            },
+            {
+              "kind": "field",
+              "name": "hoverButtonStyles",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"hover:bg-orange-400 hover:text-white\""
+            }
+          ],
+          "events": [
+            {
+              "name": "panel-changed",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "activePanel",
+              "fieldName": "activePanel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcdt-panel-menu",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PanelMenu",
+          "declaration": {
+            "name": "PanelMenu",
+            "module": "src/pages/devtools/components/panel-menu.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcdt-panel-menu",
+          "declaration": {
+            "name": "PanelMenu",
+            "module": "src/pages/devtools/components/panel-menu.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/components/toolbar.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Toolbar",
+          "members": [
+            {
+              "kind": "field",
+              "name": "connected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "connected",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "tabId",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "attribute": "tabId"
+            },
+            {
+              "kind": "field",
+              "name": "className",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"flex justify-between w-full border-b-gray-300 border-b-2\""
+            },
+            {
+              "kind": "method",
+              "name": "toggleHighlightAll"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "connected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "connected"
+            },
+            {
+              "name": "tabId",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "fieldName": "tabId"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SignalWatcher",
+              "package": "@lit-labs/signals"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "tool-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Toolbar",
+          "declaration": {
+            "name": "Toolbar",
+            "module": "src/pages/devtools/components/toolbar.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tool-bar",
+          "declaration": {
+            "name": "Toolbar",
+            "module": "src/pages/devtools/components/toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/events/devtools-hover-event.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "createDevtoolsHoverEvent",
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "TreeElement"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "createDevtoolsHoverLeaveEvent"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "createDevtoolsHoverEvent",
+          "declaration": {
+            "name": "createDevtoolsHoverEvent",
+            "module": "src/pages/devtools/events/devtools-hover-event.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "createDevtoolsHoverLeaveEvent",
+          "declaration": {
+            "name": "createDevtoolsHoverLeaveEvent",
+            "module": "src/pages/devtools/events/devtools-hover-event.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/events/devtools-select-event.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "createDevtoolsSelectEvent",
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "TreeElement"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "createDevtoolsSelectEvent",
+          "declaration": {
+            "name": "createDevtoolsSelectEvent",
+            "module": "src/pages/devtools/events/devtools-select-event.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/lib/devtool-tabs.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "TABS",
+          "type": {
+            "text": "object"
+          },
+          "default": "{ ELEMENTS: \"ELEMENTS\", SETTINGS: \"SETTINGS\", }"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TABS",
+          "declaration": {
+            "name": "TABS",
+            "module": "src/pages/devtools/lib/devtool-tabs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/state/devtools-context.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DevtoolsState",
+          "members": [
+            {
+              "kind": "field",
+              "name": "messagePort",
+              "type": {
+                "text": "browser.Runtime.Port"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "elementTree",
+              "privacy": "public",
+              "default": "new Signal.State<TreeElement | undefined>(undefined)"
+            },
+            {
+              "kind": "field",
+              "name": "highlightAll",
+              "privacy": "public",
+              "default": "new Signal.State(false)"
+            },
+            {
+              "kind": "field",
+              "name": "selectedItem",
+              "privacy": "public",
+              "default": "new Signal.State<TreeElement | undefined>(undefined)"
+            },
+            {
+              "kind": "field",
+              "name": "selectedItemDetails",
+              "privacy": "public",
+              "default": "new Signal.State<SerializedAnalyzedElement | undefined>(undefined)"
+            },
+            {
+              "kind": "field",
+              "name": "previousTreeUpdate",
+              "privacy": "public",
+              "default": "new Signal.State<Date | undefined>(undefined)"
+            },
+            {
+              "kind": "method",
+              "name": "onChange",
+              "privacy": "public",
+              "parameters": [
+                {
+                  "name": "stateObject",
+                  "type": {
+                    "text": "Signal.State<any>"
+                  }
+                },
+                {
+                  "name": "callback",
+                  "type": {
+                    "text": "Function"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "freezeState",
+              "privacy": "public",
+              "description": "Store the Panel state in localStorage for UI development ease"
+            },
+            {
+              "kind": "method",
+              "name": "applyFrozenUiState",
+              "privacy": "public"
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "devtoolsState",
+          "default": "new DevtoolsState()"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DevtoolsState",
+          "declaration": {
+            "name": "DevtoolsState",
+            "module": "src/pages/devtools/state/devtools-context.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "devtoolsState",
+          "declaration": {
+            "name": "devtoolsState",
+            "module": "src/pages/devtools/state/devtools-context.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/inpage/analyzer/custom-element-dom-analyzer.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "analyzeSelectedElement",
+          "return": {
+            "type": {
+              "text": "StaticAnalyzedElement"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "TreeElement"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "analyzeSelectedElement",
+          "declaration": {
+            "name": "analyzeSelectedElement",
+            "module": "src/pages/inpage/analyzer/custom-element-dom-analyzer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/inpage/analyzer/dom-element-analyzer.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "analyzeStaticAnalyzedElementAgainstDOM",
+          "return": {
+            "type": {
+              "text": "DomAnalyzedElement"
+            }
+          },
+          "parameters": [
+            {
+              "name": "staticAnalyzedElement",
+              "type": {
+                "text": "StaticAnalyzedElement"
+              }
+            },
+            {
+              "name": "treeElement",
+              "type": {
+                "text": "TreeElement"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "analyzeStaticAnalyzedElementAgainstDOM",
+          "declaration": {
+            "name": "analyzeStaticAnalyzedElementAgainstDOM",
+            "module": "src/pages/inpage/analyzer/dom-element-analyzer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/inpage/analyzer/serialized-analyzed-element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SerializedAnalyzedElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "elementName",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "attributes",
+              "type": {
+                "text": "Attributes"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "#serializeProperties",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "SerializedProperties"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "properties",
+                  "type": {
+                    "text": "Properties"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#serializeProperty",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "SerializedProperty"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "prop",
+                  "type": {
+                    "text": "Property"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#createJsonSerializerHelper",
+              "privacy": "private"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SerializedAnalyzedElement",
+          "declaration": {
+            "name": "SerializedAnalyzedElement",
+            "module": "src/pages/inpage/analyzer/serialized-analyzed-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/inpage/dom-events/contextmenu-click.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "trackContextMenuClicks"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "trackContextMenuClicks",
+          "declaration": {
+            "name": "trackContextMenuClicks",
+            "module": "src/pages/inpage/dom-events/contextmenu-click.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/inpage/events/update-tree.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "updateTree"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "updateTree",
+          "declaration": {
+            "name": "updateTree",
+            "module": "src/pages/inpage/events/update-tree.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/lib/spotlight/dimensions.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "getSpotlightElementDimensions",
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "TreeElement"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "getSpotlightElementDimensions",
+          "declaration": {
+            "name": "getSpotlightElementDimensions",
+            "module": "src/pages/content/lib/spotlight/dimensions.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/content/lib/spotlight/spotlight-element.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "SPOTLIGHT_ELEM_ID",
+          "type": {
+            "text": "string"
+          },
+          "default": "\"wc-devtools-spotlight-element\""
+        },
+        {
+          "kind": "function",
+          "name": "getSpotlightElement"
+        },
+        {
+          "kind": "function",
+          "name": "createSpotlightElement"
+        },
+        {
+          "kind": "function",
+          "name": "removeSpotlightElement"
+        },
+        {
+          "kind": "function",
+          "name": "requestSpotlightRemove"
+        },
+        {
+          "kind": "function",
+          "name": "cancelSpotlightRemoveRequest"
+        },
+        {
+          "kind": "function",
+          "name": "moveSpotlight",
+          "parameters": [
+            {
+              "name": "rect",
+              "type": {
+                "text": "DOMRect"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SPOTLIGHT_ELEM_ID",
+          "declaration": {
+            "name": "SPOTLIGHT_ELEM_ID",
+            "module": "src/pages/content/lib/spotlight/spotlight-element.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "getSpotlightElement",
+          "declaration": {
+            "name": "getSpotlightElement",
+            "module": "src/pages/content/lib/spotlight/spotlight-element.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "createSpotlightElement",
+          "declaration": {
+            "name": "createSpotlightElement",
+            "module": "src/pages/content/lib/spotlight/spotlight-element.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "removeSpotlightElement",
+          "declaration": {
+            "name": "removeSpotlightElement",
+            "module": "src/pages/content/lib/spotlight/spotlight-element.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "requestSpotlightRemove",
+          "declaration": {
+            "name": "requestSpotlightRemove",
+            "module": "src/pages/content/lib/spotlight/spotlight-element.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "cancelSpotlightRemoveRequest",
+          "declaration": {
+            "name": "cancelSpotlightRemoveRequest",
+            "module": "src/pages/content/lib/spotlight/spotlight-element.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "moveSpotlight",
+          "declaration": {
+            "name": "moveSpotlight",
+            "module": "src/pages/content/lib/spotlight/spotlight-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/components/inspector/attribute-input.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AttributeInput",
+          "members": [
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "attribute",
+              "type": {
+                "text": "Attribute"
+              },
+              "attribute": "attribute"
+            },
+            {
+              "kind": "field",
+              "name": "editing",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "editing",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hasCheckbox",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "has-checkbox",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_leaveListener"
+            },
+            {
+              "kind": "field",
+              "name": "className",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"flex items-center hover:bg-gray-100 focus-within:bg-gray-100\""
+            },
+            {
+              "kind": "method",
+              "name": "enterEdit"
+            },
+            {
+              "kind": "method",
+              "name": "leaveEditListener",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleKeypress",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onValueChange"
+            },
+            {
+              "kind": "method",
+              "name": "toggleAttributeOnOff"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "fieldName": "name"
+            },
+            {
+              "name": "attribute",
+              "type": {
+                "text": "Attribute"
+              },
+              "fieldName": "attribute"
+            },
+            {
+              "name": "editing",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "editing"
+            },
+            {
+              "name": "has-checkbox",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hasCheckbox"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "attribute-input",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AttributeInput",
+          "declaration": {
+            "name": "AttributeInput",
+            "module": "src/pages/devtools/components/inspector/attribute-input.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "attribute-input",
+          "declaration": {
+            "name": "AttributeInput",
+            "module": "src/pages/devtools/components/inspector/attribute-input.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pages/devtools/components/inspector/devtools-element-inspector.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DevtoolsElementInspector",
+          "members": [
+            {
+              "kind": "field",
+              "name": "selectedItem",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "closeInspector"
+            },
+            {
+              "kind": "field",
+              "name": "className",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"flex flex-col overflow-auto\""
+            },
+            {
+              "kind": "field",
+              "name": "selectedItemProperties",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "selectedItemAttributes",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "renderTopBar"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SignalWatcher",
+              "package": "@lit-labs/signals"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "devtools-element-inspector",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DevtoolsElementInspector",
+          "declaration": {
+            "name": "DevtoolsElementInspector",
+            "module": "src/pages/devtools/components/inspector/devtools-element-inspector.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "devtools-element-inspector",
+          "declaration": {
+            "name": "DevtoolsElementInspector",
+            "module": "src/pages/devtools/components/inspector/devtools-element-inspector.ts"
+          }
+        }
+      ]
+    }
+  ]
+}
