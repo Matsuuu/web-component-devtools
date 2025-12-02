@@ -50,7 +50,7 @@ export class DevtoolsElementInspector extends SignalWatcher(LitElement) {
                     >
                 </div>
             </div>
-            <wa-divider style="--width: 2px;" class="h-[2px] bg-gray-300"></wa-divider>
+            <wa-divider style="--width: 2px;" class="h-[2px] min-h-[2px] bg-gray-300"></wa-divider>
 
             <div class="flex-col p-4 pb-16">
                 <div class="flex flex-col gap-2" id="attributes">
