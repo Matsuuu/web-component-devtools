@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+body,
+html {
+    height: 100%;
+
+    --wa-color-brand-fill-loud: #ca3500;
+}

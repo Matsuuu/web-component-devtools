@@ -1,7 +1,7 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: "[BUG]: "
+about: Something doesn't work.
+title: "[BUG]"
 labels: ''
 assignees: ''
 
@@ -9,6 +9,7 @@ assignees: ''
 
 **Describe the bug**
 A clear and concise description of what the bug is.
+
 
 **To Reproduce**
 Steps to reproduce the behavior:
@@ -20,14 +21,13 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
+**Steps/attempts taken to fix**
+I've tried X, Y, and Z...but it's not working. What should I do?
+NOTE: You should always try and look for a fix first.
+
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-
-**Additional context**
-Add any other context about the problem here.
+ - OS: [e.g. Windows, Linux, MacOS] including version
+ - Browser [e.g. chrome, firefox] including version

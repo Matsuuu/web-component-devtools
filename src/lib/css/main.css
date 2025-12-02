@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary-element: #ca3500;
+    --color-not-highlighted-element: lightgray;
+    --color-secondary-element: #8a2be2;
+    --color-element-value: #1a1aa6;
+}
