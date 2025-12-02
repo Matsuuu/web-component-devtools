@@ -36,7 +36,7 @@
         "@crxjs/vite-plugin": "^2.0.3",
         "@custom-elements-manifest/analyzer": "^0.11.0",
         "@tailwindcss/vite": "^4.1.11",
-        "@types/chrome": "^0.1.11",
+        "@types/chrome": "^0.1.32",
         "@types/node": "^24.4.0",
         "@types/webextension-polyfill": "^0.12.4",
         "@typescript-eslint/eslint-plugin": "^7.8.0",
