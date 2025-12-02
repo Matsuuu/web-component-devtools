@@ -5,6 +5,9 @@ import { customElement, property } from "lit/decorators.js";
 import { createDevtoolsAttributeChangeEvent } from "../../events/devtools-inspector-event";
 import { createRef, ref } from "lit/directives/ref.js";
 import WaInput from "@awesome.me/webawesome/dist/components/input/input.js";
+import { WaSelectionChangeEvent } from "@awesome.me/webawesome";
+import { ChangeEvent } from "react";
+import WaCheckbox from "@awesome.me/webawesome/dist/components/checkbox/checkbox.js";
 
 @customElement("attribute-input")
 @withTailwind
@@ -66,9 +69,16 @@ export class AttributeInput extends LitElement {
         }
     }
 
-    toggleAttributeOnOff() {
-        // TODO
-        console.warn("[attribute-input]: toggleAttributeOnOff not implemented");
+    toggleAttributeOnOff(event: ChangeEvent) {
+        const checked = (event.target as WaCheckbox).checked;
+        createDevtoolsAttributeChangeEvent({
+            name: this.attribute.name,
+            type: "boolean",
+            value: checked,
+        });
+
+        // Update the UI for responsiveness. The InPage will query the new state also
+        this.attribute.on = checked;
     }
 
     render() {
@@ -78,7 +88,7 @@ export class AttributeInput extends LitElement {
 
         return html`
             <wa-checkbox
-                @click=${this.toggleAttributeOnOff}
+                @change=${this.toggleAttributeOnOff}
                 ?checked=${this.attribute.on}
                 size="small"
                 class="mr-2"
