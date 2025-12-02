@@ -6,8 +6,8 @@ import {
     Property,
     SerializedProperty,
     PropertyTypes,
+    Attributes,
 } from "../../../lib/analyzer/analyzed-element";
-import { Attributes } from "react";
 
 const NO_SERIALIZATION_NEEDED_TYPES = new Set<PropertyType>([
     PropertyTypes.String,
