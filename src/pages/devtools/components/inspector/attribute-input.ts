@@ -2,6 +2,9 @@ import { Attribute } from "@src/lib/analyzer/analyzed-element";
 import { withTailwind } from "@src/lib/css/tailwind";
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { createDevtoolsAttributeChangeEvent } from "../../events/devtools-inspector-event";
+import { createRef, ref } from "lit/directives/ref.js";
+import WaInput from "@awesome.me/webawesome/dist/components/input/input.js";
 
 @customElement("attribute-input")
 @withTailwind
@@ -19,6 +22,7 @@ export class AttributeInput extends LitElement {
     hasCheckbox = false;
 
     _leaveListener = this.leaveEditListener.bind(this);
+    inputRef = createRef<WaInput>();
 
     className = "flex items-center hover:bg-gray-100 focus-within:bg-gray-100";
 
@@ -49,8 +53,17 @@ export class AttributeInput extends LitElement {
     }
 
     onValueChange() {
-        // TODO
-        console.warn("[attribute-input]: onValueChange not implemented");
+        const newValue = this.inputRef.value?.value;
+
+        if (typeof newValue === "string") {
+            createDevtoolsAttributeChangeEvent({
+                name: this.attribute.name,
+                type: "string",
+                value: newValue,
+            });
+            // Update the UI for responsiveness. The InPage will query the new state also
+            this.attribute.value = newValue;
+        }
     }
 
     toggleAttributeOnOff() {
@@ -75,6 +88,7 @@ export class AttributeInput extends LitElement {
                 ${this.editing
                     ? html`
                           <wa-input
+                              ${ref(this.inputRef)}
                               @keydown=${this.handleKeypress}
                               size="small"
                               value="${this.attribute.value}"

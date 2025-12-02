@@ -18,7 +18,7 @@ import { LAYER, CONTEXT } from "../messages/layers";
 import { MessageBase } from "../messages/message-base";
 import { isPingMessage, PingMessage } from "../messages/ping-message";
 import { isSelectInspectMessage } from "../messages/select-inspect-message";
-import { isSelectMessage } from "../messages/select-message";
+import { isSelectMessage, SelectMessage } from "../messages/select-message";
 import { analyzeSelectedElement } from "./analyzer/custom-element-dom-analyzer";
 import { updateTree } from "./events/update-tree";
 import { inpageState } from "./inpage-state";
@@ -26,6 +26,7 @@ import { analyzeStaticAnalyzedElementAgainstDOM } from "./analyzer/dom-element-a
 import { TreeElement } from "../content/lib/element";
 import { SelectResultMessage } from "../messages/select-result-message";
 import { SerializedAnalyzedElement } from "./analyzer/serialized-analyzed-element";
+import { isAttributeChangeMessage } from "../messages/attribute-change-message";
 
 export function initInpageConnections() {
     window.addEventListener("message", event => {
@@ -35,25 +36,14 @@ export function initInpageConnections() {
 
         const data = message.data;
 
+        // TODO: Move the implementations to their own file or at least functions at some point
+
         if (isInitMessage(data)) {
-            updateTree();
-            return;
+            return updateTree();
         }
 
         if (isSelectMessage(data)) {
-            console.log("[NOT IMPLEMENTED]: Asking for select");
-            const treeElement = contentTreeState.treeElementByIdMap.get(data.element.id);
-            if (!treeElement) {
-                return;
-            }
-
-            const analyzedElement = analyzeTreeElement(treeElement);
-            console.log(analyzedElement);
-            sendMessageFromInPage({
-                to: LAYER.DEVTOOLS,
-                data: new SelectResultMessage(analyzedElement),
-            });
-            return;
+            return invokeSelect(data);
         }
 
         if (isSelectInspectMessage(data)) {
@@ -94,12 +84,47 @@ export function initInpageConnections() {
             return;
         }
 
+        if (isAttributeChangeMessage(data)) {
+            const target = inpageState.selectedElement;
+            if (!target) {
+                return;
+            }
+
+            const change = data.attributeChange;
+            if (change.type === "boolean") {
+                target.element.toggleAttribute(change.name, change.value);
+            } else {
+                target.element.setAttribute(change.name, change.value);
+            }
+
+            invokeSelect(new SelectMessage(target));
+            updateTree();
+
+            return;
+        }
+
         if (isPingMessage(data)) {
             sendMessageFromInPage({
                 to: LAYER.DEVTOOLS,
                 data: new PingMessage(),
             });
         }
+    });
+}
+
+function invokeSelect(data: SelectMessage) {
+    const treeElement = contentTreeState.treeElementByIdMap.get(data.element.id);
+    if (!treeElement) {
+        return;
+    }
+
+    // TODO: De-select should also send a message. I mean when you close the select window
+    inpageState.selectedElement = treeElement;
+
+    const analyzedElement = analyzeTreeElement(treeElement);
+    sendMessageFromInPage({
+        to: LAYER.DEVTOOLS,
+        data: new SelectResultMessage(analyzedElement),
     });
 }
 
