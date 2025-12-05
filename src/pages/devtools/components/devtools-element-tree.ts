@@ -6,7 +6,7 @@ import { withTailwind } from "@src/lib/css/tailwind";
 import { LucideIcon } from "@src/lib/icons/lucide";
 import { TreeElement } from "@src/pages/content/lib/element";
 import { css, html, LitElement, PropertyValues, TemplateResult } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ChevronRight } from "lucide";
 import { devtoolsState } from "../state/devtools-context";
@@ -27,6 +27,9 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
 
     @property({ type: Boolean, reflect: true, attribute: "highlight-all" })
     highLightAll = false;
+
+    @state()
+    scrollToElement = false;
 
     protected firstUpdated(_changedProperties: PropertyValues): void {
         window.elementTree = this;
@@ -50,7 +53,13 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     }
 
     focusOnSelectedItem() {
-        console.log("Trying to focus on ", devtoolsState.selectedItem.get()?.nodeName);
+        const parentTree = devtoolsState.getSelectedItemParentElements();
+
+        parentTree.forEach(elem => {
+            expansionMap.add(elem);
+        });
+        this.scrollToElement = true;
+        this.requestUpdate();
     }
 
     onSelectionChange(event: WaSelectionChangeEvent) {
@@ -96,10 +105,23 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
             itemRow.removeAttribute("style");
             createDevtoolsHoverLeaveEvent();
         });
+
+        if (this.scrollToElement && treeElement.id === devtoolsState.selectedItem.get()?.id) {
+            element.selected = true;
+            element.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+            });
+            this.scrollToElement = false;
+        }
+    }
+
+    isTreeLeafOpen(element: TreeElement, level: number) {
+        return expansionMap.has(element) || level < INITIAL_DEPTH;
     }
 
     renderItem(element: TreeElement, level: number): TemplateResult {
-        const itemIsOpen = expansionMap.has(element) || level < INITIAL_DEPTH;
+        const itemIsOpen = this.isTreeLeafOpen(element, level);
 
         return html`
             <wa-tree-item

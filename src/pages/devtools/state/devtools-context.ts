@@ -22,6 +22,30 @@ export class DevtoolsState {
     }
 
     /**
+     * Gets the currently selected item and walks up the tree,
+     * saving each TreeElement into an array.
+     * */
+    public getSelectedItemParentElements() {
+        const parentArray: TreeElement[] = [];
+
+        let current = this.selectedItem.get();
+        if (!current) {
+            return parentArray;
+        }
+
+        parentArray.push(current);
+        while (current && current.parentId) {
+            current = this.elementTreeLookup.get(current.parentId);
+
+            if (current) {
+                parentArray.push(current);
+            }
+        }
+
+        return parentArray.reverse();
+    }
+
+    /**
      * We will construct a lookup tree for the elements in our tree for faster access to any
      * element via their ID, saving us time and headache of climbing trees.
      * */
@@ -42,8 +66,6 @@ export class DevtoolsState {
             };
 
             lookupper(treeElement);
-
-            console.log("Tree updated. New lookup: ", this.elementTreeLookup);
         });
     }
 

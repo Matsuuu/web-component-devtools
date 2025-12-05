@@ -12,6 +12,7 @@ export type TraverseFunction = (element: TreeElement) => void;
  * */
 export class TreeElement {
     public id: ElementId;
+    public parentId: ElementId | undefined;
     public element: Element;
     children: TreeElement[] = [];
     isCustomElement: boolean = false;
@@ -63,6 +64,7 @@ export class TreeElement {
     }
 
     public addChild(treeElement: TreeElement) {
+        treeElement.parentId = this.id;
         this.children.push(treeElement);
     }
 }
