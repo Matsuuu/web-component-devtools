@@ -10,9 +10,8 @@ export function initContextMenu() {
     });
 
     browser.contextMenus.onClicked.addListener((info: any, tab: Tabs.Tab | undefined) => {
-        if (tab?.id) {
-            // TODO: Somehow open up the devtools panel
-            // TODO: I guess this isn't possible but could we at least change focus to our panel?
+        // TODO: Check that this doesn't actually trigger in all calls to contextmenu
+        if (tab?.id && tab.id > 0) {
             browser.tabs
                 .sendMessage(tab.id, { from: LAYER.BACKGROUND, to: LAYER.INPAGE, data: new SelectInspectMessage() })
                 .catch(err => {

@@ -1,4 +1,5 @@
 export interface StaticAnalyzedElement {
+    id: string;
     name: string;
     elementName: string;
     properties: Properties;

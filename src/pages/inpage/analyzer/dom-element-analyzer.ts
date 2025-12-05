@@ -11,6 +11,7 @@ export function analyzeStaticAnalyzedElementAgainstDOM(
     treeElement: TreeElement,
 ): DomAnalyzedElement {
     const domAnalyzedElement: DomAnalyzedElement = { ...staticAnalyzedElement };
+    domAnalyzedElement.id = treeElement.id;
 
     // Parse the value of all properties on the DOM element
     for (const [key, prop] of Object.entries(domAnalyzedElement.properties)) {

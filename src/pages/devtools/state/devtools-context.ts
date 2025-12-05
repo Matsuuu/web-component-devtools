@@ -1,5 +1,5 @@
 import { Signal } from "@lit-labs/signals";
-import { TreeElement } from "@src/pages/content/lib/element";
+import { ElementId, TreeElement } from "@src/pages/content/lib/element";
 import { SerializedAnalyzedElement } from "@src/pages/inpage/analyzer/serialized-analyzed-element";
 import browser from "webextension-polyfill";
 import { isFreezePanelOn } from "../components/debug-panel";
@@ -12,10 +12,39 @@ export class DevtoolsState {
     public selectedItemDetails = new Signal.State<SerializedAnalyzedElement | undefined>(undefined);
     public previousTreeUpdate = new Signal.State<Date | undefined>(undefined);
 
+    public elementTreeLookup = new Map<ElementId, TreeElement>();
+
     constructor() {
         if (isFreezePanelOn()) {
             this.applyFrozenUiState();
         }
+        this.createLookupTreeListeners();
+    }
+
+    /**
+     * We will construct a lookup tree for the elements in our tree for faster access to any
+     * element via their ID, saving us time and headache of climbing trees.
+     * */
+    private createLookupTreeListeners() {
+        this.onChange(this.elementTree, () => {
+            // Construct a lookup tree for other parts of the tree to easily find elements from
+            this.elementTreeLookup.clear();
+
+            const treeElement = this.elementTree.get();
+            if (!treeElement) {
+                return;
+            }
+            const lookupper = (treeElement: TreeElement) => {
+                this.elementTreeLookup.set(treeElement.id, treeElement);
+                treeElement.children.forEach(child => lookupper(child));
+                // TODO: Should we save the path to each element so that we can open the tree
+                // on e.g. inspects?
+            };
+
+            lookupper(treeElement);
+
+            console.log("Tree updated. New lookup: ", this.elementTreeLookup);
+        });
     }
 
     public onChange(stateObject: Signal.State<any>, callback: Function) {
@@ -48,7 +77,6 @@ export class DevtoolsState {
         this.elementTree.set(state.elementTree);
         this.selectedItem.set(state.selectedItem);
         this.selectedItemDetails.set(state.selectedItemDetails);
-        console.log(state);
     }
 }
 

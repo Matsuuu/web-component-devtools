@@ -1,13 +1,3 @@
-import {
-    Attributes,
-    DomAnalyzedElement,
-    Properties,
-    Property,
-    PropertyType,
-    SerializedProperties,
-    SerializedProperty,
-    StaticAnalyzedElement,
-} from "@src/lib/analyzer/analyzed-element";
 import { getSpotlightElementDimensions } from "../content/lib/spotlight/dimensions";
 import { moveSpotlight, requestSpotlightRemove } from "../content/lib/spotlight/spotlight-element";
 import { contentTreeState } from "../content/lib/tree-walker";
@@ -57,7 +47,6 @@ export function initInpageConnections() {
             }
 
             const analyzedElement = analyzeTreeElement(treeElement);
-            console.log(analyzedElement);
             sendMessageFromInPage({
                 to: LAYER.DEVTOOLS,
                 data: new SelectResultMessage(analyzedElement, true),

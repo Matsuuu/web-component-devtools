@@ -1,5 +1,15 @@
 export type ElementId = string;
 
+export type TraverseFunction = (element: TreeElement) => void;
+
+/**
+ * This is an instance of an element we parsed from the page, and
+ * this is passed around the inpage and the devtools.
+ *
+ * DO NOT DECLARE ANY FUNCTIONS HERE, WHICH YOU WANT TO HAVE AVAILABLE IN THE DEVTOOLS!
+ * -- When this class is passed to the devtools, it will be serialized and will only contain
+ * -- the serializable parts of the object, so the relevant data, and not the functions.
+ * */
 export class TreeElement {
     public id: ElementId;
     public element: Element;

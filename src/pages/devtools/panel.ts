@@ -46,7 +46,12 @@ export class WCDTPanel extends SignalWatcher(LitElement) {
     }
 
     selectElement(data: SelectResultMessage) {
+        const treeElement = devtoolsState.elementTreeLookup.get(data.element.id);
+        devtoolsState.selectedItem.set(treeElement);
         devtoolsState.selectedItemDetails.set(data.element);
+        if (data.focusOnDevtools) {
+            window.elementTree.focusOnSelectedItem();
+        }
     }
 
     protected firstUpdated(): void {

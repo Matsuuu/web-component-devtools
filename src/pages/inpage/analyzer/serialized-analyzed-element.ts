@@ -17,12 +17,14 @@ const NO_SERIALIZATION_NEEDED_TYPES = new Set<PropertyType>([
 ]);
 
 export class SerializedAnalyzedElement {
+    id: string;
     name: string;
     elementName: string;
     attributes: Attributes;
     properties: SerializedProperties;
 
     constructor(domAnalyzedElement: DomAnalyzedElement) {
+        this.id = domAnalyzedElement.id;
         this.name = domAnalyzedElement.name;
         this.elementName = domAnalyzedElement.elementName;
         this.attributes = domAnalyzedElement.attributes;

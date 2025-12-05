@@ -29,6 +29,7 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     highLightAll = false;
 
     protected firstUpdated(_changedProperties: PropertyValues): void {
+        window.elementTree = this;
         devtoolsState.onChange(devtoolsState.highlightAll, () => {
             // We do this the janky way do get it to reflect to the property,
             // and therefore the attribute.
@@ -46,6 +47,10 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
 
     get tree() {
         return devtoolsState.elementTree.get();
+    }
+
+    focusOnSelectedItem() {
+        console.log("Trying to focus on ", devtoolsState.selectedItem.get()?.nodeName);
     }
 
     onSelectionChange(event: WaSelectionChangeEvent) {
@@ -89,7 +94,7 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
 
         itemRow?.addEventListener("mouseleave", () => {
             itemRow.removeAttribute("style");
-            createDevtoolsHoverLeaveEvent(treeElement);
+            createDevtoolsHoverLeaveEvent();
         });
     }
 
