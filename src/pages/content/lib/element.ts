@@ -1,3 +1,5 @@
+import { contentTreeState } from "./tree-walker";
+
 export type ElementId = string;
 
 export type TraverseFunction = (element: TreeElement) => void;
@@ -22,8 +24,8 @@ export class TreeElement {
     lazy = true;
 
     constructor(element: Element) {
-        this.id = generateUuidV4Like();
         this.element = element;
+        this.id = this.determineId();
         this.isCustomElement = this.checkIsCustomElement(element);
         this.nodeText = this.createNodeText();
         this.nodeName = element.nodeName.toLowerCase();
@@ -33,6 +35,19 @@ export class TreeElement {
             writable: true,
             configurable: true,
         });
+    }
+
+    /**
+     * We try to see if this element already had an ID and re-use it.
+     * Otherwise generate new one.
+     * */
+    determineId() {
+        const existingReference = contentTreeState.treeElementWeakMap.get(this.element);
+        if (existingReference) {
+            return existingReference.id;
+        }
+
+        return generateUuidV4Like();
     }
 
     private checkIsCustomElement(element: Element): boolean {

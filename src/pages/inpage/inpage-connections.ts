@@ -86,8 +86,9 @@ export function initInpageConnections() {
                 target.element.setAttribute(change.name, change.value);
             }
 
-            invokeSelect(new SelectMessage(target));
             updateTree();
+
+            invokeSelect(new SelectMessage(target));
 
             return;
         }

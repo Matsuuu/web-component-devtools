@@ -15,6 +15,7 @@ export class DevtoolsState {
     public elementTreeLookup = new Map<ElementId, TreeElement>();
 
     constructor() {
+        window.devtoolsState = this;
         if (isFreezePanelOn()) {
             this.applyFrozenUiState();
         }

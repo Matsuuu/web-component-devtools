@@ -38,6 +38,13 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
             // and therefore the attribute.
             this.highLightAll = devtoolsState.highlightAll.get();
         });
+
+        devtoolsState.onChange(devtoolsState.selectedItem, () => {
+            this.ensureSelectedItemIsVisibleInTree();
+        });
+        devtoolsState.onChange(devtoolsState.elementTree, () => {
+            this.ensureSelectedItemIsVisibleInTree();
+        });
     }
 
     onExpand(ev: WaExpandEvent, element: TreeElement) {
@@ -52,12 +59,16 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
         return devtoolsState.elementTree.get();
     }
 
-    focusOnSelectedItem() {
+    ensureSelectedItemIsVisibleInTree() {
         const parentTree = devtoolsState.getSelectedItemParentElements();
 
         parentTree.forEach(elem => {
             expansionMap.add(elem);
         });
+    }
+
+    focusOnSelectedItem() {
+        this.ensureSelectedItemIsVisibleInTree();
         this.scrollToElement = true;
         this.requestUpdate();
     }
@@ -67,6 +78,7 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
         if (selectedTreeItem) {
             const treeElement = this.treeItemToElementMap.get(selectedTreeItem);
             if (treeElement) {
+                console.log("[ElementTree:onSelectionChange]: Setting selected item to ", treeElement);
                 devtoolsState.selectedItem.set(treeElement);
                 createDevtoolsSelectEvent(treeElement);
             }
