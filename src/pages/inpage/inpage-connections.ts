@@ -33,7 +33,7 @@ export function initInpageConnections() {
         }
 
         if (isSelectMessage(data)) {
-            return invokeSelect(data);
+            return invokeSelect(data.element);
         }
 
         if (isSelectInspectMessage(data)) {
@@ -46,11 +46,7 @@ export function initInpageConnections() {
                 return;
             }
 
-            const analyzedElement = analyzeTreeElement(treeElement);
-            sendMessageFromInPage({
-                to: LAYER.DEVTOOLS,
-                data: new SelectResultMessage(analyzedElement, true),
-            });
+            invokeSelect(treeElement);
             return;
         }
 
@@ -87,8 +83,7 @@ export function initInpageConnections() {
             }
 
             updateTree();
-
-            invokeSelect(new SelectMessage(target));
+            invokeSelect(target);
 
             return;
         }
@@ -102,8 +97,8 @@ export function initInpageConnections() {
     });
 }
 
-function invokeSelect(data: SelectMessage) {
-    const treeElement = contentTreeState.treeElementByIdMap.get(data.element.id);
+function invokeSelect(element: TreeElement) {
+    const treeElement = contentTreeState.treeElementByIdMap.get(element.id);
     if (!treeElement) {
         return;
     }
