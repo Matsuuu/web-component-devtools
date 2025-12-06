@@ -162,8 +162,13 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
     static styles = css`
         wa-tree-item::part(label) {
             font-size: 0.75rem;
-            white-space: nowrap;
+            white-space: break-spaces;
             overflow: hidden;
+            flex-wrap: wrap;
+        }
+
+        wa-tree-item::part(item) {
+            align-items: flex-start;
         }
 
         wa-tree-item::part(expand-button) {

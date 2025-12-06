@@ -18,6 +18,7 @@ import { SelectResultMessage } from "../messages/select-result-message";
 import { SerializedAnalyzedElement } from "./analyzer/serialized-analyzed-element";
 import { isAttributeChangeMessage } from "../messages/attribute-change-message";
 import { initializeMutationObservers } from "../content/lib/mutation-observers";
+import { devtoolsState } from "../devtools/state/devtools-context";
 
 export function initInpageConnections() {
     window.addEventListener("message", event => {
@@ -48,7 +49,7 @@ export function initInpageConnections() {
                 return;
             }
 
-            return invokeSelect(treeElement);
+            return invokeSelect(treeElement, true);
         }
 
         if (isHoverMessage(data)) {
@@ -92,7 +93,14 @@ export function initInpageConnections() {
     });
 }
 
-function invokeSelect(element: TreeElement) {
+export function invokeReSelect() {
+    const treeElement = inpageState.selectedElement;
+    if (treeElement) {
+        invokeSelect(treeElement);
+    }
+}
+
+function invokeSelect(element: TreeElement, focusOnDevTools: boolean = false) {
     const treeElement = contentTreeState.treeElementByIdMap.get(element.id);
     if (!treeElement) {
         return;
@@ -104,7 +112,7 @@ function invokeSelect(element: TreeElement) {
     const analyzedElement = analyzeTreeElement(treeElement);
     sendMessageFromInPage({
         to: LAYER.DEVTOOLS,
-        data: new SelectResultMessage(analyzedElement),
+        data: new SelectResultMessage(analyzedElement, focusOnDevTools),
     });
 }
 

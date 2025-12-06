@@ -1,8 +1,11 @@
 import { debounce } from "../../../lib/utils/debounce";
 import { SPOTLIGHT_ELEM_ID } from "./spotlight/spotlight-element";
 import { updateTree } from "../../../pages/inpage/events/update-tree";
+import { inpageState } from "../../../pages/inpage/inpage-state";
+import { invokeReSelect } from "../../../pages/inpage/inpage-connections";
 
 const debouncedTreeUpdater = debounce(updateTree, 250);
+const debouncedSelect = debounce(invokeReSelect, 250);
 
 export function initializeMutationObservers(element: Element | ShadowRoot = document.body) {
     setObserver(element);
@@ -32,9 +35,14 @@ function setObserver(element: Element | ShadowRoot) {
             if (target instanceof Element && target.id === SPOTLIGHT_ELEM_ID) {
                 return;
             }
+
             if (mutation.type === "childList") {
                 debouncedTreeUpdater();
             } else if (mutation.type === "attributes") {
+                const selectedElement = inpageState.selectedElement?.element;
+                if (target === selectedElement) {
+                    debouncedSelect();
+                }
                 debouncedTreeUpdater();
             }
         }
