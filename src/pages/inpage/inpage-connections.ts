@@ -8,7 +8,7 @@ import { LAYER, CONTEXT } from "../messages/layers";
 import { MessageBase } from "../messages/message-base";
 import { isPingMessage, PingMessage } from "../messages/ping-message";
 import { isSelectInspectMessage } from "../messages/select-inspect-message";
-import { isSelectMessage, SelectMessage } from "../messages/select-message";
+import { isSelectMessage } from "../messages/select-message";
 import { analyzeSelectedElement } from "./analyzer/custom-element-dom-analyzer";
 import { updateTree } from "./events/update-tree";
 import { inpageState } from "./inpage-state";
@@ -17,6 +17,7 @@ import { TreeElement } from "../content/lib/element";
 import { SelectResultMessage } from "../messages/select-result-message";
 import { SerializedAnalyzedElement } from "./analyzer/serialized-analyzed-element";
 import { isAttributeChangeMessage } from "../messages/attribute-change-message";
+import { initializeMutationObservers } from "../content/lib/mutation-observers";
 
 export function initInpageConnections() {
     window.addEventListener("message", event => {
@@ -29,6 +30,7 @@ export function initInpageConnections() {
         // TODO: Move the implementations to their own file or at least functions at some point
 
         if (isInitMessage(data)) {
+            initializeMutationObservers();
             return updateTree();
         }
 
@@ -46,8 +48,7 @@ export function initInpageConnections() {
                 return;
             }
 
-            invokeSelect(treeElement);
-            return;
+            return invokeSelect(treeElement);
         }
 
         if (isHoverMessage(data)) {
@@ -58,15 +59,11 @@ export function initInpageConnections() {
 
             const dimensions = getSpotlightElementDimensions(hoveredElement);
 
-            moveSpotlight(dimensions);
-
-            return;
+            return moveSpotlight(dimensions);
         }
 
         if (isHoverLeaveMessage(data)) {
-            requestSpotlightRemove();
-
-            return;
+            return requestSpotlightRemove();
         }
 
         if (isAttributeChangeMessage(data)) {
@@ -82,9 +79,7 @@ export function initInpageConnections() {
                 target.element.setAttribute(change.name, change.value);
             }
 
-            updateTree();
             invokeSelect(target);
-
             return;
         }
 

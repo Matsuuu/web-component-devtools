@@ -85,6 +85,6 @@ function parseDOMTree(target: HTMLElement | ShadowRoot = document.body) {
     }
 }
 
-function nodeIsShadowRoot(node: Node): node is ShadowRoot {
+export function nodeIsShadowRoot(node: Node): node is ShadowRoot {
     return node.toString() === "[object ShadowRoot]";
 }

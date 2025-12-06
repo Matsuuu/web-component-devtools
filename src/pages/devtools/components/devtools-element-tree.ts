@@ -78,7 +78,6 @@ export class DevtoolsElementTree extends SignalWatcher(LitElement) {
         if (selectedTreeItem) {
             const treeElement = this.treeItemToElementMap.get(selectedTreeItem);
             if (treeElement) {
-                console.log("[ElementTree:onSelectionChange]: Setting selected item to ", treeElement);
                 devtoolsState.selectedItem.set(treeElement);
                 createDevtoolsSelectEvent(treeElement);
             }
