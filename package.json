@@ -35,7 +35,7 @@
     "devDependencies": {
         "@crxjs/vite-plugin": "^2.0.3",
         "@custom-elements-manifest/analyzer": "^0.11.0",
-        "@tailwindcss/vite": "^4.1.11",
+        "@tailwindcss/vite": "^4.1.17",
         "@types/chrome": "^0.1.32",
         "@types/node": "^24.10.1",
         "@types/webextension-polyfill": "^0.12.4",
